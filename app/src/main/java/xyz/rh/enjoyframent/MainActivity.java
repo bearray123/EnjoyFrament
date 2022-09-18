@@ -74,7 +74,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void changeFragment(Fragment fragment) {
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fragment_container, fragment);
+
+        /**
+         * add只会将一个fragment添加到容器中。 假设您将FragmentA和FragmentB添加到容器中。
+         * 容器将具有FragmentA和FragmentB，如果容器是FrameLayout，则将fragment一个添加在另一个之上。
+         * replace将简单地替换容器顶部的一个fragment，
+         * 因此，如果我创建了 FragmentC并 replace 顶部的 FragmentB，
+         * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
+         */
+        transaction.replace(R.id.fragment_container, fragment);
         // 将fragment管理加入到回退栈，栈名可以传null
         //transaction.addToBackStack("my_stack");
         int indetify = transaction.commit();
@@ -83,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void popBackStackByIndex(int stackIndex) {
         FragmentManager fragmentManager =  getSupportFragmentManager();
-        int listSize = backStackList.size();
         if (stackIndex < backStackList.size()) {
             int id = backStackList.get(stackIndex);
             for (int index = 0; index <= stackIndex; index++) { // 因为下面用的是POP_BACK_STACK_INCLUSIVE，所以这里用<=，包含当前的这个
