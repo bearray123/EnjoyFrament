@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         transaction.replace(R.id.fragment_container, fragment);
         // 将fragment管理加入到回退栈，栈名可以传null
-        //transaction.addToBackStack("my_stack");
+        transaction.addToBackStack("my_stack");
         int indetify = transaction.commit();
         backStackList.push(indetify);
     }
