@@ -1,5 +1,6 @@
 package xyz.rh.enjoyframent;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ public class SecondFragment extends Fragment {
 
         Log.d(TAG, "lifeCycle::onCreateView() === " + hashCode());
 
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, null);
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, container, false);
         textView = rootView.findViewById(R.id.textview_second);
         textView.setText(textView.getText() + " :: " + mText);
 
@@ -41,11 +42,20 @@ public class SecondFragment extends Fragment {
 
     }
 
+    @Override public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "lifeCycle::onAttach() === " + hashCode());
+    }
+
+    @Override public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "lifeCycle::onDetach() === " + hashCode());
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         Log.d(TAG, "lifeCycle::onViewCreated() === " + hashCode());
-
 
     }
 

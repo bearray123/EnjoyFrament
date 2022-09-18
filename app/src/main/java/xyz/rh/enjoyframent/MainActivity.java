@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void changeFragment(Fragment fragment) {
+    private void changeFragment(Fragment newFragment) {
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -82,7 +82,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 因此，如果我创建了 FragmentC并 replace 顶部的 FragmentB，
          * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
          */
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.add(R.id.fragment_container, newFragment);
+
+        //transaction.remove(newFragment);
+        transaction.hide(newFragment);
+        transaction.show(newFragment);
+
+        /**
+         * newFragment 会替换目前在 R.id.fragment_container ID 所标识的布局容器中的任何片段（如有）。
+         * 通过调用 addToBackStack()，您可以将替换事务保存到返回栈，以便用户能够通过按返回按钮撤消事务并回退到上一片段。
+         */
+        //transaction.replace(R.id.fragment_container, newFragment);
+
         // 将fragment管理加入到回退栈，栈名可以传null
         transaction.addToBackStack("my_stack");
         int indetify = transaction.commit();

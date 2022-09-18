@@ -1,5 +1,6 @@
 package xyz.rh.enjoyframent;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ public class FirstFragment extends Fragment {
 
         Log.d(TAG, "lifeCycle::onCreateView() === " + hashCode());
 
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, container, false);
         textView = rootView.findViewById(R.id.textview_first);
         textView.setText(textView.getText() + " :: " + mText);
         return rootView;
@@ -42,6 +43,23 @@ public class FirstFragment extends Fragment {
 
         Log.d(TAG, "lifeCycle::onViewCreated() === " + hashCode());
 
+    }
+
+    /**
+     * 在片段已与 Activity 关联时进行调用（Activity 传递到此方法内）。
+     * @param context
+     */
+    @Override public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "lifeCycle::onAttach() === " + hashCode());
+    }
+
+    /**
+     * 在取消片段与 Activity 的关联时进行调用。
+     */
+    @Override public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "lifeCycle::onDetach() === " + hashCode());
     }
 
     @Override public void onResume() {
@@ -59,6 +77,9 @@ public class FirstFragment extends Fragment {
         Log.d(TAG, "lifeCycle::onStop() === " + hashCode());
     }
 
+    /**
+     * 在移除与片段关联的视图层次结构时进行调用。
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
