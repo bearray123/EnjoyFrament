@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.enjoy.ribs.VIPERActivity;
+import javax.inject.Inject;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
+import xyz.rh.enjoyframent.di.test.BussA;
+import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
+import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyframent.touchevent.TestFragmentEntryActivity;
 
@@ -17,14 +20,30 @@ import xyz.rh.enjoyframent.touchevent.TestFragmentEntryActivity;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @Inject
+    public BussA mBussA;
+    @Inject
+    public BussBFrom3rdParty mBussB;
+
     public static final String TAG = "MainActivity";
 
+    /**
+     * viewBinding的使用
+     * 自动生成的类个数和layout目录中布局文件个数是对应的
+     * 其实可以在所有的类中都使用viewBinding，我这里只在首页使用了，其他的类中都可以使用
+     */
     private MainActivityLayoutBinding _layoutBinding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DaggerBussComponent.create().injectMainActivity(this);
+
+        Log.d(TAG, "BussA = " + mBussA + ", BussB=" + mBussB);
+        mBussA.method1A();
+        mBussB.method1B();
 
         // decorView类型：androidx.appcompat.widget.ContentFrameLayout
         View decorView = findViewById(android.R.id.content);

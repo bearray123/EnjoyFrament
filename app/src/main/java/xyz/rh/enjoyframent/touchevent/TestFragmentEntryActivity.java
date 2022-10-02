@@ -89,6 +89,10 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
 
     private void changeFragment(Fragment newFragment) {
+
+        /**
+         * 每一个Activity对应着一个FragmentController，即对应着一个FragmentManager对象
+         */
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
