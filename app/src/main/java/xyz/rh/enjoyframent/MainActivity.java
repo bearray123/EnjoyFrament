@@ -1,124 +1,60 @@
 package xyz.rh.enjoyframent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import java.util.LinkedList;
+import android.view.Window;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.enjoy.ribs.VIPERActivity;
+import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
+import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
+import xyz.rh.enjoyframent.touchevent.TestFragmentEntryActivity;
 
-import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+/**
+ * Created by xionglei01@baidu.com on 2022/9/21.
+ */
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = "MainActivity";
 
-    private View btn1, btn2, btn3;
-    private TextView mBackStackContentView;
+    private MainActivityLayoutBinding _layoutBinding;
 
-    private LinkedList<Integer> backStackList = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        // decorView类型：androidx.appcompat.widget.ContentFrameLayout
+        View decorView = findViewById(android.R.id.content);
 
-        btn1 = findViewById(R.id.changeBtn1);
-        btn2 = findViewById(R.id.changeBtn2);
-        btn3 = findViewById(R.id.changeBtn3);
+        _layoutBinding = MainActivityLayoutBinding.inflate(getLayoutInflater());
+        View rootView = _layoutBinding.getRoot();
 
+        // setContentView之后就把当前我们定义的layout布局添加到了decorView上，这样decorView就有了一个children
+        // 它的child就是ConstraintLayout，即我们在layout里定义的根视图 rootView：ConstraintLayout
+        setContentView(rootView);
 
-        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-        btn3.setOnClickListener(this);
+        Window activityWindow = getWindow();
+        Log.d(TAG, "window:: getWindow()=== " + activityWindow);
 
-        mBackStackContentView = findViewById(R.id.backstack_content);
-
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(
-            new FragmentManager.OnBackStackChangedListener() {
-                @Override public void onBackStackChanged() {
-                    Log.d(TAG, "onBackStackChanged()========");
-                    updateBackStackContent();
-                }
-            });
+        _layoutBinding.testTouchEvent.setOnClickListener(this);
+        _layoutBinding.testFragmentEntry.setOnClickListener(this);
+        _layoutBinding.testViper.setOnClickListener(this);
 
     }
 
     @Override public void onClick(View v) {
 
-        if (v == btn1) {
-            FirstFragment fragment = new FirstFragment();
-            fragment.updateContent(fragment.hashCode() + "");
-            changeFragment(fragment);
-        } else if (v == btn2) {
-            SecondFragment fragment = new SecondFragment();
-            fragment.updateContent(fragment.hashCode() + "");
-            changeFragment(fragment);
-        } else if (v == btn3) {
-            popBackStackByIndex(2);
+        if(v == _layoutBinding.testFragmentEntry) {
+            startActivity(new Intent(this, TestFragmentEntryActivity.class));
+        } else if (v ==  _layoutBinding.testTouchEvent) {
+            startActivity(new Intent(this, EnjoyTouchEventActivity.class));
+        } else if (v ==  _layoutBinding.testViper) {
+            startActivity(new Intent(this, VIPERActivity.class));
         }
 
-        // 这里查看回退栈其实是有延时的，只能看到上一次的状态，所以不要在这里查看，需要放到onBackStackChanged里去监听查看
-        //updateBackStackContent();
-
-    }
-
-
-    private void changeFragment(Fragment newFragment) {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        /**
-         * add只会将一个fragment添加到容器中。 假设您将FragmentA和FragmentB添加到容器中。
-         * 容器将具有FragmentA和FragmentB，如果容器是FrameLayout，则将fragment一个添加在另一个之上。
-         * replace将简单地替换容器顶部的一个fragment，
-         * 因此，如果我创建了 FragmentC并 replace 顶部的 FragmentB，
-         * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
-         */
-        transaction.add(R.id.fragment_container, newFragment);
-
-        //transaction.remove(newFragment);
-        transaction.hide(newFragment);
-        transaction.show(newFragment);
-
-        /**
-         * newFragment 会替换目前在 R.id.fragment_container ID 所标识的布局容器中的任何片段（如有）。
-         * 通过调用 addToBackStack()，您可以将替换事务保存到返回栈，以便用户能够通过按返回按钮撤消事务并回退到上一片段。
-         */
-        //transaction.replace(R.id.fragment_container, newFragment);
-
-        // 将fragment管理加入到回退栈，栈名可以传null
-        transaction.addToBackStack("my_stack");
-        int indetify = transaction.commit();
-        backStackList.push(indetify);
-    }
-
-    private void popBackStackByIndex(int stackIndex) {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        if (stackIndex < backStackList.size()) {
-            int id = backStackList.get(stackIndex);
-            for (int index = 0; index <= stackIndex; index++) { // 因为下面用的是POP_BACK_STACK_INCLUSIVE，所以这里用<=，包含当前的这个
-                backStackList.pop();
-                Log.d(TAG, "backStackList pop::: " + index);
-            }
-            Log.d(TAG, "after popBackStackByIndex()======== backStateList.size===" + backStackList.size());
-            fragmentManager.popBackStack(id, POP_BACK_STACK_INCLUSIVE);
-        } else {
-            Toast.makeText(this, "当前指定的index超出了范围", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void updateBackStackContent() {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        int backstackEntryCount = fragmentManager.getBackStackEntryCount();
-        mBackStackContentView.setText("回退栈：" + backstackEntryCount);
     }
 
 }
