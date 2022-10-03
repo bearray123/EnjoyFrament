@@ -8,19 +8,19 @@ import android.view.MotionEvent;
 /**
  * Created by xionglei01@baidu.com on 2022/9/22.
  */
-public class RHBotton extends androidx.appcompat.widget.AppCompatButton {
+public class RHButton extends androidx.appcompat.widget.AppCompatButton {
 
    public static final String TAG = "RHBotton";
 
-   public RHBotton(Context context) {
+   public RHButton(Context context) {
       super(context);
    }
 
-   public RHBotton(Context context, AttributeSet attrs) {
+   public RHButton(Context context, AttributeSet attrs) {
       super(context, attrs);
    }
 
-   public RHBotton(Context context, AttributeSet attrs, int defStyleAttr) {
+   public RHButton(Context context, AttributeSet attrs, int defStyleAttr) {
       super(context, attrs, defStyleAttr);
    }
 

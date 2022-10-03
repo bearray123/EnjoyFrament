@@ -30,7 +30,7 @@
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         />
     <activity
-        android:name=".touchevent.TestFragmentEntryActivity"
+        android:name=".TestFragmentEntryActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         />
 

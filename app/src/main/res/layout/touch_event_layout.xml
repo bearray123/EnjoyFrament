@@ -19,7 +19,7 @@
       android:layout_margin="50dp"
       android:orientation="vertical">
 
-    <xyz.rh.enjoyframent.touchevent.RHBotton
+    <xyz.rh.enjoyframent.touchevent.RHButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="我是嵌套在RHLinearLayout内部的Button"

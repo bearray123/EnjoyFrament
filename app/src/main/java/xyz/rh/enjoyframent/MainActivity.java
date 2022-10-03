@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 import com.enjoy.ribs.VIPERActivity;
 import javax.inject.Inject;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
@@ -13,7 +17,6 @@ import xyz.rh.enjoyframent.di.test.BussA;
 import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
-import xyz.rh.enjoyframent.touchevent.TestFragmentEntryActivity;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.
@@ -40,6 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         DaggerBussComponent.create().injectMainActivity(this);
+
+        /////////////////////// test Lifecycle ////////////////////////////
+        getLifecycle().addObserver(new LifecycleEventObserver() {
+
+            @Override public void onStateChanged(@NonNull LifecycleOwner source,
+                @NonNull Lifecycle.Event event) {
+                Log.d(TAG, "LifecycleEventObserver:: " + event);
+            }
+        });
+        /////////////////////////////////////////////////////////////////
 
         Log.d(TAG, "BussA = " + mBussA + ", BussB=" + mBussB);
         mBussA.method1A();

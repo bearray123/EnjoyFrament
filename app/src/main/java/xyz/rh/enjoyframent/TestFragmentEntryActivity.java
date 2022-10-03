@@ -1,4 +1,4 @@
-package xyz.rh.enjoyframent.touchevent;
+package xyz.rh.enjoyframent;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -61,11 +61,12 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         Log.w(TAG, "XL::: Activity :: getDecorView() === " + getWindow().getDecorView());
         Log.w(TAG, "XL::: Activity :: btn1.getRootView === " + btn1.getRootView());
 
-
         Log.w(TAG, "window:: getWindow()=== " + getWindow());
 
+    }
 
-
+    @Override protected void onResume() {
+        super.onResume();
     }
 
     @Override public void onClick(View v) {
