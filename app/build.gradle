@@ -39,9 +39,9 @@ dependencies {
   implementation project(path: ':rh-ribs')
 //  project(':rh-ribs')
 
-  implementation 'androidx.appcompat:appcompat:1.5.0'
-  implementation 'com.google.android.material:material:1.6.1'
-  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+  implementation "androidx.appcompat:appcompat:$APPCOMPAT_VERSION"
+  implementation "com.google.android.material:material:$MATERIAL_VERSION"
+  implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINTLAYOUT_VERSION"
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0"
 

@@ -13,5 +13,12 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+        val my = My()
+        my.name = "xl"
+        System.out.println("hello JUnit:: ${my.name}")
     }
+}
+
+class My {
+    var name: String? = null
 }
