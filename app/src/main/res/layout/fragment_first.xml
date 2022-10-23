@@ -16,7 +16,7 @@
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"/>
+      />
 
   <Button
       android:id="@+id/show_dialog_btn"
@@ -25,6 +25,26 @@
       app:layout_constraintTop_toBottomOf="@id/textview_first"
       app:layout_constraintStart_toStartOf="@id/textview_first"
       android:layout_marginTop="20dp"
-      android:text="click and show a Dialog"
+      android:text="Click and show a Dialog"
     />
+
+  <Button
+      android:id="@+id/start_sub_fragment"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/show_dialog_btn"
+      app:layout_constraintStart_toStartOf="@id/textview_first"
+      android:layout_marginTop="20dp"
+      android:text="Click to start a sub Fragment"
+      />
+
+  <FrameLayout
+      android:id="@+id/sub_fragment_container"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/start_sub_fragment"
+      app:layout_constraintStart_toStartOf="@id/textview_first"
+      android:layout_marginBottom="10dp"
+  />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

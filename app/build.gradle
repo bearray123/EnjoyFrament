@@ -36,8 +36,8 @@ android {
 
 dependencies {
 
-  implementation project(path: ':rh-ribs')
-//  project(':rh-ribs')
+//  implementation project(path: ':other_project')
+//  project(':rh-ribs') // error usage
 
   implementation "androidx.appcompat:appcompat:$APPCOMPAT_VERSION"
   implementation "com.google.android.material:material:$MATERIAL_VERSION"

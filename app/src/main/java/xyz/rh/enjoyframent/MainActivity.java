@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
-import com.enjoy.ribs.VIPERActivity;
 import javax.inject.Inject;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
@@ -82,9 +81,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == _layoutBinding.testFragmentEntry) {
             startActivity(new Intent(this, TestFragmentEntryActivity.class));
         } else if (v ==  _layoutBinding.testTouchEvent) {
-            startActivity(new Intent(this, EnjoyTouchEventActivity.class));
+            //startActivity(new Intent(this, EnjoyTouchEventActivity.class));
+            setResult(100, new Intent());
+            finish();
         } else if (v ==  _layoutBinding.testViper) {
-            startActivity(new Intent(this, VIPERActivity.class));
         }
 
     }

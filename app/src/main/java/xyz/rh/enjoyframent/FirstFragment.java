@@ -3,6 +3,7 @@ package xyz.rh.enjoyframent;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +13,17 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import xyz.rh.enjoyframent.dialog.DialogFragment;
 
@@ -27,11 +35,48 @@ public class FirstFragment extends Fragment {
     private TextView textView;
     private String mText;
     private Button mShowDialogBtn;
+    private Button mStartSubFragment;
+
+    private ActivityResultLauncher launcher = null;
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.w(TAG, "lifeCycle::onCreate() === " + hashCode());
+
+        //getActivity().registerForActivityResult()
+        ActivityResultContract activityResultContract = new ActivityResultContracts.StartActivityForResult();
+        launcher = registerForActivityResult(/*new ActivityResultContract<Object, Object>() {
+            @NonNull @Override
+            public Intent createIntent(@NonNull Context context, Object o) {
+                Intent intent = new Intent(FirstFragment.this.getActivity(), MainActivity.class);
+                return intent;
+            }
+
+            @Override public Object parseResult(int i, @Nullable Intent intent) {
+                Log.d(TAG, ":::::parseResult i " + i + ", intent=" + intent);
+                return null;
+            }
+        }*/
+            activityResultContract, new ActivityResultCallback<ActivityResult>() {
+            @Override public void onActivityResult(ActivityResult result) {
+                Log.d(TAG, "::::: onActivityResult  result =" + result);
+            }
+        });
+
+        //getActivity().startactivityfor
+
+        launcher.unregister();
+
+
+
+
     }
+
+    public void startAct(ActivityResultCallback resultCallback) {
+        launcher.launch(null);
+    }
+
+
 
     @Override
     public View onCreateView(
@@ -48,6 +93,8 @@ public class FirstFragment extends Fragment {
 
         textView = rootView.findViewById(R.id.textview_first);
         textView.setText(textView.getText() + " :: " + mText);
+
+        Log.d(TAG, " textView.getRootView() ?= rootView :: " + (textView.getRootView() == rootView));
 
         mShowDialogBtn = rootView.findViewById(R.id.show_dialog_btn);
         mShowDialogBtn.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +116,8 @@ public class FirstFragment extends Fragment {
                     new DialogInterface.OnClickListener() {
                         @Override public void onClick(DialogInterface dialog, int which) {
 
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            //FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, new SecondFragment());
                             transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
                             transaction.commit();
@@ -81,6 +129,32 @@ public class FirstFragment extends Fragment {
 
             }
         });
+
+        mStartSubFragment = rootView.findViewById(R.id.start_sub_fragment);
+        mStartSubFragment.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                SecondFragment subFragment = new SecondFragment();
+                subFragment.updateContent("作为子Fragment添加到FirstFragment里面");
+
+                // 验证getChildFragmentManager的使用：
+                // 在使用getChildFragmentManager去启动和管理一个子fragment时，整个视图层级都是处于当前这个Fragment下的
+                // 对应的container也必须是当前Fragment里的ViewGroup，如果取Activity层里面的container会crash报错：
+                // java.lang.IllegalArgumentException: No view found for id 0x7f0800d1 (xyz.rh.enjoyframent:id/fragment_container) for fragment SecondFragment
+                // crash的原因就是fragment_container其实不在当前这个Fragment里
+                //transaction.replace(R.id.fragment_container, subFragment);
+
+                //transaction.replace(R.id.sub_fragment_container, subFragment);
+                //transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
+                //transaction.commit();
+
+                launcher.launch(null);
+
+
+            }
+
+        });
+
         Log.w(TAG, "XL::: FistFragment  textView.getRootView() === " + textView.getRootView());
 
         return rootView;
@@ -89,7 +163,6 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         Log.d(TAG, "lifeCycle::onViewCreated() === " + hashCode());
 
     }
@@ -144,6 +217,21 @@ public class FirstFragment extends Fragment {
 
     public void updateContent(String text) {
         mText = text;
+    }
+
+    static class MyActivityResultLauncher extends ActivityResultLauncher {
+
+        @Override public void launch(Object input, @Nullable ActivityOptionsCompat options) {
+
+        }
+
+        @Override public void unregister() {
+
+        }
+
+        @NonNull @Override public ActivityResultContract getContract() {
+            return null;
+        }
     }
 
 }

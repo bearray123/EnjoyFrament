@@ -11,17 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.LinkedList;
-import xyz.rh.enjoyframent.FirstFragment;
-import xyz.rh.enjoyframent.R;
-import xyz.rh.enjoyframent.SecondFragment;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 
-public class TestFragmentEntryActivity extends AppCompatActivity implements View.OnClickListener{
+public class TestFragmentEntryActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    public static final String TAG = "TestFragmentEntryActivity";
+    public static final String TAG = "FragmentEntryActivity";
 
     private View btn1, btn2, btn3;
     private TextView mBackStackContentView;
@@ -73,12 +70,12 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
-            fragment.updateContent(fragment.hashCode() + "");
-            changeFragment(fragment);
+            fragment.updateContent(fragment.hashCode() + "::加入回退栈");
+            changeFragment(fragment, true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
-            fragment.updateContent(fragment.hashCode() + "");
-            changeFragment(fragment);
+            fragment.updateContent(fragment.hashCode() + "::不加入回退栈");
+            changeFragment(fragment, false);
         } else if (v == btn3) {
             popBackStackByIndex(2);
         }
@@ -86,15 +83,17 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         // 这里查看回退栈其实是有延时的，只能看到上一次的状态，所以不要在这里查看，需要放到onBackStackChanged里去监听查看
         //updateBackStackContent();
 
+
     }
 
 
-    private void changeFragment(Fragment newFragment) {
+    private void changeFragment(Fragment newFragment, boolean addBackStack) {
 
         /**
          * 每一个Activity对应着一个FragmentController，即对应着一个FragmentManager对象
          */
         FragmentManager fragmentManager =  getSupportFragmentManager();
+        //fragmentManager.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         /**
@@ -104,7 +103,9 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
          * 因此，如果我创建了 FragmentC并 replace 顶部的 FragmentB，
          * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
          */
-        transaction.add(R.id.fragment_container, newFragment);
+        //transaction.add(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.fragment_container, newFragment);
+
 
         //transaction.remove(newFragment);
         transaction.hide(newFragment);
@@ -116,8 +117,10 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
          */
         //transaction.replace(R.id.fragment_container, newFragment);
 
-        // 将fragment管理加入到回退栈，栈名可以传null
-        transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
+        if (addBackStack) {
+            // 将fragment管理加入到回退栈，栈名可以传null
+            transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
+        }
         int indetify = transaction.commit();
         backStackList.push(indetify);
     }

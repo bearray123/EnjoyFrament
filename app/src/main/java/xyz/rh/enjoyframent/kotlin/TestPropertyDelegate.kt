@@ -1,5 +1,6 @@
 package xyz.rh.enjoyframent.kotlin
 
+import android.util.SparseArray
 import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -42,11 +43,72 @@ class IntegerDelegate<T> : ReadWriteProperty<TestPropertyDelegateMain, T> {
 
 fun main(args: Array<String>) {
 
-    println("test property delegate")
+//    println("test property delegate")
+//
+//    var main : TestPropertyDelegateMain?
+//    main = TestPropertyDelegateMain();
+//    main.intParam = "xionglei"
 
-    var main : TestPropertyDelegateMain?
-    main = TestPropertyDelegateMain();
-    main.intParam = "xionglei"
+    val list = arrayOf(arrayOf(1,2,3), arrayOf(4,5,6,7), arrayOf(8,9,10,11,12))
+//    var list2 = arrayListOf<String>("afj", "3", "276548", "dfjewiifcjicw", "90")
+////    list.reverse()
+//    val newlist = list.reversed()
+//    list.forEach {
+//        it.reverse()
+//    }
+//
+//    val list3 = list2.filter {
+//        it.length >= 3
+//    }
+//    val list4 = list2.map {
+//        it.length
+//    }
+//
+//    val list5 = list2.asSequence().filter {
+//        it.length >= 3
+//    }
+//
+//    println(list3)
+//    println(list4)
+////    println(list5)
+//
+//
+//    var abc = SparseArray<String>()
+//    abc.put(1, "acb")
+//    abc.put(2, "cde")
+
+//    run abc@{
+//
+//         list.forEach {
+//
+//            it.forEach xyz@{
+//
+//                if (it == 5) {
+//                    return@abc
+//                }
+//
+//                println(it)
+//
+//            }
+//        }
+//    }
+    foree(list)
 
 
+
+}
+
+fun foree(list: Array<Array<Int>>) {
+    list.forEach outer@{
+
+        it.forEach inner@{
+
+            if (it == 5) {
+//                return@inner
+                return@outer
+            }
+            println(it)
+
+        }
+    }
 }
