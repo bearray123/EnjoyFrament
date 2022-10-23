@@ -1,4 +1,4 @@
-package xyz.rh.enjoyframent;
+package xyz.rh.enjoyframent.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import xyz.rh.enjoyframent.R;
 
 public class SecondFragment extends Fragment {
 

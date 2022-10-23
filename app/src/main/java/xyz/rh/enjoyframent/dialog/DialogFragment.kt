@@ -1,17 +1,15 @@
 package xyz.rh.enjoyframent.dialog
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.ColorInt
-import androidx.fragment.app.FragmentTransaction
 import xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME
 import xyz.rh.enjoyframent.R
-import xyz.rh.enjoyframent.SecondFragment
+import xyz.rh.enjoyframent.fragment.SecondFragment
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -49,7 +47,9 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
             override fun onClick(v: View?) {
 
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container, SecondFragment())
+                transaction?.replace(R.id.fragment_container,
+                    SecondFragment()
+                )
                 //这行决定从当前DialogFragment跳转到SecondFragment之后，按返回键,DialogFragment是否还继续显示
                 transaction?.addToBackStack(GLOBAL_BACK_STACK_NAME)
                 transaction?.commit()

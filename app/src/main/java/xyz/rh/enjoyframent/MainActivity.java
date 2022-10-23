@@ -18,7 +18,7 @@ import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
 import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
-import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
+import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.

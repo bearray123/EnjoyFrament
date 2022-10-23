@@ -1,4 +1,4 @@
-package xyz.rh.enjoyframent;
+package xyz.rh.enjoyframent.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.LinkedList;
+import xyz.rh.enjoyframent.R;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
