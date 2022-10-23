@@ -1,10 +1,13 @@
 package xyz.rh.enjoyframent;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
@@ -86,6 +89,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         } else if (v ==  _layoutBinding.testViper) {
         }
+
+    }
+
+    /**
+     * 直接通过 databinding xml文件link过来的，一般不建议这样写，可读性比较差
+     * @param view
+     */
+    public void onDialogEntryClicked(View view) {
+
+        // 测试Dialog的Window和Activity的Window是否是同一个对象：不是同一个对象
+
+        // 测试Application的context.getSystemService和Activity的context.getSystemService是否是同一个对象：
+        // 对于WINDOW_SERVICE和SEARCH_SERVICE来讲不是同一个对象，除了这两个之外其他的Service都是同一个对象，其他的Service
+        // 最终都是调用到SystemServiceRegistry.getSystemService(this, name)这个静态方法来获取的，
+        // 最终都是走到了SYSTEM_SERVICE_FETCHERS这个ArrayMap中根据传人的servicename来获取的
+
+        // 测试Dialog的WindowManager和Activity的WindowManger是否是同一个对象：WindowManager对象是由传进来的Contxt决定的，如果传的是Application.context，那么会导致WindowManager不一样，最终导致crash
+
+        // 测试Dialog如果传Application的Context会导致crash的原理
+        Object windowServiceFromApplicationContextGet = getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+
+        Object windowServiceFromActivityContextGet = getSystemService(Context.WINDOW_SERVICE);
+
+        Log.d(TAG, "windowServiceFromApplicationContextGet ?= windowServiceFromActivityContextGet = " + (windowServiceFromApplicationContextGet == windowServiceFromActivityContextGet));
+
+        Dialog dialog = new Dialog(getApplicationContext());
+        Log.d(TAG, "Dialog.getWindow ?= activity.getWindow = " + (dialog.getWindow() == this.getWindow()));
+
+        dialog.setTitle("弹框Title");
+        TextView contentView = new TextView(this);
+        contentView.setText("Dialog弹窗的内容！");
+        dialog.setContentView(contentView);
+
+        dialog.show();
 
     }
 
