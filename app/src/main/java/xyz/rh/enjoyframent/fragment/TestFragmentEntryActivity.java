@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.LinkedList;
+import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.R;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
@@ -61,6 +62,8 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
         Log.w(TAG, "window:: getWindow()=== " + getWindow());
 
+
+
     }
 
     @Override protected void onResume() {
@@ -75,8 +78,8 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
             changeFragment(fragment, true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
-            fragment.updateContent(fragment.hashCode() + "::不加入回退栈");
-            changeFragment(fragment, false);
+            fragment.updateContent(fragment.hashCode() + "::加入回退栈");
+            changeFragment(fragment, true);
         } else if (v == btn3) {
             popBackStackByIndex(2);
         }

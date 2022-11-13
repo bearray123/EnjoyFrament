@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import xyz.rh.enjoyframent.R;
+import xyz.rh.enjoyframent.fragment.view.VolumeView;
 
 public class SecondFragment extends Fragment {
 
@@ -19,6 +21,8 @@ public class SecondFragment extends Fragment {
 
     private TextView textView;
     private String mText;
+
+    private ViewGroup rootView;
 
 
 
@@ -35,7 +39,7 @@ public class SecondFragment extends Fragment {
 
         Log.d(TAG, "lifeCycle::onCreateView() === " + hashCode());
 
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, container, false);
+        rootView = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, container, false);
         textView = rootView.findViewById(R.id.textview_second);
         textView.setText(textView.getText() + " :: " + mText);
 
@@ -53,8 +57,24 @@ public class SecondFragment extends Fragment {
         Log.d(TAG, "lifeCycle::onDetach() === " + hashCode());
     }
 
+    private void addSubViewByCode() {
+        View childView = new VolumeView(getContext());
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;  // 与父容器ConstraintLayout左边对齐
+        layoutParams.topToBottom = textView.getId(); // 在textview的下边
+        layoutParams.topMargin = 50;  //
+        layoutParams.leftMargin = 50; //
+        layoutParams.bottomMargin = 20; //
+        childView.setLayoutParams(layoutParams);
+        rootView.addView(childView, layoutParams);
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // 通过代码动态添加子View
+        addSubViewByCode();
 
         Log.d(TAG, "lifeCycle::onViewCreated() === " + hashCode());
 

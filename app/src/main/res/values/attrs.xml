@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <declare-styleable name="round_corner_style">
+    <attr name="android:radius">20</attr>
+  </declare-styleable>
+
+  <declare-styleable name="VolumeView">
+    <attr name="radius" format="float">0</attr>
+<!--    当前播放音量条的背景颜色-绿色-->
+    <attr name="occupied_color" format="color">#4683e7</attr>
+<!--    当前剩余音量的背景颜色-灰色-->
+    <attr name="unoccupied_color" format="color">#4A4A4A</attr>
+  </declare-styleable>
+
+</resources>

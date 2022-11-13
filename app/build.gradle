@@ -39,18 +39,23 @@ dependencies {
 //  implementation project(path: ':other_project')
 //  project(':rh-ribs') // error usage
 
-  implementation "androidx.appcompat:appcompat:$APPCOMPAT_VERSION"
-  implementation "com.google.android.material:material:$MATERIAL_VERSION"
-  implementation "androidx.constraintlayout:constraintlayout:$CONSTRAINTLAYOUT_VERSION"
+  implementation project(path: ':common')
+
 
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$CORE_KTX_VERSION"
 
   implementation 'com.google.dagger:dagger:2.44'
+  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+  implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+  implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
   // java版的apt
 //  annotationProcessor 'com.google.dagger:dagger-compiler:2.44'
 
   //[引入kapt] 因为依赖注入的代码是kotlin写的，所以需要使用kotlin版的kapt
   kapt 'com.google.dagger:dagger-compiler:2.44'
+
+
+  implementation "com.github.bumptech.glide:glide:4.11.0"
 
 
 }

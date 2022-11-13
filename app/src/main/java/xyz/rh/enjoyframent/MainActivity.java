@@ -14,11 +14,13 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import javax.inject.Inject;
+import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
 import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
+import xyz.rh.enjoyframent.viewpager2.ViewPager2EntryActivity;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.
@@ -77,11 +79,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _layoutBinding.testFragmentEntry.setOnClickListener(this);
         _layoutBinding.testViper.setOnClickListener(this);
 
+        // 首页注册EventPublisher事件
+        testEventPublisher();
+
     }
 
     @Override public void onClick(View v) {
 
         if(v == _layoutBinding.testFragmentEntry) {
+
+            // 进入到该页面后就发送 EventPublisher事件，看首页注册的地方能不能收到
+            Log.d(TAG, "xl::::BaseEventPublisher.publish");
+            BaseEventPublisher.getPublisher().publish("category_abc");
+
             startActivity(new Intent(this, TestFragmentEntryActivity.class));
         } else if (v ==  _layoutBinding.testTouchEvent) {
             //startActivity(new Intent(this, EnjoyTouchEventActivity.class));
@@ -125,5 +135,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
 
     }
+
+
+    public void onViewPager2Clicked(View view) {
+        startActivity(new Intent(this, ViewPager2EntryActivity.class));
+    }
+
+
+    private void testEventPublisher() {
+        Log.d(TAG, "xl::::testEventPublisher");
+        BaseEventPublisher.getPublisher().subscribe("category_abc",
+            new BaseEventPublisher.OnEventListener() {
+                @Override public void onEvent(String category, Object event) {
+
+                    Log.d(TAG, "xl::::收到事件：" + category + ", event=" + event);
+
+                }
+            });
+    }
+
 
 }

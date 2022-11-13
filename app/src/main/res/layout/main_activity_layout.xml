@@ -58,4 +58,18 @@
       android:text="Dialog"
         tools:ignore="UsingOnClickInXml" />
 
+     <Button
+      android:id="@+id/test_viewpager2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test_dialog"
+      android:layout_marginLeft="50dp"
+      android:layout_marginRight="50dp"
+      android:layout_marginTop="20dp"
+      android:onClick="onViewPager2Clicked"
+      android:text="ViewPager2"
+      tools:ignore="UsingOnClickInXml" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
