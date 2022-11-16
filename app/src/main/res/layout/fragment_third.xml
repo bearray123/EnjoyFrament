@@ -7,6 +7,7 @@
     tools:context=".fragment.ThirdFragment">
 
   <TextView
+      android:id="@+id/textview_third"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:textSize="20sp"

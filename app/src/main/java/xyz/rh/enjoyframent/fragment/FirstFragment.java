@@ -20,7 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import java.util.List;
 import xyz.rh.enjoyframent.R;
 
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
@@ -88,7 +90,16 @@ public class FirstFragment extends Fragment {
 
 
         textView = rootView.findViewById(R.id.textview_first);
-        textView.setText(textView.getText() + " :: " + mText);
+
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        List<Fragment> fragmentList = fragmentManager.getFragments();
+        Log.d(TAG, "lifeCycle::onCreateView() === fragmentManager = " + fragmentManager + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager.getBackStackEntryCount());
+
+        int currentFragmentIndex = fragmentList.indexOf(this);
+
+        textView.setText(textView.getText() + " :: " + currentFragmentIndex + 1);  // index从0开始的
+
 
         Log.d(TAG, " textView.getRootView() ?= rootView :: " + (textView.getRootView() == rootView));
 

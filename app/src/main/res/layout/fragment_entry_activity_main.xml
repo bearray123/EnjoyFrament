@@ -14,7 +14,7 @@
       app:layout_constraintTop_toTopOf="parent"
       android:layout_marginTop="30dp"
       android:layout_marginLeft="50dp"
-      android:text="点击切换FirstFragment"
+      android:text="下一页：FirstFragment"
       />
 
   <Button
@@ -24,7 +24,7 @@
       app:layout_constraintTop_toBottomOf="@id/changeBtn1"
       app:layout_constraintStart_toStartOf="@+id/changeBtn1"
       android:layout_marginTop="4dp"
-      android:text="点击切换SecondFragment"
+      android:text="下一页：SecondFragment"
        />
 
   <Button
@@ -32,6 +32,16 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:layout_constraintTop_toBottomOf="@id/changeBtn2"
+      app:layout_constraintStart_toStartOf="@+id/changeBtn2"
+      android:layout_marginTop="4dp"
+      android:text="下一页：ThirdFragment"
+      />
+
+  <Button
+      android:id="@+id/changeBtn4"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/changeBtn3"
       app:layout_constraintStart_toStartOf="@+id/changeBtn1"
       android:layout_marginTop="4dp"
       android:text="切换到第2个"

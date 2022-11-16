@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.IntDef;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.R;
@@ -22,7 +25,7 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
     public static final String TAG = "FragmentEntryActivity";
 
-    private View btn1, btn2, btn3;
+    private View btn1, btn2, btn3, btn4;
     private TextView mBackStackContentView;
 
     private LinkedList<Integer> backStackList = new LinkedList<>();
@@ -36,11 +39,14 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         btn1 = findViewById(R.id.changeBtn1);
         btn2 = findViewById(R.id.changeBtn2);
         btn3 = findViewById(R.id.changeBtn3);
+        btn4 = findViewById(R.id.changeBtn4);
 
 
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+
 
         mBackStackContentView = findViewById(R.id.backstack_content);
 
@@ -70,17 +76,38 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         super.onResume();
     }
 
+    private Fragment cacheFragment = null;
+
     @Override public void onClick(View v) {
 
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, true);
+            changeFragment(fragment, RELEACE,true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
+            cacheFragment = fragment;
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, true);
+            changeFragment(fragment, RELEACE, false);
         } else if (v == btn3) {
+            ThirdFragment fragment = new ThirdFragment();
+            //changeFragment(fragment, RELEACE, true);
+
+            // 目前遇到的疑惑：
+            // replace + addbackstack跳转到A,  然后replace 跳转到B， 此时回退栈只有A，再继续relace + addbackstack跳转A，此时回退栈里有两个A
+            // 此时按返回键 会回到B，为什么会回到B，而且B会走onViewCreated,onResume很奇怪，B不是没加到回退栈吗？为什么还回到了B
+
+            FragmentManager fragmentManager =  getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            //fragmentManager.popBackStack();  // 所谓的popBackStack，顾名思义就是pop回退栈里的元素
+            transaction.remove(cacheFragment);
+            //transaction.detach(cacheFragment); // detach并不会导致fragment销毁走onDestroy和onDetach，只会走到onDestroyView，具体看该方法的官方注释
+
+            transaction.add(R.id.fragment_container, fragment);
+            transaction.commit();
+
+
+        } else if (v == btn4) {
             popBackStackByIndex(2);
         }
 
@@ -91,13 +118,24 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
     }
 
 
-    private void changeFragment(Fragment newFragment, boolean addBackStack) {
+    public static final int RELEACE = 1;
+    public static final int ADD = 2;
+    public static final int REMOVE = 3;
+    public static final int SHOW = 4;
+    public static final int HIDE = 5;
+
+    @IntDef({RELEACE,ADD,REMOVE,SHOW,HIDE})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface TransactionMode{}
+
+
+
+    private void changeFragment(Fragment newFragment, @TransactionMode int mode, boolean addBackStack) {
 
         /**
          * 每一个Activity对应着一个FragmentController，即对应着一个FragmentManager对象
          */
         FragmentManager fragmentManager =  getSupportFragmentManager();
-        //fragmentManager.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         /**
@@ -108,12 +146,31 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
          * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
          */
         //transaction.add(R.id.fragment_container, newFragment);
-        transaction.replace(R.id.fragment_container, newFragment);
+        //transaction.replace(R.id.fragment_container, newFragment);
 
+        switch (mode) {
+            case RELEACE:
+                transaction.replace(R.id.fragment_container, newFragment);
+                break;
+            case ADD:
+                transaction.add(R.id.fragment_container, newFragment);
+                break;
+            case REMOVE:
+                transaction.remove(newFragment);
+                break;
+            case SHOW:
+                transaction.show(newFragment);
+                break;
+            case HIDE:
+                transaction.hide(newFragment);
+                break;
+            default:
+                throw new IllegalArgumentException("must put mode params!");
+        }
 
         //transaction.remove(newFragment);
-        transaction.hide(newFragment);
-        transaction.show(newFragment);
+        //transaction.hide(newFragment);
+        //transaction.show(newFragment);
 
         /**
          * newFragment 会替换目前在 R.id.fragment_container ID 所标识的布局容器中的任何片段（如有）。

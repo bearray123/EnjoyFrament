@@ -3,7 +3,10 @@ package xyz.rh.enjoyframent;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,7 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import java.util.Map;
 import javax.inject.Inject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONStringer;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
@@ -82,6 +91,85 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 首页注册EventPublisher事件
         testEventPublisher();
 
+        //try {
+        //    GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[] {});
+        //    _layoutBinding.testTouchEvent.setBackground(drawable);
+        //} catch (Throwable e) {
+        //    Log.d(TAG, "eeeeeeee======111111 " + activityWindow);
+        //    e.printStackTrace();
+        //}
+
+        Uri uri = Uri.parse("onetravel://dache_anycar/confirm/cccc");
+
+
+
+        Log.d(TAG, "eeeeeeee======22222 uri.getAuthority()====" + uri.getAuthority()); //dache_anycar
+        Log.d(TAG, "eeeeeeee======22222 uri.getHost()====" + uri.getHost()); //dache_anycar
+        Log.d(TAG, "eeeeeeee======22222 uri.getPath()===" + uri.getPath()); ///confirm/cccc
+        Log.d(TAG, "eeeeeeee======22222 uri.getScheme()===" + uri.getScheme()); ///confirm/cccc
+
+        //String originStr = "{\"sids\": [{\"k1\": 1}, {\"k2\": 2}, {\"k2\": 2}, {\"k2\": 2}]}";
+        String originStr = "{\"sids\": {\"k1\": 1, \"k2\": 2, \"k3\": 4, \"k4\": \"5\"}}";
+        //{
+        //    "sids": {
+        //        "k1": 1,
+        //        "k2": 2,
+        //        "k2": 2,
+        //        "k2": 2
+        //    }
+        //}
+
+        //try {
+        //    //JSONObject JSO = new JSONObject(json);
+        //    //JSONObject jsonObject = JSO.getJSONObject("sids");
+        //    //JSONArray jsonArray = JSO.optJSONArray("sids");
+        //    //jsonArray.
+        //
+        //    Config config = JSON.parseObject(originStr, Config.class);
+        //
+        //    Map jsonObject = JSON.parseObject(config.sids, Map.class); // 得到的是一个HashMap
+        //    //Map<String, String> transMap = (Map<String, String>)JSON.parse(originStr);
+        //
+        //    Log.d(TAG, "eeeeeeee======" + jsonObject); ///confirm/cccc
+        //
+        //    if (jsonObject.containsKey("k2")) {
+        //        jsonObject.keySet();
+        //    }
+        //
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
+
+        //try {
+        //    new Thread() {
+        //
+        //        @Override public void run() {
+        //            while (true) {
+        //                try {
+        //                    Thread.sleep(2000);
+        //                }catch (Exception e) {
+        //
+        //                }
+        //                throw new RuntimeException("xl1000");
+        //            }
+        //        }
+        //    }.start();
+        //} catch (Exception E) {
+        //    E.printStackTrace();
+        //}
+
+    }
+
+    public static class Config {
+        public String sids;
+
+        public void setSids(String sids) {
+            this.sids = sids;
+        }
+
+        //public String getSids() {
+        //    return sids;
+        //}
     }
 
     @Override public void onClick(View v) {
