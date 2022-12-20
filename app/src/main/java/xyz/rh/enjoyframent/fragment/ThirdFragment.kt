@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import xyz.rh.common.BaseFragment
 import xyz.rh.enjoyframent.R
 
-class ThirdFragment : Fragment() {
+class ThirdFragment : BaseFragment() {
 
 
     private val textView: TextView by lazy {
@@ -31,7 +32,7 @@ class ThirdFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.w(TAG, "lifeCycle::onCreateView() === === ===" + hashCode())
+        super.onCreateView(inflater, container, savedInstanceState)
         rootView = inflater.inflate(R.layout.fragment_third, container, false) as ViewGroup
         return rootView
     }
@@ -43,45 +44,37 @@ class ThirdFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.w(TAG, "lifeCycle::onViewCreated() === === ===" + hashCode())
-        textView.text = "我是 第三个 :: $this"
+        super.onViewCreated(view, savedInstanceState)
+        textView.text = "我是 第三个, 所在的容器是container_2 :: $this"
     }
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.w(TAG, "lifeCycle::onAttach() === === ===" + hashCode())
     }
 
     override fun onResume() {
         super.onResume()
-        Log.w(TAG, "lifeCycle::onResume() === === ===" + hashCode())
     }
 
     override fun onPause() {
         super.onPause()
-        Log.w(TAG, "lifeCycle::onPause() === === ===" + hashCode())
     }
 
     override fun onStop() {
         super.onStop()
-        Log.w(TAG, "lifeCycle::onStop() === === ===" + hashCode())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.w(TAG, "lifeCycle::onDestroyView() === === === " + hashCode())
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.w(TAG, "lifeCycle::onDestroy() === === ===" + hashCode())
-
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.w(TAG, "lifeCycle::onDetach() === === ===" + hashCode())
     }
 
 

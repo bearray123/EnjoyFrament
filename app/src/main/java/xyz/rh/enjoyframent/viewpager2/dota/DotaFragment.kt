@@ -2,25 +2,22 @@ package xyz.rh.enjoyframent.viewpager2.dota
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.dota_hero_item_layout.*
 import kotlinx.coroutines.launch
 import xyz.rh.common.xlog
 import xyz.rh.enjoyframent.R
-import xyz.rh.enjoyframent.viewpager2.BaseTabFragment
+import xyz.rh.common.BaseFragment
 
 /**
  * Created by rayxiong on 2022/10/30.
  */
-class DotaFragment : BaseTabFragment() {
+class DotaFragment : BaseFragment() {
 
     companion object {
         const val TAG = "DotaFragment"

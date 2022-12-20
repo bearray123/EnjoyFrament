@@ -23,11 +23,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import java.util.List;
+import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
 
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends BaseFragment {
 
     public static final String TAG = "FirstFragment";
     private TextView textView;
@@ -39,7 +40,6 @@ public class FirstFragment extends Fragment {
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(TAG, "lifeCycle::onCreate() === " + hashCode());
 
         //getActivity().registerForActivityResult()
         ActivityResultContract activityResultContract = new ActivityResultContracts.StartActivityForResult();
@@ -81,20 +81,16 @@ public class FirstFragment extends Fragment {
         LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState
     ) {
-
-        Log.d(TAG, "lifeCycle::onCreateView() === " + hashCode());
+        super.onCreateView(inflater, container, savedInstanceState);
 
         Fragment parent = getParentFragment();
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, container, false);
         Log.w(TAG, "XL::: FistFragment  RootView === " + rootView + ", parentFragment == " + parent + this);
 
-
         textView = rootView.findViewById(R.id.textview_first);
-
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        Log.d(TAG, "lifeCycle::onCreateView() === fragmentManager = " + fragmentManager + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager.getBackStackEntryCount());
 
         int currentFragmentIndex = fragmentList.indexOf(this);
 
@@ -187,7 +183,6 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "lifeCycle::onViewCreated() === " + hashCode());
 
     }
 
@@ -197,7 +192,6 @@ public class FirstFragment extends Fragment {
      */
     @Override public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        Log.d(TAG, "lifeCycle::onAttach() === " + hashCode());
     }
 
     /**
@@ -205,23 +199,19 @@ public class FirstFragment extends Fragment {
      */
     @Override public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "lifeCycle::onDetach() === " + hashCode());
     }
 
     @Override public void onResume() {
         super.onResume();
-        Log.d(TAG, "lifeCycle::onResume() === " + hashCode());
         Log.d(TAG, "window:: getActivity().getWindow() = " + getActivity().getWindow());
     }
 
     @Override public void onPause() {
         super.onPause();
-        Log.d(TAG, "lifeCycle::onPause() === " + hashCode());
     }
 
     @Override public void onStop() {
         super.onStop();
-        Log.d(TAG, "lifeCycle::onStop() === " + hashCode());
     }
 
     /**
@@ -230,13 +220,10 @@ public class FirstFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "lifeCycle::onDestroyView() === " + hashCode());
-
     }
 
     @Override public void onDestroy() {
         super.onDestroy();
-        Log.w(TAG, "lifeCycle::onDestroy() === " + hashCode());
     }
 
     public void updateContent(String text) {

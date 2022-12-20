@@ -48,7 +48,7 @@ dependencies {
   api("com.squareup.retrofit2:retrofit:$RETROFIT_VERSION")
 
   // fastjson
-  implementation "com.alibaba:fastjson:${FASTJSON_VERSION}"
+  api "com.alibaba:fastjson:${FASTJSON_VERSION}"
 
 
 //  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$CORE_KTX_VERSION"

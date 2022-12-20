@@ -14,10 +14,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import java.util.List;
+import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
 import xyz.rh.enjoyframent.fragment.view.VolumeView;
 
-public class SecondFragment extends Fragment {
+public class SecondFragment extends BaseFragment {
 
     public static final String TAG = "SecondFragment";
 
@@ -30,7 +31,6 @@ public class SecondFragment extends Fragment {
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(TAG, "lifeCycle::onCreate() === === " + hashCode());
     }
 
     @Override
@@ -38,16 +38,13 @@ public class SecondFragment extends Fragment {
         LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState
     ) {
-
-        Log.d(TAG, "lifeCycle::onCreateView() === === " + hashCode());
+        super.onCreateView(inflater, container, savedInstanceState);
 
         rootView = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, container, false);
         textView = rootView.findViewById(R.id.textview_second);
 
-
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        Log.d(TAG, "lifeCycle::onCreateView() === === fragmentManager = " + fragmentManager + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager.getBackStackEntryCount());
 
         int currentFragmentIndex = fragmentList.indexOf(this);
 
@@ -59,12 +56,10 @@ public class SecondFragment extends Fragment {
 
     @Override public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        Log.d(TAG, "lifeCycle::onAttach() === === " + hashCode());
     }
 
     @Override public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "lifeCycle::onDetach() === === " + hashCode());
     }
 
     private void addSubViewByCode() {
@@ -87,23 +82,18 @@ public class SecondFragment extends Fragment {
         // 通过代码动态添加子View
         addSubViewByCode();
 
-        Log.d(TAG, "lifeCycle::onViewCreated() === === " + hashCode());
-
     }
 
     @Override public void onResume() {
         super.onResume();
-        Log.d(TAG, "lifeCycle::onResume() === === " + hashCode());
     }
 
     @Override public void onPause() {
         super.onPause();
-        Log.d(TAG, "lifeCycle::onPause() === === " + hashCode());
     }
 
     @Override public void onStop() {
         super.onStop();
-        Log.d(TAG, "lifeCycle::onStop() === === " + hashCode());
     }
 
     /**
@@ -112,7 +102,6 @@ public class SecondFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "lifeCycle::onDestroyView() === === " + hashCode());
     }
 
     /**
@@ -120,7 +109,6 @@ public class SecondFragment extends Fragment {
      */
     @Override public void onDestroy() {
         super.onDestroy();
-        Log.w(TAG, "lifeCycle::onDestroy() === === " + hashCode());
     }
 
 

@@ -2,6 +2,7 @@ package xyz.rh.enjoyframent.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,10 +12,11 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
-import xyz.rh.common.eventpublisher.BaseEventPublisher;
+import java.util.List;
 import xyz.rh.enjoyframent.R;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
@@ -56,7 +58,9 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         fragmentManager.addOnBackStackChangedListener(
             new FragmentManager.OnBackStackChangedListener() {
                 @Override public void onBackStackChanged() {
-                    Log.d(TAG, "onBackStackChanged()========");
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    List<Fragment> fragmentList = fragmentManager.getFragments();
+                    Log.d(TAG, "onBackStackChanged========" + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager.getBackStackEntryCount());
                     updateBackStackContent();
                 }
             });
@@ -83,12 +87,12 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, RELEACE,true);
+            changeFragment(fragment, ADD,true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
             cacheFragment = fragment;
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, RELEACE, false);
+            changeFragment(fragment, ADD, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
             //changeFragment(fragment, RELEACE, true);
@@ -97,18 +101,48 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
             // replace + addbackstack跳转到A,  然后replace 跳转到B， 此时回退栈只有A，再继续relace + addbackstack跳转A，此时回退栈里有两个A
             // 此时按返回键 会回到B，为什么会回到B，而且B会走onViewCreated,onResume很奇怪，B不是没加到回退栈吗？为什么还回到了B
 
+            // 针对这个问题进一步简化流程，只做两部跳转，看生命周期：
+            // 1、replace + addbackstack跳转到A   2、然后replace 跳转到B
+            // 此时界面显示的是B，然后按返回键，界面无任何变化，还是显示的B，看生命周期回调发现调用了A的 onDestroy和onDetach，B的生命周期无任何变化，也就是说在B页面按返回键时是把A给销毁了
+            // 通过这个简单验证得出结论： 回退栈真的只是针对在回退栈里元素的操作，这个case中回退栈里只有A，B不在回退栈，所以就算在B页面按返回键时处理的也只是A页面。
+            // 所以通过这个简化的case可以再进一步分析上面稍微复杂的 A(在回退栈)-> B -> A(在回退栈) 的问题，当停留在后一个A时按返回键，B中的view会走重建。感觉回退栈根本界面显示哪个fragment没什么关系，
+            // 回退栈处理的是返回键的逻辑，当一个activity中fragment的回退栈为空时返回键的逻辑就交给了activity自己处理了，自然也就关闭了activity，但是此时还是无法解释为什么B的view会重建？？？B是通过replace跳转到A的，并且最开始跳转到B时是不加回退栈的。
+            // B中的View应该不会再重建才对
+
+            // 第二天重新理解了下，感觉可以说通了，现在总结下：
+            // 先从回退栈的本质说起，回退栈到底针对的是什么？其实针对的是那一次commit进行回滚操作，那B跳转到A时使用的是replace+addbackstack，
+            // 而relace = remove（B）+ add（A），这一跳转其实是两个option，那么在A页面按返回键时进行的回退栈回滚的是remove（B）+ add（A）
+            // 所以按返回键相当于是把A移除了，然后重新把B显示出来，自然也就走到了B的onCreateView,onViewCreated,onResume等生命周期
+
             FragmentManager fragmentManager =  getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             //fragmentManager.popBackStack();  // 所谓的popBackStack，顾名思义就是pop回退栈里的元素
-            transaction.remove(cacheFragment);
+            //transaction.remove(cacheFragment);
             //transaction.detach(cacheFragment); // detach并不会导致fragment销毁走onDestroy和onDetach，只会走到onDestroyView，具体看该方法的官方注释
 
-            transaction.add(R.id.fragment_container, fragment);
+            // 通过把ThirdFragment使用单独的容器来验证容器和回退栈的关系，结论如下：
+            // 当把ThirdFragment使用单独容器时，回退栈里的内容是不区分容器的，会返回所有容器的size，
+            // 例如fragmentManager.getBackStackEntryCount()返回的是所有容器（包括fragment_container和fragment_container_2）里的count
+            transaction.add(R.id.fragment_container_2, fragment); // ThirdFragment单独使用另一个容器
+            transaction.addToBackStack("ThirdFrag");
             transaction.commit();
 
 
         } else if (v == btn4) {
-            popBackStackByIndex(2);
+            //popBackStackByIndex(2);
+
+            FragmentManager fragmentManager =  getSupportFragmentManager();
+            int c = fragmentManager.getBackStackEntryCount();
+            fragmentManager.popBackStack(1, POP_BACK_STACK_INCLUSIVE);
+            int c1 = fragmentManager.getBackStackEntryCount();
+            List sss =fragmentManager.getFragments();
+            String sa;
+            new Handler().post(new Runnable() {
+                @Override public void run() {
+                    int c2 = fragmentManager.getBackStackEntryCount();
+                    String sa;
+                }
+            });
         }
 
         // 这里查看回退栈其实是有延时的，只能看到上一次的状态，所以不要在这里查看，需要放到onBackStackChanged里去监听查看
@@ -117,6 +151,35 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
     }
 
+    @Override public void onBackPressed() {
+        super.onBackPressed();
+        FragmentManager fragmentManager =  getSupportFragmentManager();
+        // 测试 setMaxLifecycle 的使用
+        // 一般使用add进行跳转后，当前fragment生命周期是不会有变化的，为了在add模式下当前fragment生命周期有变化，至少走onPause，可采取将当前fragment设置最大生命周期为STARTED
+        // 所以返回时取倒数第二个（即目标fragment）来设置最大生命周期为RESUME
+        if (getFragmentByIndex(2) != null) {
+            fragmentManager.beginTransaction()
+                .setMaxLifecycle(getFragmentByIndex(2), Lifecycle.State.RESUMED)
+                .commitNow();
+        }
+
+    }
+
+    // count = 1 代表栈顶fragment，即倒数第一个
+    // count =2 代表倒数第二个
+    private Fragment getFragmentByIndex(int count) {
+        FragmentManager fragmentManager =  getSupportFragmentManager();
+        List<Fragment> addedFragmentList = fragmentManager.getFragments();
+        int index = addedFragmentList.size() - count;
+        if (index <= 0) {
+            index = 0;
+        }
+        if (addedFragmentList.size() >=1) {
+            return addedFragmentList.get(index);
+        } else {
+            return null;
+        }
+    }
 
     public static final int RELEACE = 1;
     public static final int ADD = 2;
@@ -137,6 +200,14 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
          */
         FragmentManager fragmentManager =  getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+         // 测试 setMaxLifecycle 的使用
+         // 一般使用add进行跳转后，当前fragment生命周期是不会有变化的，为了在add模式下当前fragment生命周期有变化，至少走onPause，可采取将当前fragment设置最大生命周期为STARTED
+         if (getFragmentByIndex(1) != null) {
+             fragmentManager.beginTransaction()
+                 .setMaxLifecycle(getFragmentByIndex(1), Lifecycle.State.STARTED)
+                 .commitNow();
+         }
 
         /**
          * add只会将一个fragment添加到容器中。 假设您将FragmentA和FragmentB添加到容器中。
