@@ -15,11 +15,12 @@ import kotlinx.android.synthetic.main.dota_hero_item_layout.*
 import kotlinx.coroutines.launch
 import xyz.rh.common.xlog
 import xyz.rh.enjoyframent.R
+import xyz.rh.enjoyframent.viewpager2.BaseTabFragment
 
 /**
  * Created by rayxiong on 2022/10/30.
  */
-class DotaFragment : Fragment() {
+class DotaFragment : BaseTabFragment() {
 
     companion object {
         const val TAG = "DotaFragment"
@@ -32,7 +33,6 @@ class DotaFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "lifecycle:: onAttach()")
     }
 
     override fun onCreateView(
@@ -40,7 +40,6 @@ class DotaFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "lifecycle:: onCreateView()")
         mRootView = inflater.inflate(R.layout.dota_page_fragment, container)
         return mRootView
 
@@ -48,7 +47,6 @@ class DotaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "lifecycle:: onViewCreated()")
         mRecyclerView = mRootView.findViewById<RecyclerView>(R.id.hero_list)
         // mark: 之前没设置layoutManager，所以列表一直没显示出来，设置layoutManager后就可以正常显示了!!!
         mRecyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -72,19 +70,16 @@ class DotaFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "lifecycle:: onPause()")
 
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "lifecycle:: onStop()")
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "lifecycle:: onDestroyView()")
 
     }
 

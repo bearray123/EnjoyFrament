@@ -12,17 +12,16 @@ import xyz.rh.enjoyframent.R
 /**
  * Created by rayxiong on 2022/10/30.
  */
-class PeaceEiteFragment : Fragment() {
+class PeaceEiteFragment : BaseTabFragment() {
 
-    companion object {
-        const val TAG = "PeaceEiteFragment"
-    }
+//    companion object {
+//        const val TAG = "PeaceEiteFragment"
+//    }
 
     lateinit var mRootView : View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "lifecycle:: onAttach()")
     }
 
     override fun onCreateView(
@@ -30,7 +29,6 @@ class PeaceEiteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "lifecycle:: onCreateView()")
 
         mRootView = inflater.inflate(R.layout.peaceeite_fragment, container)
         return mRootView
@@ -39,36 +37,29 @@ class PeaceEiteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "lifecycle:: onViewCreated()")
 
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "lifecycle:: onPause()")
 
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "lifecycle:: onStop()")
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "lifecycle:: onDestroyView()")
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG, "lifecycle:: onDestroy()")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d(TAG, "lifecycle:: onDetach()")
     }
 
 }

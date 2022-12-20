@@ -47,7 +47,7 @@ class ViewPager2EntryActivity : FragmentActivity() {
         val csgoTab = GaTab("CSGO", R.drawable.tab_icon_csgo, CSGOFragment())
         val honorOfKingsTab = GaTab("王者荣耀", R.drawable.tab_icon_honor_king, HonorOfKingsFragment())
         val peaceEiteTab = GaTab("和平精英", R.drawable.tab_icon_dota, PeaceEiteFragment())
-        val redAlertTab = GaTab("红警3", R.drawable.tab_icon_dota, RedAlertFragment())
+        val redAlertTab = GaTab("红警3", R.drawable.tab_icon_alert, RedAlertFragment())
 
 //        val dotaFragment = DotaFragment()
 //        val csgoFragment = CSGOFragment()
@@ -65,7 +65,7 @@ class ViewPager2EntryActivity : FragmentActivity() {
 
 
         // 设置离屏显示的page数
-        mViewPager.offscreenPageLimit = ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
+        mViewPager.offscreenPageLimit = 1
         val fragmentStateAdapter = MyFragmentStateAdapter(this)
         fragmentStateAdapter.dataList = tabList
         mViewPager.adapter = fragmentStateAdapter
