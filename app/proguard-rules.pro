@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# 想要对BaseFragment的子类进行keep，而这些子类都在app下，所以必须把keep申明放到app下才行，
+# 之前尝试过放到common下但是没起到作用
+-keep public class * extends xyz.rh.common.BaseFragment

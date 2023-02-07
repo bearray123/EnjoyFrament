@@ -15,14 +15,17 @@ android {
   }
 
   buildTypes {
-    release {
+    debug {
       minifyEnabled false
+    }
+    release {
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
   }
   kotlinOptions {
     jvmTarget = '1.8'
@@ -53,6 +56,7 @@ dependencies {
 
 //  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$CORE_KTX_VERSION"
 
+  println "打印测试2"
 
   // 协程需要单独引用
   api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${KOTLINX_COROUTINES_CORE_VERSION}"
@@ -79,3 +83,32 @@ dependencies {
 
 
 }
+
+this.beforeEvaluate {
+  println "before 配置..."
+}
+
+this.afterEvaluate {
+  println "完成配置之后..."
+}
+
+println "打印测试"
+
+println "打印测试1"
+
+//this.project("../EnjoyFragment") {
+//
+//}
+
+this.afterEvaluate {
+
+}
+
+allprojects {
+
+  println "执行到allprojects"
+
+}
+
+
+

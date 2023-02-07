@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+#-keep public class * extends xyz.rh.common.BaseFragment
+
+-keep public class xyz.rh.common.BaseFragment

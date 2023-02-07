@@ -8,3 +8,29 @@ plugins {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
+
+//project("common") {
+//  def g = group
+//  println "执行project , project=$it, group=$g"
+//}
+//
+//subprojects { Project proj ->
+//    println "打印：${proj.group} , ${proj.version}"
+//}
+//
+//
+//
+//task clean2({
+//  delete rootProject.buildDir
+//})
+//
+//assembleDebug {
+//  doLast {
+//    delete rootProject.buildDir
+//  }
+//}
+//
+//afterEvaluate {
+//  println "执行 afterEvaluate"
+//  delete rootProject.buildDir
+//}

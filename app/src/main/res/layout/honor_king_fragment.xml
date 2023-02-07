@@ -21,7 +21,7 @@
       android:layout_height="wrap_content"
       app:layout_constraintTop_toBottomOf="@+id/content_txt"
       app:layout_constraintLeft_toLeftOf="parent"
-      android:src="@drawable/tab_icon_honor_king"
     />
+<!--      android:src="@drawable/tab_icon_honor_king"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

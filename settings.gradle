@@ -12,8 +12,21 @@ dependencyResolutionManagement {
     maven{ url 'https://maven.aliyun.com/nexus/content/groups/public/'}
     google()
     mavenCentral()
+    flatDir {
+      //默认aar本地存放路径在libs下
+      dirs 'libs'
+    }
   }
 }
 rootProject.name = "EnjoyFrament"
 include ':app'
 include ':common'
+
+
+println "这是在setting.gradle里的配置"
+
+println("哈哈")
+
+//this.project("") {
+//
+//}
