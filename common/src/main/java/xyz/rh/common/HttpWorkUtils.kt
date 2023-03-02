@@ -1,15 +1,26 @@
+import android.os.Build
+import androidx.annotation.Keep
+import androidx.annotation.RequiresApi
 import com.alibaba.fastjson.JSON
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.*
+import okio.Sink
+import okio.Source
 import xyz.rh.common.xlog
 import java.io.IOException
+import java.io.InputStream
+import java.io.ObjectInput
+import java.io.OutputStream
 import java.lang.RuntimeException
+import java.time.Duration
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /**
  * Created by bearray123@sina.com on 2022/5/26.
  */
+@Keep
 class HttpWorkUtils private constructor(){
 
     companion object {
@@ -144,8 +155,12 @@ class HttpWorkUtils private constructor(){
 //    }
 
     fun get(url: String) {
-        val okHttpClient = OkHttpClient.Builder().build()
-        okHttpClient.newCall(newRequest(url)).enqueue(object : Callback{
+        val okHttpClient = OkHttpClient.Builder()
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+        val call = okHttpClient.newCall(newRequest(url))
+        call.enqueue(object : Callback{
             override fun onFailure(call: Call, e: IOException) {
                 xlog(TAG, "onFailure:: e=${e.message}")
             }
@@ -156,6 +171,32 @@ class HttpWorkUtils private constructor(){
             }
 
         })
+
+        call.cancel()
+
+        call.execute()
+
+
+//        source = input
+//        sink = output
+//
+//        val source: Source
+//        source.read(sink, 1000)
+//
+//        val sink: Sink
+//        sink.write(source, 1000)
+//
+//        val output : OutputStream
+//        output.write()
+//        val input: InputStream
+//        input.read()
+
+//        call.cancel()
+//        call.isCanceled
+//        call.isExecuted
+//        call.request()
+//        call.timeout()
+
 
     }
 
