@@ -42,6 +42,11 @@
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         />
 
+    <activity
+        android:name=".layoutparams.TestLayoutParamsActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        />
+
 
   </application>
 

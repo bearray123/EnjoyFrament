@@ -3,7 +3,6 @@ package xyz.rh.enjoyframent;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,19 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import java.util.Map;
 import javax.inject.Inject;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONStringer;
+import org.json.JSONObject;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
 import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
+import xyz.rh.enjoyframent.layoutparams.TestLayoutParamsActivity;
+import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyframent.viewpager2.ViewPager2EntryActivity;
 
 /**
@@ -67,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         /////////////////////////////////////////////////////////////////
 
+
         Log.d(TAG, "BussA = " + mBussA + ", BussB=" + mBussB);
         mBussA.method1A();
         mBussB.method1B();
@@ -86,7 +85,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _layoutBinding.testTouchEvent.setOnClickListener(this);
         _layoutBinding.testFragmentEntry.setOnClickListener(this);
+
         _layoutBinding.testViper.setOnClickListener(this);
+
+        _layoutBinding.testLayoutparams.setOnClickListener(this);
+
 
         // 首页注册EventPublisher事件
         testEventPublisher();
@@ -158,7 +161,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //    E.printStackTrace();
         //}
 
+        JSONObject JSO = null;
+        try {
+            JSO = new JSONObject(data111);
+            JSONArray jsonArray = JSO.getJSONArray("multi_require_product");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //JSONObject jsonObject = JSO.getJSONObject("sids");
+        //    JSONArray jsonArray = JSO.optJSONArray("sids");
+
+
     }
+
+    public String data111 = "{\"multi_require_product\": [\n"
+        + "        {\n"
+        + "            \"estimate_id\": \"fe994b84f228258b52b6b312c8698283\",\n"
+        + "            \"product_id\": 3,\n"
+        + "            \"business_id\": 260,\n"
+        + "            \"combo_type\": 0,\n"
+        + "            \"require_level\": 600,\n"
+        + "            \"level_type\": 0,\n"
+        + "            \"combo_id\": 0,\n"
+        + "            \"route_type\": 0,\n"
+        + "            \"is_special_price\": 0,\n"
+        + "            \"count_price_type\": 0,\n"
+        + "            \"pay_type\": \"2\",\n"
+        + "            \"product_category\": 1\n"
+        + "        },\n"
+        + "        {\n"
+        + "            \"estimate_id\": \"5e9df2595d9f2ed8c10b2822b0821cc1\",\n"
+        + "            \"product_id\": 3,\n"
+        + "            \"business_id\": 260,\n"
+        + "            \"combo_type\": 314,\n"
+        + "            \"require_level\": 600,\n"
+        + "            \"level_type\": 0,\n"
+        + "            \"combo_id\": 0,\n"
+        + "            \"route_type\": 0,\n"
+        + "            \"is_special_price\": 0,\n"
+        + "            \"count_price_type\": 0,\n"
+        + "            \"pay_type\": \"2\",\n"
+        + "            \"product_category\": 61\n"
+        + "        }\n"
+        + "    ]\n"
+        + "}";
+
 
     public static class Config {
         public String sids;
@@ -172,6 +219,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //}
     }
 
+    @Override protected void onResume() {
+        super.onResume();
+
+        _layoutBinding.testMarquee.setText("我靠，这个文案好长，好像是一行显示不下啊，怎么办，跑马灯");
+        _layoutBinding.testMarquee.setVisibility(View.VISIBLE);
+        _layoutBinding.testMarquee.setSelected(true);
+        //_layoutBinding.testMarquee.requestFocus();
+
+
+
+        //_layoutBinding.testMarquee2.setVisibility(View.VISIBLE);
+        //_layoutBinding.testMarquee2.setSelected(true);
+        //_layoutBinding.testMarquee2.requestFocus()
+
+        
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+        //    _layoutBinding.testViper.requestFocus();
+                _layoutBinding.testMarquee.setTextSize(50);
+
+            }
+        },3000);
+
+
+    }
+
     @Override public void onClick(View v) {
 
         if(v == _layoutBinding.testFragmentEntry) {
@@ -182,10 +255,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             startActivity(new Intent(this, TestFragmentEntryActivity.class));
         } else if (v ==  _layoutBinding.testTouchEvent) {
-            //startActivity(new Intent(this, EnjoyTouchEventActivity.class));
-            setResult(100, new Intent());
-            finish();
+            startActivity(new Intent(this, EnjoyTouchEventActivity.class));
         } else if (v ==  _layoutBinding.testViper) {
+        } else if (v ==  _layoutBinding.testLayoutparams) {
+            startActivity(new Intent(this, TestLayoutParamsActivity.class));
         }
 
     }
