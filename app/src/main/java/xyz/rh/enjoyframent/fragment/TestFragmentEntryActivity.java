@@ -1,11 +1,13 @@
 package xyz.rh.enjoyframent.fragment;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -49,6 +51,24 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         btn3.setOnClickListener(this);
         btn4.setOnClickListener(this);
 
+        // 测试APP切后台后能否执行fragment跳转：
+        // 结论：不行，会崩溃
+        //java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
+        //at androidx.fragment.app.FragmentManager.checkStateLoss(FragmentManager.java:1844)
+        //at androidx.fragment.app.FragmentManager.enqueueAction(FragmentManager.java:1884)
+        //at androidx.fragment.app.BackStackRecord.commitInternal(BackStackRecord.java:329)
+        //at androidx.fragment.app.BackStackRecord.commit(BackStackRecord.java:294)
+        //at xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity.changeFragment(TestFragmentEntryActivity.java:265)
+        //at xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity.onClick(TestFragmentEntryActivity.java:104)
+        //at android.view.View.performClick(View.java:7281)
+
+        //new Handler().postDelayed(new Runnable() {
+        //    @Override public void run() {
+        //        Log.d(TAG, "postDelayed=== performClick 2222");
+        //        btn2.performClick();
+        //    }
+        //}, 5000);
+
 
         mBackStackContentView = findViewById(R.id.backstack_content);
 
@@ -87,12 +107,12 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, ADD,true);
+            changeFragment(fragment, RELEACE,true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
             cacheFragment = fragment;
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, ADD, true);
+            changeFragment(fragment, RELEACE, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
             //changeFragment(fragment, RELEACE, true);
@@ -123,7 +143,7 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
             // 通过把ThirdFragment使用单独的容器来验证容器和回退栈的关系，结论如下：
             // 当把ThirdFragment使用单独容器时，回退栈里的内容是不区分容器的，会返回所有容器的size，
             // 例如fragmentManager.getBackStackEntryCount()返回的是所有容器（包括fragment_container和fragment_container_2）里的count
-            transaction.add(R.id.fragment_container_2, fragment); // ThirdFragment单独使用另一个容器
+            transaction.replace(R.id.fragment_container, fragment); // ThirdFragment单独使用另一个容器
             transaction.addToBackStack("ThirdFrag");
             transaction.commit();
 
@@ -277,5 +297,26 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         int backstackEntryCount = fragmentManager.getBackStackEntryCount();
         mBackStackContentView.setText("回退栈：" + backstackEntryCount);
     }
+
+
+
+    //fun getCornerDrawable(
+    //    @ColorInt startColor: Int,
+    //    @ColorInt endColor: Int,
+    //    topLeftRadius: Float,
+    //    topRightRadius: Float,
+    //    bottomRightRadius: Float,
+    //    bottomLeftRadius: Float
+    //): GradientDrawable {
+    //
+    //    var gradientDrawable = GradientDrawable(
+    //        GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(startColor, endColor))
+    //    gradientDrawable.cornerRadii =
+    //        floatArrayOf(topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius)
+    //    gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+    //
+    //
+    //    return gradientDrawable
+    //}
 
 }
