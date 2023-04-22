@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import xyz.rh.common.eventpublisher.BaseEventPublisher
 import xyz.rh.enjoyframent.MainActivity
 import xyz.rh.enjoyframent.R
 import xyz.rh.enjoyframent.viewpager2.dota.DotaFragment
@@ -42,11 +41,10 @@ class ViewPager2EntryActivity : FragmentActivity() {
 
         setContentView(R.layout.viewpager2_activity_layout)
 
-
-        val dotaTab = GaTab("DOTA", R.drawable.tab_icon_honor_king, DotaFragment())
+        val dotaTab = GaTab("DOTA", R.drawable.tab_icon_dota, DotaFragment())
         val csgoTab = GaTab("CSGO", R.drawable.tab_icon_csgo, CSGOFragment())
-        val honorOfKingsTab = GaTab("王者荣耀", R.drawable.tab_icon_honor_king, HonorOfKingsFragment())
-        val peaceEiteTab = GaTab("和平精英", R.drawable.tab_icon_dota, PeaceEiteFragment())
+        val honorOfKingsTab = GaTab("王者荣耀", R.drawable.tab_honor_king, HonorOfKingsFragment())
+        val peaceEiteTab = GaTab("和平精英", R.drawable.tab_icon_peace, PeaceEiteFragment())
         val redAlertTab = GaTab("红警3", R.drawable.tab_icon_alert, RedAlertFragment())
 
 //        val dotaFragment = DotaFragment()
@@ -97,12 +95,12 @@ class ViewPager2EntryActivity : FragmentActivity() {
 
     }
 
-    suspend fun test() {
-        Log.d("xl###", "test()  begin ====       thread == ${Thread.currentThread().name}")
-        withContext(Dispatchers.IO) {
-            Log.d("xl###", "test()  doing    thread == ${Thread.currentThread().name}")
+        suspend fun test() {
+            Log.d("xl###", "test()  begin ====       thread == ${Thread.currentThread().name}")
+            withContext(Dispatchers.IO) {
+                Log.d("xl###", "test()  doing    thread == ${Thread.currentThread().name}")
+            }
         }
-    }
 
 
 }

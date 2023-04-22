@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
  */
 public class RHLinearLayout extends LinearLayout {
 
-    public static final String TAG = "MyLinearLayout";
+    public static final String TAG = "RHLinearLayout";
 
 
     public RHLinearLayout(Context context) {
@@ -40,12 +40,14 @@ public class RHLinearLayout extends LinearLayout {
 
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
         Log.d(TAG, "Event::: onInterceptTouchEvent(), touchEvent == " + ev.getAction());
+        //return true; // 消费当前事件，不再往子view传递
         return super.onInterceptTouchEvent(ev);
     }
 
     @Override public boolean onTouchEvent(MotionEvent event) {
         Log.d(TAG, "Event::: onTouchEvent(), touchEvent == " + event.getAction());
-        return super.onTouchEvent(event);
+        //return super.onTouchEvent(event);
+        return true;
     }
 
 

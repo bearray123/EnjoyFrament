@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.ViewStub;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import java.util.List;
 import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
+import xyz.rh.enjoyframent.fragment.view.RHConstraintLayout;
 import xyz.rh.enjoyframent.fragment.view.VolumeView;
 
 public class SecondFragment extends BaseFragment {
@@ -26,6 +28,8 @@ public class SecondFragment extends BaseFragment {
     private String mText;
 
     private ViewGroup rootView;
+
+    private RHConstraintLayout constraintContainer;
 
 
 
@@ -42,6 +46,9 @@ public class SecondFragment extends BaseFragment {
 
         rootView = (ViewGroup) LayoutInflater.from(getContext()).inflate(R.layout.fragment_second, container, false);
         textView = rootView.findViewById(R.id.textview_second);
+
+
+        constraintContainer = rootView.findViewById(R.id.rh_constraint_container);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         List<Fragment> fragmentList = fragmentManager.getFragments();
@@ -86,6 +93,9 @@ public class SecondFragment extends BaseFragment {
 
     @Override public void onResume() {
         super.onResume();
+
+        constraintContainer.update();
+
     }
 
     @Override public void onPause() {

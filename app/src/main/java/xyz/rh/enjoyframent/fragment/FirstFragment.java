@@ -22,9 +22,11 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
+import xyz.rh.enjoyframent.fragment.model.GameHeroViewModel;
 
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 

@@ -19,4 +19,15 @@
       app:layout_constraintBottom_toBottomOf="parent"
       />
 
+  <xyz.rh.enjoyframent.fragment.view.RHConstraintLayout
+      android:id="@+id/rh_constraint_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      tools:layout_height="100dp"
+      />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

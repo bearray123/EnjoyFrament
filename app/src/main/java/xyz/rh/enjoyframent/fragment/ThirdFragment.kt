@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 import xyz.rh.common.BaseFragment
+import xyz.rh.common.xlog
+import xyz.rh.enjoyframent.MainActivity
 import xyz.rh.enjoyframent.R
+import xyz.rh.enjoyframent.fragment.model.GameHeroViewModel
 
 class ThirdFragment : BaseFragment() {
 
@@ -46,6 +50,36 @@ class ThirdFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         textView.text = "我是 第三个, 所在的容器是container_2 :: $this"
+
+//        textView.postDelayed(object : Runnable {
+//            override fun run() {
+//
+//                xlog("test disposed score::: post delay to remove the textview")
+//
+//                rootView.removeView(textView)
+//
+//
+//            }
+//
+//        }, 5000)
+//
+//        val job = textView.lifecycleScope.launch {
+//
+//            withContext(Dispatchers.IO) {
+//                xlog("test disposed score::: withContext start delay 10000")
+//
+//                delay(10000)
+//
+//                xlog("test disposed score:::  withContext delay end!")
+//
+//            }
+//
+//        }
+//
+//        job.invokeOnCompletion {
+//            xlog("test disposed score:::  job.invokeOnCompletion  execute()")
+//        }
+
     }
 
 
@@ -55,6 +89,23 @@ class ThirdFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        val gameHeroViewModel = ViewModelProvider(this)[GameHeroViewModel::class.java]
+        Log.d(FirstFragment.TAG, "print view model:: $gameHeroViewModel")
+
+
+        xlog("Fragment::test coroutine scope:: onResume Fragment is = $this")
+
+        lifecycleScope.launch {
+
+            xlog("Fragment::test coroutine scope:: launch start")
+            withContext(Dispatchers.IO) {
+                xlog("Fragment::test coroutine scope:: withContext(Dispatchers.IO) start")
+                delay(10_000)
+                xlog("Fragment::test coroutine scope:: withContext(Dispatchers.IO) end!")
+            }
+
+        }
+
     }
 
     override fun onPause() {
@@ -67,6 +118,9 @@ class ThirdFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        xlog("Fragment::test coroutine scope:: onDestroyView lifecycleScope.cancel()")
+        lifecycleScope.cancel()
+        MainScope()
     }
 
     override fun onDestroy() {

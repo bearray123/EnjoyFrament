@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -49,6 +51,12 @@ class DotaFragment : BaseFragment() {
         mRecyclerView.layoutManager = LinearLayoutManager(this.context)
         mListAdapter = DotaRecycleViewAdapter(HeroDiffCallback())
         mRecyclerView.adapter = mListAdapter
+//        mRecyclerView.itemAnimator = null
+
+        mRecyclerView.viewTreeObserver.addOnGlobalLayoutListener {
+            xlog("mRecyclerView =====>onGlobalLayout()")
+        }
+
         getAndUpdate(mListAdapter)
 
     }

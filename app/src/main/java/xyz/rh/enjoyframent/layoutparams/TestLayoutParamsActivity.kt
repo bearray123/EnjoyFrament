@@ -2,11 +2,12 @@ package xyz.rh.enjoyframent.layoutparams
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.os.Process
 import android.view.View
 import android.view.ViewStub
+import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import xyz.rh.common.xlog
@@ -16,6 +17,7 @@ import xyz.rh.enjoyframent.temp.TempTestKotlin
 import kotlin.concurrent.thread
 
 /**
+ * 测试跟View相关的属性，ViewTreeObserver等监听
  * Created by rayxiong on 2023/3/11.
  */
 class TestLayoutParamsActivity : AppCompatActivity() {
@@ -29,12 +31,13 @@ class TestLayoutParamsActivity : AppCompatActivity() {
         findViewById(R.id.top_container)
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_layout_params_page_layout)
 
+        testViewTreeObserver()
+
+        testMarquee()
 
         val test1 = TempTestKotlin()
         test1.testIns {
@@ -84,6 +87,49 @@ class TestLayoutParamsActivity : AppCompatActivity() {
             xlog("test thread id:: Thread.currentThread id = ${Thread.currentThread().id}")
             xlog("test thread id:: current process id = ${Process.myPid()}, uid = ${Process.myUid()}, tid = ${Process.myTid()}")
         }
+    }
+
+
+    // 测试viewTreeObserver
+    fun testViewTreeObserver() {
+        val tx =  findViewById<TextView>(R.id.test_tx)
+
+        tx.viewTreeObserver.addOnGlobalLayoutListener {
+            xlog("textView-------------->addOnGlobalLayoutListener()")
+        }
+        tx.viewTreeObserver.addOnDrawListener {
+            xlog("textView-------------->addOnDrawListener()")
+        }
+
+        tx.viewTreeObserver.addOnWindowAttachListener(object : ViewTreeObserver.OnWindowAttachListener {
+            override fun onWindowAttached() {
+                xlog("textView-------------->onWindowAttached()")
+            }
+
+            override fun onWindowDetached() {
+                xlog("textView-------------->onWindowDetached()")
+            }
+
+        })
+
+        tx.viewTreeObserver.addOnWindowFocusChangeListener {
+            xlog("textView-------------->addOnWindowFocusChangeListener()")
+        }
+
+        tx.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
+            xlog("textView-------------->addOnGlobalFocusChangeListener()")
+        }
+
+        tx.viewTreeObserver.addOnGlobalLayoutListener {
+            xlog("textView-------------->addOnGlobalLayoutListener()")
+        }
+    }
+
+    fun testMarquee() {
+        val marqueeText = findViewById<TextView>(R.id.test_marquee)
+        marqueeText.text = "我靠，这个文案好长，好像是一行显示不下啊，怎么办，跑马灯"
+        marqueeText.visibility = View.VISIBLE
+        marqueeText.isSelected = true
     }
 
 

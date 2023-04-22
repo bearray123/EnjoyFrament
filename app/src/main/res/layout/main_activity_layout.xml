@@ -5,6 +5,29 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+  <!--轻启动：测试无障碍-->
+  <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:background="@android:color/holo_red_light"
+    >
+    <TextView
+        android:id="@+id/my_skip_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:text="跳过"
+        android:textSize="22dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        />
+  </FrameLayout>
+
+
   <Button
       android:id="@+id/test_touch_event"
       android:layout_width="match_parent"
@@ -70,6 +93,21 @@
       android:layout_marginTop="20dp"
       android:onClick="onViewPager2Clicked"
       android:text="ViewPager2"
+      tools:ignore="UsingOnClickInXml" />
+
+
+  <Button
+      android:id="@+id/test_layoutparams"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test_viewpager2"
+      android:layout_marginLeft="50dp"
+      android:layout_marginRight="50dp"
+      android:layout_marginTop="20dp"
+      android:onClick="onViewPager2Clicked"
+      android:text="测试layoutParams"
       tools:ignore="UsingOnClickInXml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/top_container"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:background="#ffcc66"
+      >
+
+    <TextView
+        android:id="@+id/test_tx"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试文案"
+        />
+
+    <TextView
+        android:id="@+id/test_marquee"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/test_tx"
+        app:layout_constraintStart_toStartOf="@+id/test_tx"
+        android:layout_marginTop="30dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="-1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="visible"
+        android:text="这是一个非常长的文案，一行是无法显示完的，需要跑马灯的效果"
+        />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <Button
+      android:id="@+id/add_subview_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="添加一个子View"
+      app:layout_constraintTop_toBottomOf="@+id/top_container"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_marginStart="10dp"
+    />
+
+
   <xyz.rh.enjoyframent.layoutparams.NewUserLayout
       android:id="@+id/new_user_layout_container"
       android:layout_width="match_parent"

@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
  */
 public class RHFrameLayout extends FrameLayout {
 
-    public static final String TAG = "MyFrameLayout";
+    public static final String TAG = "RHFrameLayout";
 
     public RHFrameLayout(@NonNull Context context) {
         super(context);

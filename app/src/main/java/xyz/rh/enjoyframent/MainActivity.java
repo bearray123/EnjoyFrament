@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _layoutBinding.testTouchEvent.setOnClickListener(this);
         _layoutBinding.testFragmentEntry.setOnClickListener(this);
+        _layoutBinding.mySkipBtn.setOnClickListener(this);
+        //_layoutBinding.superAppShieldIcon.setOnClickListener(this);
 
         _layoutBinding.testViper.setOnClickListener(this);
 
@@ -221,28 +223,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override protected void onResume() {
         super.onResume();
-
-        _layoutBinding.testMarquee.setText("我靠，这个文案好长，好像是一行显示不下啊，怎么办，跑马灯");
-        _layoutBinding.testMarquee.setVisibility(View.VISIBLE);
-        _layoutBinding.testMarquee.setSelected(true);
-        //_layoutBinding.testMarquee.requestFocus();
-
-
-
-        //_layoutBinding.testMarquee2.setVisibility(View.VISIBLE);
-        //_layoutBinding.testMarquee2.setSelected(true);
-        //_layoutBinding.testMarquee2.requestFocus()
-
-        
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-        //    _layoutBinding.testViper.requestFocus();
-                _layoutBinding.testMarquee.setTextSize(50);
-
-            }
-        },3000);
-
-
     }
 
     @Override public void onClick(View v) {
@@ -260,7 +240,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v ==  _layoutBinding.testLayoutparams) {
             startActivity(new Intent(this, TestLayoutParamsActivity.class));
         }
+        else if (v == _layoutBinding.mySkipBtn) {
+            startActivity(new Intent(this, TestLayoutParamsActivity.class));
+        }
+        //else if (v == _layoutBinding.superAppShieldIcon) {
+        //    startActivity(new Intent(this, TestLayoutParamsActivity.class));
+        //}
 
+    }
+
+    @Override protected void onPause() {
+        Log.d(TAG, "xl::::onPause");
+        super.onPause();
+    }
+
+    @Override protected void onStop() {
+        Log.d(TAG, "xl::::onStop");
+        super.onStop();
     }
 
     /**

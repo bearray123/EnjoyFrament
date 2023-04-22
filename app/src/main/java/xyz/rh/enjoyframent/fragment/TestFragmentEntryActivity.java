@@ -20,6 +20,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 import java.util.List;
 import xyz.rh.enjoyframent.R;
+import xyz.rh.enjoyframent.temp.TempTestKotlin;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
@@ -52,7 +53,7 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         btn4.setOnClickListener(this);
 
         // 测试APP切后台后能否执行fragment跳转：
-        // 结论：不行，会崩溃
+        // 结论：不行，会崩溃；  除非忽略状态保存，使用commitAllowingStateLoss是可以跳转的，状态会走到onViewCreated，APP切前台后会走onStart,onResume
         //java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
         //at androidx.fragment.app.FragmentManager.checkStateLoss(FragmentManager.java:1844)
         //at androidx.fragment.app.FragmentManager.enqueueAction(FragmentManager.java:1884)
@@ -62,12 +63,12 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
         //at xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity.onClick(TestFragmentEntryActivity.java:104)
         //at android.view.View.performClick(View.java:7281)
 
-        //new Handler().postDelayed(new Runnable() {
-        //    @Override public void run() {
-        //        Log.d(TAG, "postDelayed=== performClick 2222");
-        //        btn2.performClick();
-        //    }
-        //}, 5000);
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                Log.d(TAG, "postDelayed=== performClick 2222");
+                btn2.performClick();
+            }
+        }, 5000);
 
 
         mBackStackContentView = findViewById(R.id.backstack_content);
@@ -131,7 +132,7 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
 
             // 第二天重新理解了下，感觉可以说通了，现在总结下：
             // 先从回退栈的本质说起，回退栈到底针对的是什么？其实针对的是那一次commit进行回滚操作，那B跳转到A时使用的是replace+addbackstack，
-            // 而relace = remove（B）+ add（A），这一跳转其实是两个option，那么在A页面按返回键时进行的回退栈回滚的是remove（B）+ add（A）
+            // 而relace = remove（B）+ add（A），这一跳转其实是两个option，那么在A页面按返回键时进行的回退栈回滚的是remove（A）+ add（B）
             // 所以按返回键相当于是把A移除了，然后重新把B显示出来，自然也就走到了B的onCreateView,onViewCreated,onResume等生命周期
 
             FragmentManager fragmentManager =  getSupportFragmentManager();
@@ -273,7 +274,7 @@ public class TestFragmentEntryActivity extends AppCompatActivity implements View
             // 将fragment管理加入到回退栈，栈名可以传null
             transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
         }
-        int indetify = transaction.commit();
+        int indetify = transaction.commitAllowingStateLoss();
         backStackList.push(indetify);
     }
 
