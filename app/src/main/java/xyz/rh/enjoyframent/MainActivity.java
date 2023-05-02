@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import xyz.rh.common.KotlinExtensionKt;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyframent.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyframent.di.test.BussA;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        KotlinExtensionKt.setApplication(getApplication().getApplicationContext());
 
         DaggerBussComponent.create().injectMainActivity(this);
 

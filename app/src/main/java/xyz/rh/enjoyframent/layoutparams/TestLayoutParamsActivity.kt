@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import xyz.rh.common.xlog
 import xyz.rh.enjoyframent.R
 import xyz.rh.enjoyframent.fragment.view.VolumeView
@@ -123,6 +125,13 @@ class TestLayoutParamsActivity : AppCompatActivity() {
         tx.viewTreeObserver.addOnGlobalLayoutListener {
             xlog("textView-------------->addOnGlobalLayoutListener()")
         }
+
+
+        tx.post {
+            xlog("========== tx.y = ${tx.y} , tx.translationY = ${tx.translationY} , topContainer.y = ${topContainer.y}")
+
+        }
+
     }
 
     fun testMarquee() {
