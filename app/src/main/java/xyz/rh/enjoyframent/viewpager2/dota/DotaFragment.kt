@@ -53,9 +53,50 @@ class DotaFragment : BaseFragment() {
         mRecyclerView.adapter = mListAdapter
 //        mRecyclerView.itemAnimator = null
 
+
+
+        // 获取分割线，复用listView里的
+        val attrs = intArrayOf(android.R.attr.listDivider)
+        val typeArray = context?.obtainStyledAttributes(attrs)
+        val dividerLine = typeArray?.getDrawable(0)
+        typeArray?.recycle()
+
+        mRecyclerView.addItemDecoration(DivideDecoration(dividerLine!!))
+//        mRecyclerView.addItemDecoration(BubbleDecoration())
+
         mRecyclerView.viewTreeObserver.addOnGlobalLayoutListener {
             xlog("mRecyclerView =====>onGlobalLayout()")
         }
+
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                xlog("Dota::RecyclerView--->onScrollStateChanged: newState=${newState}")
+                // 0 : IDLE
+                // 1 : DRAGGING
+                // 2 : SETTLING
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) { // 0
+//                    val heroItem = mListAdapter.currentList.find { hero ->
+//                        hero.name == "npc_dota_hero_bane"
+//                    }
+
+                    // LayoutManager.findViewByPosition： 返回整个列表中对应位置的View
+                    // RecyclerView.getChildAt  ： 这个方法返回的是屏幕可见的View，比如，getChildAt(1)返回屏幕上第2个可见的View
+//                    val childIndex3 = mRecyclerView.getChildAt(3)
+
+                    val childIndex3 = (mRecyclerView.layoutManager as LinearLayoutManager).findViewByPosition(3)
+
+                    childIndex3?.run {
+                        // 当这个childItem移除到RecyclerView之外后获取到的就是空了，所以要判空
+                        val childVH = mRecyclerView.getChildViewHolder(childIndex3) as DotaHeroViewHolder
+                        xlog("Dota::RecyclerView: childIndex3:: name = ${childVH.heroNameView.text} , top = ${childIndex3.top}, ${childIndex3.y}")
+                    }
+                }
+
+            }
+
+        })
 
         getAndUpdate(mListAdapter)
 

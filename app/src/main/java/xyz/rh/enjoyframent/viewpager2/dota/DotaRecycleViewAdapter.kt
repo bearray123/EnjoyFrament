@@ -1,5 +1,6 @@
 package xyz.rh.enjoyframent.viewpager2.dota
 
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import xyz.rh.enjoyframent.R
+import xyz.rh.enjoyframent.viewpager2.dota.DotaRecycleViewAdapter.Companion.TAG
 
 /**
  * Created by rayxiong on 2022/10/30.
@@ -48,7 +50,7 @@ class DotaRecycleViewAdapter(diffCallback: DiffUtil.ItemCallback<DotaHero>) : Li
 //        }
 //        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DotaHeroViewHolder {
 //            mItemRootView = LayoutInflater.from(parent.context).inflate(R.layout.dota_hero_item_layout, parent, false)
-//            return DotaHeroViewHolder(mItemRootView)
+//            return DotaHeroViewHolder(mItemRootView   )
 //        }
 //        override fun onBindViewHolder(holder: DotaHeroViewHolder, position: Int) {
 //            holder.bindView(heroDataList[position])
@@ -65,7 +67,7 @@ class DotaHeroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.hero_img)
     }
 
-    private val heroNameView : TextView by lazy {
+    val heroNameView : TextView by lazy {
         itemView.findViewById(R.id.hero_name)
     }
 
@@ -73,17 +75,31 @@ class DotaHeroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.findViewById(R.id.hero_type)
     }
 
-    private val heroDespView : TextView? by lazy {
+    private val heroDespView : TextView by lazy {
         itemView.findViewById(R.id.hero_desp)
     }
 
+    val checkboxView : View by lazy {
+        itemView.findViewById(R.id.hero_checkbox)
+    }
+
+
+
     fun bindView(hero: DotaHero) {
+        Log.d(TAG, "DotaRecycleViewAdapter::ViewHolder bindView()")
         hero.imgUrl?.let { url ->
             Glide.with(itemView.context).load(url).into(heroLogoView)
         }
         heroNameView.text = hero.name
         heroTypeView?.text = hero.type
         heroDespView?.text = hero.desp
+
+//        Handler().postDelayed(object: Runnable {
+//            override fun run() {
+//                Log.d(TAG, "DotaRecycleViewAdapter::ViewHolder postDelayed==========")
+//                heroDespView.text = "这是篡改之后的s"
+//            }
+//        }, 5000)
     }
 }
 
