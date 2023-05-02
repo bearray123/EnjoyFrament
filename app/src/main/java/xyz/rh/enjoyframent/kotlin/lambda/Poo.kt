@@ -17,6 +17,11 @@ class Poo {
         println("test b start!")
 //        callback.invoke(123)
         callback(123)
+        callback.invoke(456)
+    }
+
+    fun testc(callback: DefaultCallback) {
+        callback.onResult("")
     }
 
     fun delay(time: Long, block: (p1: Long) -> String) {
@@ -25,6 +30,10 @@ class Poo {
         block(time)
     }
 
+}
+
+interface DefaultCallback {
+    fun onResult(data: String)
 }
 
 
@@ -44,5 +53,22 @@ fun main() {
         println("过了 $it, 执行了")
         "返回结果是string"
     }
+
+    poo.testa { intParam ->
+        println()
+        ""
+    }
+
+//    poo.testa(object : )
+
+    poo.testc(object : DefaultCallback {
+        override fun onResult(data: String) {
+            println(data)
+        }
+    })
+
+//    poo.testc {
+//
+//    }
 
 }
