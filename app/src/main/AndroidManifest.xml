@@ -47,6 +47,25 @@
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         />
 
+    <activity
+        android:name=".jsonparser.TestJsonParserActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        />
+
+    <activity
+        android:name=".deeplink.DeepLinkActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        android:exported="true"
+        android:launchMode="singleTask">
+      <intent-filter>
+        <data
+            android:host="dodohost"
+            android:scheme="rayhung" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE" />
+      </intent-filter>
+    </activity>
 
   </application>
 
