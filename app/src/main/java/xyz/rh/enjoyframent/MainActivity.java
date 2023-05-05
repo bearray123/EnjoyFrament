@@ -26,6 +26,7 @@ import xyz.rh.enjoyframent.di.test.BussA;
 import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
+import xyz.rh.enjoyframent.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyframent.layoutparams.TestLayoutParamsActivity;
 import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyframent.viewpager2.ViewPager2EntryActivity;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _layoutBinding.testViper.setOnClickListener(this);
 
         _layoutBinding.testLayoutparams.setOnClickListener(this);
-
+        _layoutBinding.testJsonParser.setOnClickListener(this);
 
         // 首页注册EventPublisher事件
         testEventPublisher();
@@ -249,6 +250,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //else if (v == _layoutBinding.superAppShieldIcon) {
         //    startActivity(new Intent(this, TestLayoutParamsActivity.class));
         //}
+        else if (v == _layoutBinding.testJsonParser) {
+            startActivity(new Intent(this, TestJsonParserActivity.class));
+        }
 
     }
 

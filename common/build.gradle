@@ -82,6 +82,12 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-runtime:$ANDROID_LIFECYCLE_VERSION"
 
 
+
+  // 引用squareup公司的moshi解析库: A modern JSON library for Kotlin and Java.
+  // https://github.com/square/moshi
+  api("com.squareup.moshi:moshi-kotlin:1.14.0")
+
+
 }
 
 this.beforeEvaluate {
