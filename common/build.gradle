@@ -87,6 +87,8 @@ dependencies {
   // https://github.com/square/moshi
   api("com.squareup.moshi:moshi-kotlin:1.14.0")
 
+  api 'com.google.code.gson:gson:2.8.2'
+
 
 }
 

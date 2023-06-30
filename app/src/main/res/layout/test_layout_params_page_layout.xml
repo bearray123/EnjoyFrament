@@ -69,6 +69,24 @@
       tools:visibility="visible"
       tools:layout_height="375dp"
       >
+
+    <ImageView
+        android:id="@+id/net_image_1"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="5dp"
+        tools:background="#000ffe"
+      />
+
+    <ImageView
+        android:id="@+id/net_image_2"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintStart_toEndOf="@+id/net_image_1"
+        android:layout_marginLeft="10dp"
+        tools:background="#000ffe"
+        />
   </xyz.rh.enjoyframent.layoutparams.NewUserLayout>
 
 

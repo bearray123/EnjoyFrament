@@ -124,4 +124,18 @@
       android:text="Json解析"
       tools:ignore="UsingOnClickInXml" />
 
+  <Button
+      android:id="@+id/open_didi_app"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test_layoutparams"
+      android:layout_marginLeft="50dp"
+      android:layout_marginRight="50dp"
+      android:layout_marginTop="20dp"
+      android:onClick="onViewPager2Clicked"
+      android:text="打开滴滴出行"
+      tools:ignore="UsingOnClickInXml" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

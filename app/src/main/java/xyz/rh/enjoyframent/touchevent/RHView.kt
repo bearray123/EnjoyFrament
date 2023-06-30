@@ -15,7 +15,7 @@ class RHView @JvmOverloads constructor(
     View(context, attrs, defStyleAttr) {
 
     companion object {
-        const val TAG = "RHView"
+        const val TAG = "RHView::"
     }
 
 
@@ -31,7 +31,7 @@ class RHView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        xlog(TAG, "onDraw()")
+        xlog(TAG, "onDraw() ----> measuredWidth = $measuredWidth, measuredHeight = $measuredHeight, width = $width, height = $height")
     }
 
     override fun onWindowFocusChanged(hasWindowFocus: Boolean) {

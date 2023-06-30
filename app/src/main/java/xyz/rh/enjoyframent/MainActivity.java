@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         _layoutBinding.testLayoutparams.setOnClickListener(this);
         _layoutBinding.testJsonParser.setOnClickListener(this);
+        _layoutBinding.openDidiApp.setOnClickListener(this);
 
         // 首页注册EventPublisher事件
         testEventPublisher();
@@ -177,6 +178,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //JSONObject jsonObject = JSO.getJSONObject("sids");
         //    JSONArray jsonArray = JSO.optJSONArray("sids");
 
+        //try {
+        //    JSO = new JSONObject("{\n"
+        //        + "\t\"errno\": \"0\",\n"
+        //        + "\t\"errmsg\": \"SUCCESS\",\n"
+        //        + "\t\"data\": \"OKxjFuFTzRtqRroGLyrk6YZW4WlOW2oz1QEEtyrMm7SSZHrjzGEVbsGF4Ei6+i14vVb34DdSQdjDojG6rmk3Ea4YpwY8OjtZfmzk0IIii4auS3rLBot9Jcht8cAnboDzwIgeVwtz2EIM7TkBmC7WUw==\"\n"
+        //        + "}");
+        //
+        //    // {"errno": "0","errmsg": "SUCCESS","username": {"key1":"yhyhyhyhh"}}
+        //    JSO = new JSONObject("{\"errno\": \"0\",\"errmsg\": \"SUCCESS\",\"username\": \"yhyhyhyhh\"}");
+        //    JSONObject data = JSO.optJSONObject("username");
+        //    //String data = JSO.optString("username");
+        //
+        //    if (JSO.has("data")) {
+        //        Log.d("", "HAS DATA ");
+        //    }
+        //
+        //    Log.d("", "data === " + data.toString());
+        //} catch (JSONException e) {
+        //    e.printStackTrace();
+        //}
+
 
     }
 
@@ -252,6 +274,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //}
         else if (v == _layoutBinding.testJsonParser) {
             startActivity(new Intent(this, TestJsonParserActivity.class));
+        }
+        else if (v == _layoutBinding.openDidiApp) { // DeepLink跳转到滴滴出行
+            Intent intent = new Intent();
+            // 以下setAction、addCategory 不加也行
+            //intent.setAction("android.intent.action.VIEW");
+            //intent.addCategory("android.intent.category.DEFAULT");
+            //intent.addCategory("android.intent.category.BROWSABLE");
+            Uri work = Uri.parse("OneTravel://dache_anycar/entrance");
+            intent.setData(work);
+            // 这种写法是不work的，无法实现deeplink跳转，生成的对象是Uri$HierarchicalUri，对应的scheme是UrlEncode之后的：/OneTravel%3A%2F%2Fdache_anycar%2Fentrance
+            //Uri notwork = new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build();
+            //intent.setData(new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build());
+            startActivity(intent);
         }
 
     }

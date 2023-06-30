@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +32,14 @@ class TestLayoutParamsActivity : AppCompatActivity() {
 
     private val topContainer: ConstraintLayout by lazy {
         findViewById(R.id.top_container)
+    }
+
+    private val netImage1: ImageView by lazy {
+        findViewById(R.id.net_image_1)
+    }
+
+    private val netImage2: ImageView by lazy {
+        findViewById(R.id.net_image_1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
