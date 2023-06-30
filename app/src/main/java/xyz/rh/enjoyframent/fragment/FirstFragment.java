@@ -2,7 +2,7 @@ package xyz.rh.enjoyframent.fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +22,10 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
-import xyz.rh.enjoyframent.fragment.model.GameHeroViewModel;
+import xyz.rh.enjoyframent.dialog.RHDialogFragment;
 
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 
@@ -105,49 +104,13 @@ public class FirstFragment extends BaseFragment {
         mShowDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
 
-                // DialogFragment.show(fragmentManager, tag) 这个是不会添加到回退栈的
-                //dialogFragment.setCancelable(false); //
+                // 方式一：采用DialogFragment来实现弹窗
+                RHDialogFragment dialogFragment = RHDialogFragment.newInstance("","");
+                dialogFragment.setBgColor(Color.GREEN);
+                dialogFragment.show(getChildFragmentManager(), "");
 
-                //DialogFragment dialogFragment = DialogFragment.newInstance("","");
-                //dialogFragment.setBgColor(Color.GREEN);
-                //dialogFragment.show(getChildFragmentManager(), "");
-
-
-                ///  这里采用传统的dialog弹窗打log是为了确认传统dialog的window跟当前界面（activity/fragment）的window是不同的对象
-                View dialogRootView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_content_layout, null);
-                AlertDialog.Builder builder = new  AlertDialog.Builder(getContext());
-                builder.setView(dialogRootView);
-                AlertDialog dialog = builder.create();
-                dialog.setTitle("oH，弹窗标题");
-                //dialog.setContentView(dialogRootView);
-                View jumpView = dialogRootView.findViewById(R.id.dialog_ck_btn);
-                jumpView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                        //transaction.replace(R.id.fragment_container, new SecondFragment());
-                        transaction.replace(R.id.global_dialog_container, ThirdFragment.Companion.newInstance());
-                        transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
-                        transaction.commit();
-                    }
-                });
-
-                //dialog.setMessage("这是用传统AlertDialog的弹窗: dialog.getOwnerActivity=" + dialog.getOwnerActivity());
-                //dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "点击我弹一个DialogFragment弹窗",
-                //    new DialogInterface.OnClickListener() {
-                //        @Override public void onClick(DialogInterface dialog, int which) {
-                //
-                //            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                //            //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                //            //transaction.replace(R.id.fragment_container, new SecondFragment());
-                //            transaction.replace(R.id.global_dialog_container, ThirdFragment.Companion.newInstance());
-                //            transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
-                //            transaction.commit();
-                //
-                //        }
-                //    });
-                dialog.show();
-                Log.w(TAG, "window:: === AlertDialog.getWindow" + dialog.getWindow());
+                // 方式二：采用传统的AlertDialog来实现弹窗
+                //showAlertDialog();
 
             }
         });
@@ -181,6 +144,44 @@ public class FirstFragment extends BaseFragment {
 
         return rootView;
 
+    }
+
+    private void showAlertDialog() {
+        ///  这里采用传统的dialog弹窗打log是为了确认传统dialog的window跟当前界面（activity/fragment）的window是不同的对象
+        View dialogRootView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_content_layout, null);
+        AlertDialog.Builder builder = new  AlertDialog.Builder(getContext());
+        builder.setView(dialogRootView);
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("oH，弹窗标题");
+        //dialog.setContentView(dialogRootView);
+        View jumpView = dialogRootView.findViewById(R.id.dialog_ck_btn);
+        jumpView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                //transaction.replace(R.id.fragment_container, new SecondFragment());
+                transaction.replace(R.id.global_dialog_container, ThirdFragment.Companion.newInstance());
+                transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
+                transaction.commit();
+            }
+        });
+
+        //dialog.setMessage("这是用传统AlertDialog的弹窗: dialog.getOwnerActivity=" + dialog.getOwnerActivity());
+        //dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "点击我弹一个DialogFragment弹窗",
+        //    new DialogInterface.OnClickListener() {
+        //        @Override public void onClick(DialogInterface dialog, int which) {
+        //
+        //            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        //            //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        //            //transaction.replace(R.id.fragment_container, new SecondFragment());
+        //            transaction.replace(R.id.global_dialog_container, ThirdFragment.Companion.newInstance());
+        //            transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
+        //            transaction.commit();
+        //
+        //        }
+        //    });
+        dialog.show();
+        Log.w(TAG, "window:: === AlertDialog.getWindow" + dialog.getWindow());
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
