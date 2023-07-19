@@ -107,6 +107,8 @@ public class FirstFragment extends BaseFragment {
                 // 方式一：采用DialogFragment来实现弹窗
                 RHDialogFragment dialogFragment = RHDialogFragment.newInstance("","");
                 dialogFragment.setBgColor(Color.GREEN);
+                // 这里在show时：如果传入的fragmentManager是getChildFragmentManager，则fragment跳走后当前fragmentDialog会正常被盖住
+                // 如果传入的fragmentManager是activity.getSupportFragmentManager，在页面跳走后当前fragmentDialog不会消失，会覆盖到目标fragment之上
                 dialogFragment.show(getChildFragmentManager(), "");
 
                 // 方式二：采用传统的AlertDialog来实现弹窗
