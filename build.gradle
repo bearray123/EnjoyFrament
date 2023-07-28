@@ -9,6 +9,13 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
+// 工程全局sdk版本设置s
+ext {
+  min_sdk_version = 21
+  target_sdk_version = 33
+  compile_sdk_version = 33
+}
+
 //project("common") {
 //  def g = group
 //  println "执行project , project=$it, group=$g"
