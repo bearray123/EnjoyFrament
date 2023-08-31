@@ -23,6 +23,8 @@ open class BaseActivity : FragmentActivity() /*:AppCompatActivity*/ {
 
         val contentView = findViewById<View>(R.id.content) // FrameLayout
         // DecorView extends FrameLayout
+        // 对Activity、Window、DecorView的总结：
+        //
         xlog("BaseActivity::Lifecycle::onCreate --->[ this = $this ], [window=$window], [window.decorView = ${window.decorView}] , findViewById(R.id.content) = $contentView")
 
 

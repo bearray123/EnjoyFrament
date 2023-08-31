@@ -115,9 +115,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding = MainActivityLayoutBinding.inflate(getLayoutInflater());
         View rootView = _layoutBinding.getRoot();
 
+
+
         // setContentView之后就把当前我们定义的layout布局添加到了decorView上，这样decorView就有了一个children
         // 它的child就是ConstraintLayout，即我们在layout里定义的根视图 rootView：ConstraintLayout
         setContentView(rootView);
+
+
+        // 测试 activity中任何一个view的RootView是什么：
+        // Activity中任何一个view的rootView是 DecorView，自己的layout文件inflate出来然后setContentView的 不是DecorView。
+        View rootViewForFragmentEntry = _layoutBinding.testFragmentEntry.getRootView(); // DecorView
+        View rootViewForTouchEvent = _layoutBinding.testTouchEvent.getRootView(); // DecorView
+        Log.d(TAG, "test rootView===== rootViewForFragmentEntry=" + rootViewForFragmentEntry + ", rootViewForTouchEvent=" + rootViewForTouchEvent + "######## rootViewForMyLayout=" + rootView);
+
+        rootViewForFragmentEntry.post(new Runnable() { // 这里必须post，如果不post的话获取到的parent是null，因为在onCreate里面，还没走view的组装绘制流程。
+            @Override public void run() {
+                // testFragmentEntry获取到的parent是： ConstraintLayout
+                // decorView.getParent 是  android.view.ViewRootImpl
+                // 总结：普通子View的Parent获取到的是我们布局中定义的父View，DecorView已经是Window中最顶层View了，他的父View是ViewRootImpl
+                Log.d(TAG, "test getParent ==== testFragmentEntry.getParent" + _layoutBinding.testFragmentEntry.getParent() + " ##### rootViewForFragmentEntry.getParent =" + rootViewForFragmentEntry.getParent());
+            }
+        });
+
+
+
+
 
         Window activityWindow = getWindow();
         Log.d(TAG, "window:: getWindow()=== " + activityWindow);
