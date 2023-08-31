@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import xyz.rh.enjoyframent.BaseActivity
 import xyz.rh.enjoyframent.MainActivity
 import xyz.rh.enjoyframent.R
 import xyz.rh.enjoyframent.viewpager2.dota.DotaFragment
@@ -18,7 +19,7 @@ import xyz.rh.enjoyframent.viewpager2.dota.DotaFragment
 /**
  * Created by rayxiong on 2022/10/30.
  */
-class ViewPager2EntryActivity : FragmentActivity() {
+class ViewPager2EntryActivity : BaseActivity() {
 
     companion object {
         const val TAG = "ViewPager2EntryActivity"

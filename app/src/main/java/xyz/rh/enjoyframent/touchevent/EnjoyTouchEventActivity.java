@@ -10,12 +10,13 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import xyz.rh.enjoyframent.BaseActivity;
 import xyz.rh.enjoyframent.R;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.
  */
-public class EnjoyTouchEventActivity extends AppCompatActivity {
+public class EnjoyTouchEventActivity extends BaseActivity {
 
    public static final String TAG = "EnjoyTouchEventActivity";
 

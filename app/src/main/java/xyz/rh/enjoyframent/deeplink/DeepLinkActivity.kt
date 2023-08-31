@@ -2,6 +2,7 @@ package xyz.rh.enjoyframent.deeplink
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import xyz.rh.enjoyframent.BaseActivity
 import xyz.rh.enjoyframent.R
 
 /**
@@ -11,7 +12,7 @@ import xyz.rh.enjoyframent.R
  *
  * Created by rayxiong on 2023/5/5.
  */
-class DeepLinkActivity: AppCompatActivity() {
+class DeepLinkActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

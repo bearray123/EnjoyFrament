@@ -1,9 +1,11 @@
 package xyz.rh.enjoyframent.layoutparams
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Process
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.widget.Button
@@ -13,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import xyz.rh.common.dp
 import xyz.rh.common.xlog
+import xyz.rh.enjoyframent.BaseActivity
 import xyz.rh.enjoyframent.R
 import xyz.rh.enjoyframent.fragment.view.VolumeView
 import xyz.rh.enjoyframent.temp.TempTestKotlin
@@ -23,7 +27,7 @@ import kotlin.concurrent.thread
  * 测试跟View相关的属性，ViewTreeObserver等监听
  * Created by rayxiong on 2023/3/11.
  */
-class TestLayoutParamsActivity : AppCompatActivity() {
+class TestLayoutParamsActivity : BaseActivity() {
 
 
     private val addViewButton: Button by lazy {
@@ -77,6 +81,50 @@ class TestLayoutParamsActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        testAddView()
+
+    }
+
+
+
+    // 测试验证 addView操作之后是不是可以立即拿到宽高，是否立即去绘制
+    // 结论：无法立即拿到，addView只是给ViewGroup添加了childView，到绘制环节其实还是需要依赖vsync信号机制来刷新
+    private fun testAddView() {
+
+        Handler().postDelayed(Runnable {
+
+            xlog("onResume:: topContainer ---> before add view ---》 topContainer.measuredHeight = ${topContainer.measuredHeight}")
+            val subLayoutView = ConstraintLayout(this).apply {
+                val newLayoutParams = ViewGroup.LayoutParams(100.dp, 300.dp)
+                layoutParams = newLayoutParams // 设置vg的宽和高
+                setBackgroundColor(Color.GREEN) // 设置vg的背景
+            }
+
+            xlog("only new view ---> view.measuredHeight=${subLayoutView.measuredHeight}, view.height=${subLayoutView.height}")
+
+            // 利用未来的父view（当前还未执行addView）进行测量下，看是否可以拿到宽和高
+//            subLayoutView.measure(
+//                View.MeasureSpec.makeMeasureSpec(topContainer.measuredWidth, View.MeasureSpec.EXACTLY),
+//                View.MeasureSpec.makeMeasureSpec(topContainer.measuredHeight, View.MeasureSpec.EXACTLY)
+//            )
+//            xlog("after measure ---> view.measuredHeight=${subLayoutView.measuredHeight}, view.height=${subLayoutView.height}")
+
+            topContainer.addView( // 给这个容器动态添加一个子View，用于验证addView之后是否可以立即获取到宽和高
+                subLayoutView
+            )
+//            Thread.sleep(3000)
+//            xlog("onResume:: topContainer ---> after add view ---》 topContainer.measuredHeight = ${topContainer.measuredHeight}")
+            topContainer.post {
+                xlog("onResume:: topContainer ---> after post ---》 topContainer.measuredHeight = ${topContainer.measuredHeight}")
+            }
+
+
+        }, 5_000)
     }
 
 

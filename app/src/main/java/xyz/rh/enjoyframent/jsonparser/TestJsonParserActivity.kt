@@ -6,11 +6,12 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import xyz.rh.common.xlog
+import xyz.rh.enjoyframent.BaseActivity
 
 /**
  * Created by rayxiong on 2023/5/5.
  */
-class TestJsonParserActivity: AppCompatActivity() {
+class TestJsonParserActivity: BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,15 +27,15 @@ class TestJsonParserActivity: AppCompatActivity() {
         val s1 =  Gson().fromJson(data, Student::class.java)
         xlog("after from json::: s1 = $s1")
 
-        val s2 =  Gson().fromJson(data, Student2::class.java)
-        xlog("after from json::: s2 = $s2")
-
-        val s1_hm = s1.hobbyMap
-        val valueOfH1 = s1_hm["h1"]
-        xlog("valueOfH1==== newdata = ${valueOfH1.toString()}")
-
-        val s3 = Gson().fromJson(valueOfH1.toString(), Hobby::class.java)
-        xlog("after from json::: s3 = $s3")
+//        val s2 =  Gson().fromJson(data, Student2::class.java)
+//        xlog("after from json::: s2 = $s2")
+//
+//        val s1_hm = s1.hobbyMap
+//        val valueOfH1 = s1_hm["h1"]
+//        xlog("valueOfH1==== newdata = ${valueOfH1.toString()}")
+//
+//        val s3 = Gson().fromJson(valueOfH1.toString(), Hobby::class.java)
+//        xlog("after from json::: s3 = $s3")
 
     }
 
@@ -57,7 +58,7 @@ class TestJsonParserActivity: AppCompatActivity() {
 const val data = """
     {
         "name" : "dodo",
-        "age": 8,
+        "age": "18",
         "hobby_map": {
             "h1": {
                 "name": "看动画片",
@@ -80,7 +81,7 @@ data class Student(
     @SerializedName("name")
     var name: String,
     @SerializedName("age")
-    var age: Int,
+    var age: Int? = 999,
     @SerializedName("hobby_map")
     var hobbyMap: Map<String, Any>)
 

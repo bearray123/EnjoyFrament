@@ -53,6 +53,11 @@
         />
 
     <activity
+        android:name=".scroll.TestScrollActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        />
+
+    <activity
         android:name=".deeplink.DeepLinkActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         android:exported="true"

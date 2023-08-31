@@ -34,10 +34,10 @@ class AutoDisposeInterceptor(private var view: View) : ContinuationInterceptor {
         val job = continuation.context[Job]
         if (job != null) {
             view.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener{
-                override fun onViewAttachedToWindow(v: View?) {
+                override fun onViewAttachedToWindow(v: View) {
                 }
 
-                override fun onViewDetachedFromWindow(v: View?) {
+                override fun onViewDetachedFromWindow(v: View) {
                     view.removeOnAttachStateChangeListener(this)
                     job.cancel()
                 }

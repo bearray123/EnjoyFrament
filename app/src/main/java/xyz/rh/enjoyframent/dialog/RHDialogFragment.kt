@@ -97,6 +97,14 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
         return rootView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     /**
      * 传统Dialog实现
      */

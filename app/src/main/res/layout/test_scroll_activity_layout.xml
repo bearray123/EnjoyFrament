@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+  <ScrollView
+      android:id="@+id/out_vertical_scroll_view"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="100dp"
+      android:layout_marginStart="100dp"
+      android:layout_marginEnd="100dp"
+      android:background="@android:color/darker_gray"
+      >
+
+    <TextView
+        android:id="@+id/long_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="防静电卡，这是一个非常长的返点卡了发担惊受恐发生开发大刷卡机阿珂打卡代码已经解释的很清楚了，scrollBy() 在当前 mScrollX 和 mScrollY 的基础上添加偏移量调用了 scrollTo()。这本来没有什么解释的，大家结合上面的分析，自然能够明白个中奥妙，如果还需要说清楚的话，我打个比方好了。长官在地点 A 通过传声器给两个士兵下达命令。对士兵甲的命令是：到地点 F 去，士兵甲马上就去了，他用的是 scrollTo()，一步到位。对士兵乙的命令是：到下一个地点，地点 A 的下一个地点是地点 B,于是士兵乙在当前地点挪到了地点 B,这期间士兵乙本身也运用了 scrollTo()，但是他的目的地是下一站，然后一步到位。 而对于长官而言，它运用的是scrollBy()。一个小时后，长官又发了相同的命令。对士兵甲的命令是：到地点 F 去，士兵甲不需要再行动了，他直接回复，我已经到位。对士兵乙的命令是：到下一个地点，地点 B 的下一个地点是地点 C,于是士兵乙在当前地点挪到了地点 C,这期间士兵乙本身也运用了 scrollTo()，但是它的目的地是下一站，然后一步到位。 而对于长官而言，它运用的是 scrollBy()"
+      />
+
+  </ScrollView>
+
+
+  <HorizontalScrollView
+      android:id="@+id/out_horizontal_scroll_view"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/out_vertical_scroll_view"
+      android:layout_marginTop="100dp"
+      android:layout_marginStart="100dp"
+      android:layout_marginEnd="100dp"
+      android:background="@android:color/darker_gray"
+      >
+
+    <TextView
+        android:id="@+id/long_text_view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="防静电卡，这是一个非常长的返点卡了发担惊受恐发生开发大刷卡机阿珂打卡代码已经解释的很清楚了，scrollBy() 在当前 mScrollX 和 mScrollY 的基础上添加偏移量调用了 scrollTo()。这本来没有什么解释的，大家结合上面的分析，自然能够明白个中奥妙，如果还需要说清楚的话，我打个比方好了。长官在地点 A 通过传声器给两个士兵下达命令。对士兵甲的命令是：到地点 F 去，士兵甲马上就去了，他用的是 scrollTo()，一步到位。对士兵乙的命令是：到下一个地点，地点 A 的下一个地点是地点 B,于是士兵乙在当前地点挪到了地点 B,这期间士兵乙本身也运用了 scrollTo()，但是他的目的地是下一站，然后一步到位。 而对于长官而言，它运用的是scrollBy()。一个小时后，长官又发了相同的命令。对士兵甲的命令是：到地点 F 去，士兵甲不需要再行动了，他直接回复，我已经到位。对士兵乙的命令是：到下一个地点，地点 B 的下一个地点是地点 C,于是士兵乙在当前地点挪到了地点 C,这期间士兵乙本身也运用了 scrollTo()，但是它的目的地是下一站，然后一步到位。 而对于长官而言，它运用的是 scrollBy()"
+        />
+
+  </HorizontalScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

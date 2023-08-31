@@ -1,8 +1,11 @@
 package xyz.rh.enjoyframent;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,13 +31,14 @@ import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
 import xyz.rh.enjoyframent.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyframent.layoutparams.TestLayoutParamsActivity;
+import xyz.rh.enjoyframent.scroll.TestScrollActivity;
 import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyframent.viewpager2.ViewPager2EntryActivity;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Inject
     public BussA mBussA;
@@ -51,8 +55,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainActivityLayoutBinding _layoutBinding;
 
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(AudioManager.RINGER_MODE_CHANGED_ACTION)) {
+                AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                final int ringerMode = audioManager.getRingerMode();
+                switch (ringerMode) {
+                    case AudioManager.RINGER_MODE_NORMAL:
+                        Log.d("testabc", "正常模式~~");
+                        //normal
+                        break;
+                    case AudioManager.RINGER_MODE_VIBRATE:
+                        Log.d("testabc", "震动模式~~");
+                        //vibrate
+                        break;
+                    case AudioManager.RINGER_MODE_SILENT:
+                        Log.d("testabc", "静音模式~~");
+                        //silent
+                        break;
+                }
+            }
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d(TAG, "MainActivity::onCreate  ---> this = " + this + " ,savedInstanceState = " + savedInstanceState);
+
+        registerReceiver(mReceiver, new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION));
+
+
         super.onCreate(savedInstanceState);
 
         KotlinExtensionKt.setApplication(getApplication().getApplicationContext());
@@ -97,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         _layoutBinding.testLayoutparams.setOnClickListener(this);
         _layoutBinding.testJsonParser.setOnClickListener(this);
         _layoutBinding.openDidiApp.setOnClickListener(this);
+
+        _layoutBinding.testScroll.setOnClickListener(this);
+
 
         // 首页注册EventPublisher事件
         testEventPublisher();
@@ -287,6 +325,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //Uri notwork = new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build();
             //intent.setData(new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build());
             startActivity(intent);
+        }
+        else if (v == _layoutBinding.testScroll) {
+            startActivity(new Intent(this, TestScrollActivity.class));
         }
 
     }

@@ -1,5 +1,6 @@
 package xyz.rh.common
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.Keep
@@ -20,8 +21,9 @@ fun xlog(msg : Any?) {
     xlog("", msg)
 }
 
+@SuppressLint("NewApi")
 @Keep
-@RequiresApi(Build.VERSION_CODES.O)
 fun xprintln(msg: Any?) {
     println("${LocalDateTime.now()} : [${Thread.currentThread().name}]: $msg")
+
 }

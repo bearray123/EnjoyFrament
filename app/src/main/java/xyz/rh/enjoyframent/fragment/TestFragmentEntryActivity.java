@@ -19,13 +19,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 import java.util.List;
+import xyz.rh.enjoyframent.BaseActivity;
 import xyz.rh.enjoyframent.R;
 import xyz.rh.enjoyframent.temp.TempTestKotlin;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 
-public class TestFragmentEntryActivity extends AppCompatActivity implements View.OnClickListener {
+public class TestFragmentEntryActivity extends BaseActivity implements View.OnClickListener {
 
 
     public static final String TAG = "FragmentEntryActivity";
