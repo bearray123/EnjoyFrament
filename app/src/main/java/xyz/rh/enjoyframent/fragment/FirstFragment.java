@@ -213,8 +213,8 @@ public class FirstFragment extends BaseFragment {
         // 所以：在使用Glide时一定要重点关注Glide.with（）传入对象是哪种，如果生命周期过长会导致图片回来后回调onResourceReady，然后在onResourceReady里操作生命周期过短（已经被销毁对象fragment）时出现一些异常
 
         //Glide.with(getContext()) // 如果传getContext()，其实是host，即Activity，会出现fragment被销毁后，还会继续回调onResourceReady；
-        //Glide.with(this) // 如果传this, 即当前fragment，则当fragment销毁后不会回调onResourceReady
-        Glide.with(firstImg) // 如果传当前加载的view，则当fragment销毁后其实view自身也就消化了，也不会回调onResourceReady
+        Glide.with(this) // 如果传this, 即当前fragment，则当fragment销毁后不会回调onResourceReady
+        //Glide.with(firstImg) // 如果传当前加载的view，则当fragment销毁后其实view自身也就消化了，也不会回调onResourceReady
             .load(gongliSexyUrl)
             .skipMemoryCache(true) // 为了测试禁用内存缓存
             .diskCacheStrategy(DiskCacheStrategy.NONE) // 为了是测试禁用磁盘缓存
