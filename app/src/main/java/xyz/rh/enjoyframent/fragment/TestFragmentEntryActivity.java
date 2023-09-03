@@ -64,12 +64,12 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         //at xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity.onClick(TestFragmentEntryActivity.java:104)
         //at android.view.View.performClick(View.java:7281)
 
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                Log.d(TAG, "postDelayed=== performClick 2222");
-                btn2.performClick();
-            }
-        }, 5000);
+        //new Handler().postDelayed(new Runnable() {
+        //    @Override public void run() {
+        //        Log.d(TAG, "postDelayed=== performClick 2222");
+        //        btn2.performClick();
+        //    }
+        //}, 5000);
 
 
         mBackStackContentView = findViewById(R.id.backstack_content);

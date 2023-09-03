@@ -3,13 +3,16 @@ package xyz.rh.enjoyframent.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,6 +25,10 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import java.util.List;
 import xyz.rh.common.BaseFragment;
 import xyz.rh.enjoyframent.R;
@@ -33,6 +40,7 @@ public class FirstFragment extends BaseFragment {
 
     public static final String TAG = "FirstFragment";
     private TextView textView;
+    private ImageView firstImg;
     private String mText;
     private Button mShowDialogBtn;
     private Button mStartSubFragment;
@@ -89,6 +97,7 @@ public class FirstFragment extends BaseFragment {
         Log.w(TAG, "XL::: FistFragment  RootView === " + rootView + ", parentFragment == " + parent + this);
 
         textView = rootView.findViewById(R.id.textview_first);
+        firstImg = rootView.findViewById(R.id.first_image);
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         List<Fragment> fragmentList = fragmentManager.getFragments();
@@ -188,6 +197,46 @@ public class FirstFragment extends BaseFragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //////////////////////////////////////////////////////////////////
+        // 在fragment中测试Glide图片加载，如果fragment已经销毁 或 detach了，使用Glide是啥样的效果
+        // 敌法师图片:
+        String antiImgUrl = "https://steamcdn-a.akamaihd.net/apps/dota2/images/dota_react/heroes/antimage.png";
+        // 百度上巩俐性感照片： 这个图片大小是360KB，非常适合用来模拟charles慢网速图片加载的case，需要把charles throttle配置下： Download:200, upload:100  Utilisation: 100, 100
+        String gongliSexyUrl = "https://pic.rmb.bdstatic.com/bjh/down/4e168e78e07d8f742ede564b7ac9b8d1.jpeg";
+
+        // 重点知识点！！！
+        // 对于Glide.with(View|Context|Activity|Fragment|FragmentActivity) 传入的类型大有文章，他可以是View，可以是fragment, 可以是 Activity，甚至可以是applicationContext，不同的类型决定了图片请求链路的生命周期：
+        // 如果传入的是Activity，则当当前请求请求图片的fragment容器销毁（已经被detach），fragment所在Activity容器没有销毁时，请求链路不会终止，当数据完成后还会继续回调onResourceReady，因为链路的生命周期跟随当前with传入的activity生命周期
+        // 此时如果在onResourceReady里操作fragment就会导致一些异常，例如getChildFragmentManager时出现Fragment has not been attached yet.
+        // 换言之，如果with传入的是当前fragment，如果fragment被销毁（按返回键），图片的请求链路也随之停止，不会再回调onResourceReady
+        // 所以：在使用Glide时一定要重点关注Glide.with（）传入对象是哪种，如果生命周期过长会导致图片回来后回调onResourceReady，然后在onResourceReady里操作生命周期过短（已经被销毁对象fragment）时出现一些异常
+
+        //Glide.with(getContext()) // 如果传getContext()，其实是host，即Activity，会出现fragment被销毁后，还会继续回调onResourceReady；
+        //Glide.with(this) // 如果传this, 即当前fragment，则当fragment销毁后不会回调onResourceReady
+        Glide.with(firstImg) // 如果传当前加载的view，则当fragment销毁后其实view自身也就消化了，也不会回调onResourceReady
+            .load(gongliSexyUrl)
+            .skipMemoryCache(true) // 为了测试禁用内存缓存
+            .diskCacheStrategy(DiskCacheStrategy.NONE) // 为了是测试禁用磁盘缓存
+            .into(new CustomTarget<Drawable>() {
+                @Override public void onResourceReady(@NonNull Drawable resource,
+                    @Nullable Transition<? super Drawable> transition) {
+                    // onResourceReady 在主线程回调
+                    Log.d(TAG, "First ImageView:: onResourceReady()");
+                    firstImg.setImageDrawable(resource);
+                    // 通过charles 设置慢速网络，让图片经过好几秒才可以下载成功，在下载过程中按返回让当前fragment销毁，fragment已经被detach销毁后，还再继续getChildFragmentManager,最终导致FATAL EXCEPTION：main:
+                    //java.lang.IllegalStateException: Fragment FirstFragment has not been attached yet.
+                    FragmentManager childFragmentManager = getChildFragmentManager();
+                    Log.d(TAG, "First ImageView:: onResourceReady() ====  getChildFragmentManager == " + childFragmentManager);
+                }
+
+                @Override public void onLoadCleared(@Nullable Drawable placeholder) {
+                    Log.d(TAG, "First ImageView:: onLoadCleared()");
+
+
+                }
+            });
+        //////////////////////////////////////////////////////////////////
 
     }
 
