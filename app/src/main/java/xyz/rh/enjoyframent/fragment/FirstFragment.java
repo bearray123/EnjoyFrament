@@ -212,6 +212,11 @@ public class FirstFragment extends BaseFragment {
         // 换言之，如果with传入的是当前fragment，如果fragment被销毁（按返回键），图片的请求链路也随之停止，不会再回调onResourceReady
         // 所以：在使用Glide时一定要重点关注Glide.with（）传入对象是哪种，如果生命周期过长会导致图片回来后回调onResourceReady，然后在onResourceReady里操作生命周期过短（已经被销毁对象fragment）时出现一些异常
 
+        // with的含义：首先，我们来看with，其实with的功能就是根据传入的context来获取图片请求管理器RequestManager，用来启动和管理图片请求。
+        // context可以传入app，activity和fragment，这关系着图片请求的生命周期。通常使用当前页面的context，这样当我们打开一个页面加载图片，然后退出页面时，图片请求会跟随页面销毁而被取消，而不是继续加载浪费资源。
+        // 当context是app时，获得的RequestManager是一个全局单例，图片请求的生命周期会跟随整个app。
+        // 注意：如果with发生在子线程，不管context是谁，都返回应用级别的RequestManager单例。
+
         //Glide.with(getContext()) // 如果传getContext()，其实是host，即Activity，会出现fragment被销毁后，还会继续回调onResourceReady；
         Glide.with(this) // 如果传this, 即当前fragment，则当fragment销毁后不会回调onResourceReady
         //Glide.with(firstImg) // 如果传当前加载的view，则当fragment销毁后其实view自身也就消化了，也不会回调onResourceReady
