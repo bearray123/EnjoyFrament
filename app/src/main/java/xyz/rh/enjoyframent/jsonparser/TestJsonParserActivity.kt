@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import xyz.rh.common.xlog
 import xyz.rh.enjoyframent.BaseActivity
-import xyz.rh.enjoyframent.jsonparser.gson.MyJSONParserUtils
+import xyz.rh.enjoyframent.jsonparser.gson.*
 
 /**
  * Created by rayxiong on 2023/5/5.
@@ -20,31 +20,24 @@ class TestJsonParserActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         // 这里不setContentView(), 所以直接是一个空白页面
 
-
     }
 
     override fun onResume() {
         super.onResume()
 
-//        val s1 =  Gson().fromJson(data, Student2::class.java)
-//        xlog("after from json::: s1 = $s1")
-
-//        val s2 =  Gson().fromJson(data, Student2::class.java)
-//        xlog("after from json::: s2 = $s2")
-//
-//        val s1_hm = s1.hobbyMap
-//        val valueOfH1 = s1_hm["h1"]
-//        xlog("valueOfH1==== newdata = ${valueOfH1.toString()}")
-//
-//        val s3 = Gson().fromJson(valueOfH1.toString(), Hobby::class.java)
-//        xlog("after from json::: s3 = $s3")
-
-
         val student2 = MyJSONParserUtils.convertJsonFromClass(data2, Student::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  student2=$student2")
 
+        // 3，4，5，解析出来一样！hobbyMap内都是按照map嵌套map去解析的。
         val student3 = MyJSONParserUtils.convertJsonFromClass(data3, Student::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  student3=$student3")
+
+        val student4 = MyJSONParserUtils.convertJsonFromClass(data3, Student2::class.java)
+        println("MyJSONParserUtils.convertJsonFromClass ---->  student4=$student4")
+
+        val student5 = MyJSONParserUtils.convertJsonFromTypeToken<Student2>(data3, object :TypeToken<Student2>(){}.type)
+        println("MyJSONParserUtils.convertJsonFromClass ---->  student5=$student5")
+
 
         val teacher = MyJSONParserUtils.convertJsonFromClass(data3, Teacher::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  teacher=$teacher")
@@ -106,170 +99,7 @@ class TestJsonParserActivity: BaseActivity() {
 }
 
 
-// List<Map<String, Hobby>>外层是一个数组，里面包含的内容是map组成的；需要用typetoken解析
-const val typeTokenData = """
-    [
-        {   "hobby_map1": {
-                "h1": {
-                    "name": "看动画片",
-                    "level": 0
-                },
-                "h2": {
-                    "name": "switch",
-                    "level": 1
-                }
-            }
-        },
-        {   "hobby_map2": {
-                "h21": {
-                    "name": "2看动画片",
-                    "level": 0
-                },
-                "h22": {
-                    "name": "2switch",
-                    "level": 21
-                }
-            }
-        }
-    ]
-"""
 
-// List<Hobby>外层是一个数组，里面包含Hobby；需要用typetoken解析
-const val typeTokenData2 = """
-    [
-        {
-           "name": "看动画片",
-           "level": 0,
-           "innermap" : {
-                "mapk1" : 100,
-                "mapk2" : 200
-           }
-        },
-        {
-           "name": "switch",
-           "level": 1,
-           "innermap" : {
-                "mapk3" : 300,
-                "mapk4" : 400
-           }
-        }
-    ]
-"""
-
-// 特意将 name 返回为错误的类型：例如 true， []， {} 等，用原始Gson.from就会报错，崩溃
-const val dataError = """
-    {
-        "name" : [],
-        "age": "18",
-        "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
-            "h4": 100
-        }
-    }
-"""
-
-const val data = """
-    {
-        "name" : "dodo",
-        "age": "18",
-        "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
-            "h4": 100
-        }
-    }
-"""
-
-// 少了age的返回
-const val data2 = """
-    {
-        "name" : "dodo",
-        "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
-            "h4": 100
-        }
-    }
-"""
-
-// 少了name，少了age：解析后name不会走默认的，而是null；name也不会走默认的-1，而是0
-const val data3 = """
-    {
-        "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
-            "h4": 100
-        }
-    }
-"""
-
-// 额外加了map嵌套list的复杂类型
-const val data4 = """
-    {
-        "name" : "dodo",
-        "age" : 18,
-        "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
-            "h4": 100
-        },
-        "lovers" : {
-            "damimi" : [80,66,90],
-            "avnv" : [10,20,30]
-        }
-    }
-"""
 
 data class Student(
 
