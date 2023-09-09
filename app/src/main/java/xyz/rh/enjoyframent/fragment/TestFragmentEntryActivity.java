@@ -1,30 +1,20 @@
 package xyz.rh.enjoyframent.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.ColorInt;
-import androidx.annotation.IntDef;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 import java.util.List;
 import xyz.rh.enjoyframent.BaseActivity;
 import xyz.rh.enjoyframent.R;
-import xyz.rh.enjoyframent.temp.TempTestKotlin;
 
 import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
-import static xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME;
 
 public class TestFragmentEntryActivity extends BaseActivity implements View.OnClickListener {
 
@@ -41,6 +31,9 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_entry_activity_main);
+
+        // !!!视图栈管理器必须在最开始进行初始化：赋值fragmentManager 和 fragment的容器
+        NavigationManager.init(this.getSupportFragmentManager(), R.id.fragment_container);
 
         btn1 = findViewById(R.id.changeBtn1);
         btn2 = findViewById(R.id.changeBtn2);
@@ -91,7 +84,6 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         // Frament里view.getRootView == Fragment的根布局节点
         Log.w(TAG, "XL::: Activity :: getDecorView() === " + getWindow().getDecorView());
         Log.w(TAG, "XL::: Activity :: btn1.getRootView === " + btn1.getRootView());
-
         Log.w(TAG, "window:: getWindow()=== " + getWindow());
 
 
@@ -102,19 +94,16 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         super.onResume();
     }
 
-    private Fragment cacheFragment = null;
-
     @Override public void onClick(View v) {
 
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, RELEACE,true);
+            NavigationManager.push(fragment, NavigationManager.REPLACE, true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
-            cacheFragment = fragment;
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            changeFragment(fragment, RELEACE, true);
+            NavigationManager.push(fragment, NavigationManager.REPLACE, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
             //changeFragment(fragment, RELEACE, true);
@@ -152,19 +141,8 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
 
         } else if (v == btn4) {
             //popBackStackByIndex(2);
-
             FragmentManager fragmentManager =  getSupportFragmentManager();
-            int c = fragmentManager.getBackStackEntryCount();
             fragmentManager.popBackStack(1, POP_BACK_STACK_INCLUSIVE);
-            int c1 = fragmentManager.getBackStackEntryCount();
-            List sss =fragmentManager.getFragments();
-            String sa;
-            new Handler().post(new Runnable() {
-                @Override public void run() {
-                    int c2 = fragmentManager.getBackStackEntryCount();
-                    String sa;
-                }
-            });
         }
 
         // 这里查看回退栈其实是有延时的，只能看到上一次的状态，所以不要在这里查看，需要放到onBackStackChanged里去监听查看
@@ -175,108 +153,6 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
 
     @Override public void onBackPressed() {
         super.onBackPressed();
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        // 测试 setMaxLifecycle 的使用
-        // 一般使用add进行跳转后，当前fragment生命周期是不会有变化的，为了在add模式下当前fragment生命周期有变化，至少走onPause，可采取将当前fragment设置最大生命周期为STARTED
-        // 所以返回时取倒数第二个（即目标fragment）来设置最大生命周期为RESUME
-        if (getFragmentByIndex(2) != null) {
-            fragmentManager.beginTransaction()
-                .setMaxLifecycle(getFragmentByIndex(2), Lifecycle.State.RESUMED)
-                .commitNow();
-        }
-
-    }
-
-    // count = 1 代表栈顶fragment，即倒数第一个
-    // count =2 代表倒数第二个
-    private Fragment getFragmentByIndex(int count) {
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        List<Fragment> addedFragmentList = fragmentManager.getFragments();
-        int index = addedFragmentList.size() - count;
-        if (index <= 0) {
-            index = 0;
-        }
-        if (addedFragmentList.size() >=1) {
-            return addedFragmentList.get(index);
-        } else {
-            return null;
-        }
-    }
-
-    public static final int RELEACE = 1;
-    public static final int ADD = 2;
-    public static final int REMOVE = 3;
-    public static final int SHOW = 4;
-    public static final int HIDE = 5;
-
-    @IntDef({RELEACE,ADD,REMOVE,SHOW,HIDE})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface TransactionMode{}
-
-
-
-    private void changeFragment(Fragment newFragment, @TransactionMode int mode, boolean addBackStack) {
-
-        /**
-         * 每一个Activity对应着一个FragmentController，即对应着一个FragmentManager对象
-         */
-        FragmentManager fragmentManager =  getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-         // 测试 setMaxLifecycle 的使用
-         // 一般使用add进行跳转后，当前fragment生命周期是不会有变化的，为了在add模式下当前fragment生命周期有变化，至少走onPause，可采取将当前fragment设置最大生命周期为STARTED
-         if (getFragmentByIndex(1) != null) {
-             fragmentManager.beginTransaction()
-                 .setMaxLifecycle(getFragmentByIndex(1), Lifecycle.State.STARTED)
-                 .commitNow();
-         }
-
-        /**
-         * add只会将一个fragment添加到容器中。 假设您将FragmentA和FragmentB添加到容器中。
-         * 容器将具有FragmentA和FragmentB，如果容器是FrameLayout，则将fragment一个添加在另一个之上。
-         * replace将简单地替换容器顶部的一个fragment，
-         * 因此，如果我创建了 FragmentC并 replace 顶部的 FragmentB，
-         * 则FragmentB将被从容器中删除（执行onDestroy，除非您调用addToBackStack，仅执行onDestroyView），而FragmentC将位于顶部。
-         */
-        //transaction.add(R.id.fragment_container, newFragment);
-        //transaction.replace(R.id.fragment_container, newFragment);
-
-        switch (mode) {
-            case RELEACE:
-                transaction.replace(R.id.fragment_container, newFragment);
-                break;
-            case ADD:
-                transaction.add(R.id.fragment_container, newFragment);
-                break;
-            case REMOVE:
-                transaction.remove(newFragment);
-                break;
-            case SHOW:
-                transaction.show(newFragment);
-                break;
-            case HIDE:
-                transaction.hide(newFragment);
-                break;
-            default:
-                throw new IllegalArgumentException("must put mode params!");
-        }
-
-        //transaction.remove(newFragment);
-        //transaction.hide(newFragment);
-        //transaction.show(newFragment);
-
-        /**
-         * newFragment 会替换目前在 R.id.fragment_container ID 所标识的布局容器中的任何片段（如有）。
-         * 通过调用 addToBackStack()，您可以将替换事务保存到返回栈，以便用户能够通过按返回按钮撤消事务并回退到上一片段。
-         */
-        //transaction.replace(R.id.fragment_container, newFragment);
-
-        if (addBackStack) {
-            // 将fragment管理加入到回退栈，栈名可以传null
-            transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
-        }
-        int indetify = transaction.commitAllowingStateLoss();
-        backStackList.push(indetify);
     }
 
     private void popBackStackByIndex(int stackIndex) {
@@ -300,25 +176,5 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         mBackStackContentView.setText("回退栈：" + backstackEntryCount);
     }
 
-
-
-    //fun getCornerDrawable(
-    //    @ColorInt startColor: Int,
-    //    @ColorInt endColor: Int,
-    //    topLeftRadius: Float,
-    //    topRightRadius: Float,
-    //    bottomRightRadius: Float,
-    //    bottomLeftRadius: Float
-    //): GradientDrawable {
-    //
-    //    var gradientDrawable = GradientDrawable(
-    //        GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(startColor, endColor))
-    //    gradientDrawable.cornerRadii =
-    //        floatArrayOf(topLeftRadius, topLeftRadius, topRightRadius, topRightRadius, bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius)
-    //    gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
-    //
-    //
-    //    return gradientDrawable
-    //}
 
 }

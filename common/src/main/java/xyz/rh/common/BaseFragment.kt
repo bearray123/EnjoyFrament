@@ -1,5 +1,6 @@
 package xyz.rh.common
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -31,7 +32,7 @@ open class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "lifecycle:: onCreateView()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onCreateView()  >>>> hashcode=${hashCode()} >>>>> window = ${(context as Activity).window}")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

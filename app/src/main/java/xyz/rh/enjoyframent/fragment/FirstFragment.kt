@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,8 +35,6 @@ class FirstFragment : BaseFragment() {
     private var mText: String? = null
     private var mShowDialogBtn: Button? = null
     private var mStartSubFragment: Button? = null
-    private var launcher: ActivityResultLauncher<*>? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +64,22 @@ class FirstFragment : BaseFragment() {
             // 方式一：采用DialogFragment来实现弹窗
             val dialogFragment = newInstance("", "")
             dialogFragment.setBgColor(Color.GREEN)
+
+            // 测试fragment嵌套fragment时ChildFragmentManager的使用：
+            // 如果外层fragment以ADD的模式启动，再以childFragmentManager启动fragmentDialog后，再以ADD的模式启动另一个fragment后 dialog会显示在最顶层！！！
+            // 如果是replace的方式则childFragmentManager可以发挥正常，当fragment跳转后dialogFragment会被盖住：其实不是真盖住了，是因为replace启动fragment后会导致前一个fragment以及它包裹的dialogfragment走onDestroyView逻辑，
+            // 再次返回后其实是重新走了一遍onCreateView->onStart 等流程，是重新创建了view
+
             // 这里在show时：如果传入的fragmentManager是getChildFragmentManager，则fragment跳走后当前fragmentDialog会正常被盖住
             // 如果传入的fragmentManager是activity.getSupportFragmentManager，在页面跳走后当前fragmentDialog不会消失，会覆盖到目标fragment之上
             dialogFragment.show(childFragmentManager, "")
+
+
+            // 为什么 DialogFragment用dismiss好使，而用fragmentManager不好使？？？？
+//            val transition = childFragmentManager.beginTransaction()
+//            transition.hide(dialogFragment)
+//            transition.commitAllowingStateLoss()
+//            dialogFragment.dismiss()
 
             // 方式二：采用传统的AlertDialog来实现弹窗
             //showAlertDialog();
@@ -88,7 +100,6 @@ class FirstFragment : BaseFragment() {
             //transaction.replace(R.id.sub_fragment_container, subFragment);
             //transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
             //transaction.commit();
-            launcher!!.launch(null)
         }
         Log.w(TAG, "XL::: FistFragment  textView.getRootView() === ${textView?.rootView}")
         return rootView
@@ -183,6 +194,13 @@ class FirstFragment : BaseFragment() {
         val fragmentTransaction = childFm.beginTransaction()
         fragmentTransaction.add(EmptyFragment(), "xyz.xionglei")
         fragmentTransaction.commitAllowingStateLoss()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        childFragmentManager.fragments.forEach {
+            it.onHiddenChanged(hidden)
+        }
     }
 
     /**

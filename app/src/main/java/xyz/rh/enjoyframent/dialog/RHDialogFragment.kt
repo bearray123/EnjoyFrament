@@ -1,6 +1,8 @@
 package xyz.rh.enjoyframent.dialog
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,11 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.ColorInt
-import xyz.rh.common.xlog
-import xyz.rh.enjoyframent.Constants.GLOBAL_BACK_STACK_NAME
+import xyz.rh.common.log
 import xyz.rh.enjoyframent.R
+import xyz.rh.enjoyframent.fragment.NavigationManager
 import xyz.rh.enjoyframent.fragment.SecondFragment
-import kotlin.math.log
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,6 +32,11 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
     @ColorInt
     private var bgColor: Int? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        log("RHDialogFragment::Lifecycle::onAttach()")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,6 +52,7 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        log("RHDialogFragment::Lifecycle::onCreateView()")
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_dialog, container, false)
         rootView.setBackgroundColor(bgColor!!)
@@ -53,13 +60,7 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
         jumpBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
 
-                val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.fragment_container,
-                    SecondFragment()
-                )
-                //这行决定从当前DialogFragment跳转到SecondFragment之后，按返回键,DialogFragment是否还继续显示
-                transaction?.addToBackStack(GLOBAL_BACK_STACK_NAME)
-                transaction?.commit()
+                NavigationManager.push(SecondFragment(), NavigationManager.REPLACE)
 
             }
         })
@@ -68,7 +69,7 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
             // 测试：dismiss() 和 dismissAllowingStateLoss()
             Handler(Looper.myLooper()!!).postDelayed(object : Runnable {
                 override fun run() {
-                    xlog("click cancel:: delay 5s to dismiss")
+                    log("click cancel:: delay 5s to dismiss")
 //                    dismiss()
                     // 如果APP切后台（fragment走了onPause后）进行dissmiss会报如下异常crash，这里用postdelay就是为了模拟app切后台后执行dismiss
 //                    2023-06-30 17:11:17.145 19409-19409/xyz.rh.enjoyframent E/AndroidRuntime: FATAL EXCEPTION: main
@@ -99,10 +100,14 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        log("RHDialogFragment::Lifecycle::onViewCreated()")
     }
 
     override fun onResume() {
         super.onResume()
+        log("RHDialogFragment::Lifecycle::onResume()")
+        // context是Activity容器，对应的window和dialog本身对应的window是不一样的对象！
+        log("RHDialogFragment:: ---> context.window = ${(context as Activity).window}, dialog?.window = ${dialog?.window}")
     }
 
     /**
@@ -116,6 +121,40 @@ class RHDialogFragment : androidx.fragment.app.DialogFragment() {
         bgColor = color
         return this
     }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        val fragmentTransaction = this.parentFragmentManager.beginTransaction()
+        if (hidden) {
+//            fragmentTransaction.hide(this)
+            dismiss()
+        } else {
+//            fragmentTransaction.show(this)
+            show(this.parentFragmentManager,"")
+        }
+//        fragmentTransaction.commitAllowingStateLoss()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        log("RHDialogFragment::Lifecycle::onPause()")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        log("RHDialogFragment::Lifecycle::onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        log("RHDialogFragment::Lifecycle::onDestroy()")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        log("RHDialogFragment::Lifecycle::onDetach()")
+    }
+
 
     companion object {
         @JvmStatic

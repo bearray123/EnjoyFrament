@@ -21,6 +21,11 @@ fun xlog(msg : Any?) {
     xlog("", msg)
 }
 
+@Keep
+fun log(msg : Any?) {
+    Log.d("", "$msg")
+}
+
 @SuppressLint("NewApi")
 @Keep
 fun xprintln(msg: Any?) {
