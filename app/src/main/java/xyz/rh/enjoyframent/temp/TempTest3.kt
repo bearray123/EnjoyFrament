@@ -1,5 +1,7 @@
 package xyz.rh.enjoyframent.temp
 
+import xyz.rh.enjoyframent.javacallkt.MyJavaClass
+
 /**
  * Created by rayxiong on 2023/9/3.
  */
@@ -26,5 +28,23 @@ fun main() {
     }
 
     println("the END")
+
+
+    val getNameFromJava  = MyJavaClass.getInstance()?.name
+    println("getNameFromJava == $getNameFromJava")
+
+
+    val map1 = mutableMapOf<String, Int>(
+            "123" to 123,
+            "456" to 456
+    )
+
+//    map1.also {
+//        "123" to 123
+//        "456" to 456
+//    }
+    println("map1.size = ${map1.size}")
+
+
 
 }

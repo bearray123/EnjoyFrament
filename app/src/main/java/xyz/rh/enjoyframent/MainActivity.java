@@ -30,6 +30,7 @@ import xyz.rh.enjoyframent.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyframent.di.test.DaggerBussComponent;
 import xyz.rh.enjoyframent.fragment.TestFragmentEntryActivity;
 import xyz.rh.enjoyframent.jsonparser.TestJsonParserActivity;
+import xyz.rh.enjoyframent.kotlin.KotlinMainActivity;
 import xyz.rh.enjoyframent.layoutparams.TestLayoutParamsActivity;
 import xyz.rh.enjoyframent.scroll.TestScrollActivity;
 import xyz.rh.enjoyframent.touchevent.EnjoyTouchEventActivity;
@@ -144,6 +145,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Window activityWindow = getWindow();
         Log.d(TAG, "window:: getWindow()=== " + activityWindow);
 
+        _layoutBinding.testKotlin.setOnClickListener(this);
         _layoutBinding.testTouchEvent.setOnClickListener(this);
         _layoutBinding.testFragmentEntry.setOnClickListener(this);
         _layoutBinding.mySkipBtn.setOnClickListener(this);
@@ -313,8 +315,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override public void onClick(View v) {
 
-        if(v == _layoutBinding.testFragmentEntry) {
-
+        if (v == _layoutBinding.testKotlin) {
+            startActivity(new Intent(this, KotlinMainActivity.class));
+        } else if(v == _layoutBinding.testFragmentEntry) {
             // 进入到该页面后就发送 EventPublisher事件，看首页注册的地方能不能收到
             Log.d(TAG, "xl::::BaseEventPublisher.publish");
             BaseEventPublisher.getPublisher().publish("category_abc");
