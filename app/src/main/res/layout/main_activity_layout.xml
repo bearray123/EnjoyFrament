@@ -29,12 +29,25 @@
 
 
   <Button
-      android:id="@+id/test_touch_event"
+      android:id="@+id/test_kotlin"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginLeft="50dp"
+      android:layout_marginRight="50dp"
+      android:layout_marginTop="20dp"
+      android:text="kotlin"
+      />
+
+  <Button
+      android:id="@+id/test_touch_event"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test_kotlin"
       android:layout_marginLeft="50dp"
       android:layout_marginRight="50dp"
       android:layout_marginTop="20dp"

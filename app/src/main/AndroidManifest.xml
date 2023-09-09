@@ -30,6 +30,16 @@
     </activity>
 
     <activity
+        android:name=".kotlin.KotlinMainActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        />
+
+    <activity
+        android:name=".kotlin.KotlinSecondActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+        />
+
+    <activity
         android:name=".touchevent.EnjoyTouchEventActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar"
         />

@@ -47,7 +47,6 @@ dependencies {
   implementation project(path: ':common')
 
 
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$CORE_KTX_VERSION"
 
   implementation 'com.google.dagger:dagger:2.44'
   implementation 'androidx.legacy:legacy-support-v4:1.0.0'
