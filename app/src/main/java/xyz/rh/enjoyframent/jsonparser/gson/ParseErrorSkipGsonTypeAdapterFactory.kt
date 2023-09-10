@@ -27,6 +27,7 @@ class ParseErrorSkipGsonTypeAdapterFactory : TypeAdapterFactory {
                     adapter.read(reader)
                 } catch (e: Throwable) {
                     e.printStackTrace()
+//                    reader.skipValue() // 这行加的不对， 虽然不会导致整个model报错，但是从hashmap之后都是null
                     if (reader.hasNext()) {
                         if (reader.peek() == JsonToken.NAME) {
                             reader.nextName()

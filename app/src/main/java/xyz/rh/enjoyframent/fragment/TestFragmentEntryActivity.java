@@ -22,7 +22,8 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
     public static final String TAG = "FragmentEntryActivity";
 
     private View btn1, btn2, btn3, btn4;
-    private TextView mBackStackContentView;
+
+    private TextView mBackStackContent1;
 
     private LinkedList<Integer> backStackList = new LinkedList<>();
 
@@ -65,7 +66,7 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         //}, 5000);
 
 
-        mBackStackContentView = findViewById(R.id.backstack_content);
+        mBackStackContent1 = findViewById(R.id.backstack_content1);
 
         Fragment.class.isAssignableFrom(Object.class);
 
@@ -103,6 +104,7 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
+            //changeFragment(fragment, RELEACE, true);
             NavigationManager.push(fragment, NavigationManager.REPLACE, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
@@ -134,7 +136,7 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
             // 通过把ThirdFragment使用单独的容器来验证容器和回退栈的关系，结论如下：
             // 当把ThirdFragment使用单独容器时，回退栈里的内容是不区分容器的，会返回所有容器的size，
             // 例如fragmentManager.getBackStackEntryCount()返回的是所有容器（包括fragment_container和fragment_container_2）里的count
-            transaction.replace(R.id.fragment_container, fragment); // ThirdFragment单独使用另一个容器
+            transaction.replace(R.id.fragment_container_2, fragment); // ThirdFragment单独使用另一个容器2
             transaction.addToBackStack("ThirdFrag");
             transaction.commit();
 
@@ -173,7 +175,7 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
     private void updateBackStackContent() {
         FragmentManager fragmentManager =  getSupportFragmentManager();
         int backstackEntryCount = fragmentManager.getBackStackEntryCount();
-        mBackStackContentView.setText("回退栈：" + backstackEntryCount);
+        mBackStackContent1.setText(getResources().getString(R.string.backstack_container1_count_string, backstackEntryCount));
     }
 
 

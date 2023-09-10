@@ -28,6 +28,11 @@ class TestJsonParserActivity: BaseActivity() {
         val student2 = MyJSONParserUtils.convertJsonFromClass(data2, Student::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  student2=$student2")
 
+        // com.google.gson.JsonSyntaxException: Expected a java.util.HashMap but was com.google.gson.internal.LinkedTreeMap
+        val studentWithHashmap = MyJSONParserUtils.convertJsonFromClass(data, StudentWithHashMap::class.java)
+        println("MyJSONParserUtils.convertJsonFromClass ---->  studentWithHashmap=$studentWithHashmap")
+
+
         // 3，4，5，解析出来一样！hobbyMap内都是按照map嵌套map去解析的。
         val student3 = MyJSONParserUtils.convertJsonFromClass(data3, Student::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  student3=$student3")
@@ -39,6 +44,8 @@ class TestJsonParserActivity: BaseActivity() {
         println("MyJSONParserUtils.convertJsonFromClass ---->  student5=$student5")
 
 
+
+
         val teacher = MyJSONParserUtils.convertJsonFromClass(data3, Teacher::class.java)
         println("MyJSONParserUtils.convertJsonFromClass ---->  teacher=$teacher")
 
@@ -46,15 +53,15 @@ class TestJsonParserActivity: BaseActivity() {
         // 验证Gson自定义TypeAdapterFactory来兼容服务端下发类型不匹配导致整个model解析报错崩溃的问题
         // 特意传入错误类型的json，例如把定义成string类型的name传入 true,[],{}等 用原生Gson解析就报错崩溃
         // 用ParseErrorSkipGsonTypeAdapterFactory兼容的话就跳过name，不影响其他字段的解析，最终name解析出来为null
-        val studentError = MyJSONParserUtils.convertJsonFromClass(dataError, Student::class.java)
-        println("MyJSONParserUtils.convertJsonFromClass ---->  studentError=$studentError")
+//        val studentError = MyJSONParserUtils.convertJsonFromClass(dataError, Student::class.java)
+//        println("MyJSONParserUtils.convertJsonFromClass ---->  studentError=$studentError")
 
 
 
-
-        val mapWrapListStudent = MyJSONParserUtils.convertJsonFromClass(data4, ComplexStudent::class.java)
-        println("MyJSONParserUtils.convertJsonFromClass ---->  mapWrapListStudent=$mapWrapListStudent")
-
+        // 现象及结论：当服务端不返回name时，这里虽然定义了构造器里默认传defaultName，但是由于gson通过反射无参构造器是无效的（因为它本身没有无参构造器），
+        // 最终会走Unsafe的不安全方式绕过构造器去生成对象，这样属性其实是都没有赋值的，理论上都是反编译java之后默认的值，即string是null，Int是0，Map是null
+//        val mapWrapListStudent = MyJSONParserUtils.convertJsonFromClass(data4, ComplexStudent::class.java)
+//        println("MyJSONParserUtils.convertJsonFromClass ---->  mapWrapListStudent=$mapWrapListStudent")
 
 
 
@@ -115,6 +122,25 @@ data class Student(
     var hobbyMap: Map<String, Int>
     )
 
+data class StudentWithHashMap(
+
+    // 现象及结论：当服务端不返回name时，这里虽然定义了构造器里默认传defaultName，但是由于gson通过反射无参构造器是无效的（因为它本身没有无参构造器），
+    // 最终会走Unsafe的不安全方式绕过构造器去生成对象，这样属性其实是都没有赋值的，理论上都是反编译java之后默认的值，即string是null，Int是0，Map是null
+    @SerializedName("name")
+    var name: String = "defaultName",
+
+    @SerializedName("age")
+    var age: Int = -1,
+
+    @SerializedName("hobby_map")
+    var hobbyMap: HashMap<String, Any>,
+
+    // !!! 前面hashmap解析类型出现异常，只要后面紧跟着还有属性要解析的话必定报错，导致整个model都解析为null。
+    // 如果hashmap解析出错是最后一个，即后面不再有数据需要解析，则model能解析成功，只是hashmap那一个属性是解析失败为null
+    @SerializedName("tail_property")
+    val tailProperty: String
+)
+
 
 
 data class Student2(
@@ -152,8 +178,6 @@ data class Hobby(
 
 data class ComplexStudent(
 
-    // 现象及结论：当服务端不返回name时，这里虽然定义了构造器里默认传defaultName，但是由于gson通过反射无参构造器是无效的（因为它本身没有无参构造器），
-    // 最终会走Unsafe的不安全方式绕过构造器去生成对象，这样属性其实是都没有赋值的，理论上都是反编译java之后默认的值，即string是null，Int是0，Map是null
     @SerializedName("name")
     var name: String = "defaultName",
 

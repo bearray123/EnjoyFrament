@@ -82,20 +82,12 @@ const val data = """
         "name" : "dodo",
         "age": "18",
         "hobby_map": {
-            "h1": {
-                "name": "看动画片",
-                "level": 0
-            },
-            "h2": {
-                "name": "switch",
-                "level": 1
-            },
-            "h3": {
-                "name": "eatting",
-                "level": 3
-            },
+            "h1": 12,
+            "h2": 13,
+            "h3": 14,
             "h4": 100
-        }
+        },
+        "tail_property": "this is the end"
     }
 """
 

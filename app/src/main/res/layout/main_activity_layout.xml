@@ -56,6 +56,7 @@
 
     <Button
       android:id="@+id/test_fragment_entry"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -68,7 +69,8 @@
       />
 
     <Button
-        android:id="@+id/test_viper"
+      android:id="@+id/test_viper"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -82,6 +84,7 @@
 
     <Button
       android:id="@+id/test_dialog"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -96,6 +99,7 @@
 
      <Button
       android:id="@+id/test_viewpager2"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -111,6 +115,7 @@
 
   <Button
       android:id="@+id/test_layoutparams"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -125,6 +130,7 @@
 
   <Button
       android:id="@+id/test_json_parser"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -139,6 +145,7 @@
 
   <Button
       android:id="@+id/open_didi_app"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"
@@ -153,6 +160,7 @@
 
   <Button
       android:id="@+id/test_scroll"
+      android:textAllCaps="false"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_constraintLeft_toLeftOf="parent"

@@ -49,7 +49,7 @@ class ThirdFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        textView.text = "我是 第三个, 所在的容器是container_2 :: $this"
+        textView.text = "我是 ${this.javaClass.simpleName}, 所在的容器是container_2 :: $this"
 
 //        textView.postDelayed(object : Runnable {
 //            override fun run() {

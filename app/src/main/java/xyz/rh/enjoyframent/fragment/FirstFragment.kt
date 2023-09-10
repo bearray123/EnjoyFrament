@@ -81,8 +81,6 @@ class FirstFragment : BaseFragment() {
 //            transition.commitAllowingStateLoss()
 //            dialogFragment.dismiss()
 
-            // 方式二：采用传统的AlertDialog来实现弹窗
-            //showAlertDialog();
         }
         mStartSubFragment = rootView.findViewById(R.id.start_sub_fragment)
         mStartSubFragment?.setOnClickListener {
@@ -103,43 +101,6 @@ class FirstFragment : BaseFragment() {
         }
         Log.w(TAG, "XL::: FistFragment  textView.getRootView() === ${textView?.rootView}")
         return rootView
-    }
-
-    private fun showAlertDialog() {
-        ///  这里采用传统的dialog弹窗打log是为了确认传统dialog的window跟当前界面（activity/fragment）的window是不同的对象
-        val dialogRootView =
-            LayoutInflater.from(context).inflate(R.layout.dialog_content_layout, null)
-        val builder = AlertDialog.Builder(context)
-        builder.setView(dialogRootView)
-        val dialog = builder.create()
-        dialog.setTitle("oH，弹窗标题")
-        //dialog.setContentView(dialogRootView);
-        val jumpView = dialogRootView.findViewById<View>(R.id.dialog_ck_btn)
-        jumpView.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            //transaction.replace(R.id.fragment_container, new SecondFragment());
-            transaction.replace(R.id.global_dialog_container, newInstance())
-            transaction.addToBackStack(Constants.GLOBAL_BACK_STACK_NAME)
-            transaction.commit()
-        }
-
-        //dialog.setMessage("这是用传统AlertDialog的弹窗: dialog.getOwnerActivity=" + dialog.getOwnerActivity());
-        //dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "点击我弹一个DialogFragment弹窗",
-        //    new DialogInterface.OnClickListener() {
-        //        @Override public void onClick(DialogInterface dialog, int which) {
-        //
-        //            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        //            //FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        //            //transaction.replace(R.id.fragment_container, new SecondFragment());
-        //            transaction.replace(R.id.global_dialog_container, ThirdFragment.Companion.newInstance());
-        //            transaction.addToBackStack(GLOBAL_BACK_STACK_NAME);
-        //            transaction.commit();
-        //
-        //        }
-        //    });
-        dialog.show()
-        Log.w(TAG, "window:: === AlertDialog.getWindow" + dialog.window)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
