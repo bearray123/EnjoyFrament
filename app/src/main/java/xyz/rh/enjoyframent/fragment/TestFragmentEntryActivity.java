@@ -102,11 +102,9 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            //changeFragment(fragment, RELEACE, true);
             NavigationManager.push(fragment, NavigationManager.REPLACE, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
-            //changeFragment(fragment, RELEACE, true);
 
             // 目前遇到的疑惑：
             // replace + addbackstack跳转到A,  然后replace 跳转到B， 此时回退栈只有A，再继续relace + addbackstack跳转A，此时回退栈里有两个A
