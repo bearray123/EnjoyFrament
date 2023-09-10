@@ -97,12 +97,18 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
 
         if (v == btn1) {
             FirstFragment fragment = new FirstFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode", "ADD");
+            fragment.setArguments(bundle);
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            NavigationManager.push(fragment, NavigationManager.REPLACE, true);
+            NavigationManager.push(fragment, NavigationManager.ADD, true);
         } else if (v == btn2) {
             SecondFragment fragment = new SecondFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("mode", "ADD");
+            fragment.setArguments(bundle);
             fragment.updateContent(fragment.hashCode() + "::加入回退栈");
-            NavigationManager.push(fragment, NavigationManager.REPLACE, true);
+            NavigationManager.push(fragment, NavigationManager.ADD, true);
         } else if (v == btn3) {
             ThirdFragment fragment = new ThirdFragment();
 

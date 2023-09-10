@@ -54,8 +54,11 @@ public class SecondFragment extends BaseFragment {
         List<Fragment> fragmentList = fragmentManager.getFragments();
 
         int currentFragmentIndex = fragmentList.indexOf(this);
-
-        textView.setText(textView.getText() + " :: " + currentFragmentIndex);
+        String mode = "unknow";
+        if (getArguments() != null) {
+            mode = getArguments().getString("mode");
+        }
+        textView.setText(textView.getText() + ":: 启动模式 " + mode + "--->fragmentList.indexOf(this) " + currentFragmentIndex);
 
         return rootView;
 

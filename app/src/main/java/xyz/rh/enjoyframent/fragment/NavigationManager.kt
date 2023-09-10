@@ -38,9 +38,18 @@ object NavigationManager {
 
 
     @JvmStatic
-    fun init(fragmentManager: FragmentManager, pageContainerId: Int) {
-        this.fragmentMananger = fragmentManager
+    fun init(fm: FragmentManager, pageContainerId: Int) {
+        fragmentMananger = fm
         this.pageContainerId = pageContainerId
+
+        fragmentMananger.addOnBackStackChangedListener {
+            val entryCount = fragmentMananger.backStackEntryCount
+            currentFragment = if (entryCount >= 1) {
+                fragmentMananger.fragments[entryCount - 1]
+            } else {
+                null
+            }
+        }
     }
 
     @JvmStatic

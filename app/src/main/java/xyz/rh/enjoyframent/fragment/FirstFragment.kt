@@ -58,7 +58,8 @@ class FirstFragment : BaseFragment() {
 
         val fragmentList = parentFragmentManager.fragments
         val currentFragmentIndex = fragmentList.indexOf(this)
-        textView?.text = "${textView?.text} :: ${currentFragmentIndex+1}" // index从0开始的
+        val mode = arguments?.getString("mode")
+        textView?.text = "${textView?.text} :: 启动模式 $mode ---> fragmentList.indexOf(this) = $currentFragmentIndex" // index从0开始的
         mShowDialogBtn = rootView.findViewById(R.id.show_dialog_btn)
         mShowDialogBtn?.setOnClickListener {
             // 方式一：采用DialogFragment来实现弹窗

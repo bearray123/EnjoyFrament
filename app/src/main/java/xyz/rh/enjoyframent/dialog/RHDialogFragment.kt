@@ -73,7 +73,7 @@ class RHDialogFragment : DialogFragment() {
         jumpBtn.setOnClickListener {
             NavigationManager.push(
                 SecondFragment(),
-                NavigationManager.REPLACE
+                NavigationManager.ADD
             )
         }
         rootView.findViewById<Button>(R.id.in_dialog_cancel).setOnClickListener {
@@ -103,7 +103,7 @@ class RHDialogFragment : DialogFragment() {
 
                 // 不关注状态丢失的话建议使用dismissAllowingStateLoss
                 dismissAllowingStateLoss()
-            }, 3000)
+            }, /*3000*/0)
         }
         return rootView
     }
@@ -137,6 +137,7 @@ class RHDialogFragment : DialogFragment() {
         if (hidden) {
 //            fragmentTransaction.hide(this)
             dismiss()
+
         } else {
 //            fragmentTransaction.show(this)
             show(this.parentFragmentManager,"")
