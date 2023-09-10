@@ -94,8 +94,6 @@ public class SecondFragment extends BaseFragment {
     @Override public void onResume() {
         super.onResume();
 
-        constraintContainer.update();
-
     }
 
     @Override public void onPause() {

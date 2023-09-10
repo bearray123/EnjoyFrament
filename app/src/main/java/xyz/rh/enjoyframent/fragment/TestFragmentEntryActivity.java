@@ -72,13 +72,11 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
 
         FragmentManager fragmentManager =  getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(
-            new FragmentManager.OnBackStackChangedListener() {
-                @Override public void onBackStackChanged() {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    List<Fragment> fragmentList = fragmentManager.getFragments();
-                    Log.d(TAG, "onBackStackChanged========" + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager.getBackStackEntryCount());
-                    updateBackStackContent();
-                }
+            () -> {
+                FragmentManager fragmentManager1 = getSupportFragmentManager();
+                List<Fragment> fragmentList = fragmentManager1.getFragments();
+                Log.d(TAG, "onBackStackChanged========" + ", fragmentList size = " + fragmentList.size() + ", fragmentManager.getBackStackEntryCount = " + fragmentManager1.getBackStackEntryCount());
+                updateBackStackContent();
             });
 
         // Activity里 非Fragment中的view.getRootView == DecorView

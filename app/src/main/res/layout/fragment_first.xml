@@ -11,11 +11,11 @@
       android:id="@+id/textview_first"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="我是First Fragment!!!"
+      android:text="FirstFragment"
       android:textSize="28sp"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginStart="5dp"
       />
 
   <ImageView
