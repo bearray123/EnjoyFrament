@@ -152,6 +152,8 @@ class FirstFragment : BaseFragment() {
                 }
             })
         //////////////////////////////////////////////////////////////////
+        // 这里用空fragment只是想测试 以不带containerViewId来add一个fragment是什么效果：
+        // 结论：空fragment可感知父fragment的生命周期，另外空fragment由于没有containerViewId其实是不会加到视图中去的！
         val childFm = childFragmentManager
         val fragmentTransaction = childFm.beginTransaction()
         fragmentTransaction.add(EmptyFragment(), "xyz.xionglei")

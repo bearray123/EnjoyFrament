@@ -4,6 +4,7 @@ import androidx.annotation.IntDef
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import xyz.rh.common.log
 import xyz.rh.enjoyframent.Constants
 import java.util.*
 
@@ -42,8 +43,11 @@ object NavigationManager {
         fragmentMananger = fm
         this.pageContainerId = pageContainerId
 
+
         fragmentMananger.addOnBackStackChangedListener {
             val entryCount = fragmentMananger.backStackEntryCount
+            val fragmentsListSize = fragmentMananger.fragments.size
+            log("onBackStackChanged::---> backStackEntryCount = $entryCount, fragments size = $fragmentsListSize")
             currentFragment = if (entryCount >= 1) {
                 fragmentMananger.fragments[entryCount - 1]
             } else {
