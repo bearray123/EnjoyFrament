@@ -129,11 +129,19 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
             // 而relace = remove（B）+ add（A），这一跳转其实是两个option，那么在A页面按返回键时进行的回退栈回滚的是remove（A）+ add（B）
             // 所以按返回键相当于是把A移除了，然后重新把B显示出来，自然也就走到了B的onCreateView,onViewCreated,onResume等生命周期
 
+
             FragmentManager fragmentManager =  getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            //fragmentManager.popBackStack();  // 所谓的popBackStack，顾名思义就是pop回退栈里的元素
-            //transaction.remove(cacheFragment);
-            //transaction.detach(cacheFragment); // detach并不会导致fragment销毁走onDestroy和onDetach，只会走到onDestroyView，具体看该方法的官方注释
+
+            // 测试：添加fragment3时采用 一个事务，先remove 2， 然后add 3，同时加回退栈；然后返回时还是会走2的onCreateView, onViewCreated, onStart, onResume
+            //List<Fragment> list = fragmentManager.getFragments();
+            //Fragment topFragment = list.get(list.size() - 1);
+            //transaction.remove(topFragment);
+            //transaction.add(R.id.fragment_container, fragment);
+            //Log.d("", "lifecycle:: ------> 先remove， 然后add， remove的是：" + topFragment);
+            //transaction.addToBackStack(null);
+            //transaction.commit();
+
 
             // 通过把ThirdFragment使用单独的容器来验证容器和回退栈的关系，结论如下：
             // 当把ThirdFragment使用单独容器时，回退栈里的内容是不区分容器的，会返回所有容器的size，

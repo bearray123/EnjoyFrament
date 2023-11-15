@@ -15,6 +15,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -24,6 +27,8 @@ import xyz.rh.enjoyframent.Constants
 import xyz.rh.enjoyframent.R
 import xyz.rh.enjoyframent.dialog.RHDialogFragment.Companion.newInstance
 import xyz.rh.enjoyframent.fragment.ThirdFragment.Companion.newInstance
+import xyz.rh.enjoyframent.fragment.model.GameHeroViewModel
+import xyz.rh.enjoyframent.viewpager2.dota.DotaHero
 
 /**
  * Created by rayxiong on 2023/9/9.
@@ -35,6 +40,13 @@ class FirstFragment : BaseFragment() {
     private var mText: String? = null
     private var mShowDialogBtn: Button? = null
     private var mStartSubFragment: Button? = null
+
+
+    private val model: ViewModel by activityViewModels<GameHeroViewModel>()
+//    private val model: ViewModel by activityViewModels<GameHeroViewModel> {
+//        ViewModelProvider.AndroidViewModelFactory()
+//    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

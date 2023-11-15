@@ -75,11 +75,14 @@ dependencies {
 
   ///////////////// for java
   // ViewModel for java
-  implementation "androidx.lifecycle:lifecycle-viewmodel:$ANDROID_LIFECYCLE_VERSION"
+  api "androidx.lifecycle:lifecycle-viewmodel:$ANDROID_LIFECYCLE_VERSION"
   // LiveData for java
-  implementation "androidx.lifecycle:lifecycle-livedata:$ANDROID_LIFECYCLE_VERSION"
+  api "androidx.lifecycle:lifecycle-livedata:$ANDROID_LIFECYCLE_VERSION"
   // Lifecycles only (without ViewModel or LiveData)   for java
-  implementation "androidx.lifecycle:lifecycle-runtime:$ANDROID_LIFECYCLE_VERSION"
+  api "androidx.lifecycle:lifecycle-runtime:$ANDROID_LIFECYCLE_VERSION"
+
+  // 使用 activityViewModels()扩展函数
+  api "androidx.fragment:fragment-ktx:1.3.5"
 
 
 

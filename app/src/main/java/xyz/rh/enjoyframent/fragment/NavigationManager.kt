@@ -101,13 +101,14 @@ object NavigationManager {
         when (mode) {
             REPLACE -> transaction.replace(
                 pageContainerId,
-                targetFragment
+                targetFragment,
+                targetFragment::class.java.simpleName
             )
             ADD -> { // add模式：先把当前的hide，然后add目标fragment
                 currentFragment?.let {
                     transaction.hide(it)
                 }
-                transaction.add(pageContainerId, targetFragment)
+                transaction.add(pageContainerId, targetFragment, targetFragment::class.java.simpleName)
                 currentFragment = targetFragment
             }
             REMOVE -> transaction.remove(targetFragment)
@@ -137,7 +138,7 @@ object NavigationManager {
         //transaction.replace(pageContainerId, newFragment);
         if (addToBackStack) {
             // 将fragment管理加入到回退栈，栈名可以传null
-            transaction.addToBackStack(Constants.GLOBAL_BACK_STACK_NAME)
+            transaction.addToBackStack(/*Constants.GLOBAL_BACK_STACK_NAME*/null)
         }
         val indetify = transaction.commitAllowingStateLoss()
         backStackList.push(indetify)
