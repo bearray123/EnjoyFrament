@@ -18,7 +18,7 @@
       app:layout_constraintStart_toStartOf="parent"
       />
 
-  <xyz.rh.enjoyframent.fragment.view.RHConstraintLayout
+  <xyz.rh.enjoyfragment.fragment.view.RHConstraintLayout
       android:id="@+id/rh_constraint_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

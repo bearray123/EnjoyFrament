@@ -57,8 +57,17 @@
       android:layout_marginStart="10dp"
     />
 
+  <ImageView
+      android:id="@+id/juxiaodi_gif"
+      android:layout_width="100dp"
+      android:layout_height="200dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/add_subview_btn"
+      android:visibility="visible"
+      android:layout_marginTop="2dp"/>
 
-  <xyz.rh.enjoyframent.layoutparams.NewUserLayout
+
+  <xyz.rh.enjoyfragment.layoutparams.NewUserLayout
       android:id="@+id/new_user_layout_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -87,7 +96,7 @@
         android:layout_marginLeft="10dp"
         tools:background="#000ffe"
         />
-  </xyz.rh.enjoyframent.layoutparams.NewUserLayout>
+  </xyz.rh.enjoyfragment.layoutparams.NewUserLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

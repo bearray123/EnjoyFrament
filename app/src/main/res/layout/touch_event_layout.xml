@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <xyz.rh.enjoyframent.touchevent.RHFrameLayout
+  <xyz.rh.enjoyfragment.touchevent.RHFrameLayout
       android:id="@+id/main_frame_layout"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -17,9 +17,9 @@
         android:text="我是底部灰色的RHFrameLayout"
         />
 
-  </xyz.rh.enjoyframent.touchevent.RHFrameLayout>
+  </xyz.rh.enjoyfragment.touchevent.RHFrameLayout>
 
-  <xyz.rh.enjoyframent.touchevent.RHLinearLayout
+  <xyz.rh.enjoyfragment.touchevent.RHLinearLayout
       android:id="@+id/linear_layout"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -32,7 +32,7 @@
         android:text="我是盖在灰色区域RHFrameLayout之上的RHLinearLayout"
       />
 
-    <xyz.rh.enjoyframent.touchevent.RHButton
+    <xyz.rh.enjoyfragment.touchevent.RHButton
         android:id="@+id/rh_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
       />
 
 
-    <xyz.rh.enjoyframent.view.RoundCornerLinearLayout
+    <xyz.rh.enjoyfragment.view.RoundCornerLinearLayout
         android:layout_width="220dp"
         android:layout_height="150dp"
         android:background="@drawable/tab_icon_alert"
@@ -67,7 +67,7 @@
           android:background="#FFDEA8"
         />
 
-    </xyz.rh.enjoyframent.view.RoundCornerLinearLayout>
+    </xyz.rh.enjoyfragment.view.RoundCornerLinearLayout>
 
 
     <!--这里设置黑色是为了测试当background是.9图时这个ConstraintLayout真实的站位空间，这个.9图是有上下左右空余空间的
@@ -86,7 +86,7 @@
         android:background="@color/black"
       />
 
-  </xyz.rh.enjoyframent.touchevent.RHLinearLayout>
+  </xyz.rh.enjoyfragment.touchevent.RHLinearLayout>
 
 
 
