@@ -20,19 +20,18 @@ open class BaseActivity : FragmentActivity() /*:AppCompatActivity*/ {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         val contentView = findViewById<View>(R.id.content) // FrameLayout
         // DecorView extends FrameLayout
         // 对Activity、Window、DecorView的总结：
         //
         xlog("BaseActivity::Lifecycle::onCreate --->[ this = $this ], [window=$window], [window.decorView = ${window.decorView}] , findViewById(R.id.content) = $contentView")
 
-
     }
 
 
     override fun onStart() {
         super.onStart()
+        xlog("BaseActivity::Lifecycle::onStart ---> this = $this")
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -55,17 +54,17 @@ open class BaseActivity : FragmentActivity() /*:AppCompatActivity*/ {
 
     override fun onPause() {
         super.onPause()
+        xlog("BaseActivity::Lifecycle::onPause ---> this = $this")
     }
 
     override fun onStop() {
         super.onStop()
+        xlog("BaseActivity::Lifecycle::onStop ---> this = $this")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         xlog("BaseActivity::Lifecycle::onDestroy ---> this = $this")
     }
-
-
 
 }
