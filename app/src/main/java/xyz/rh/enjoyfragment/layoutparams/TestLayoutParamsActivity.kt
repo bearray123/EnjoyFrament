@@ -18,7 +18,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import kotlinx.coroutines.Runnable
 import xyz.rh.common.dp
+import xyz.rh.common.getUiHandler
 import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
@@ -67,6 +69,8 @@ class TestLayoutParamsActivity : BaseActivity() {
         }
 
         val newUserLayout = findViewById<NewUserLayout>(R.id.new_user_layout_container)
+        testViewApis(newUserLayout) // 测试View类的一些api执行效果
+
         val viewStub = findViewById<ViewStub>(R.id.xiaorentou_container_view_stub)
         viewStub.visibility = View.VISIBLE
 
@@ -129,9 +133,33 @@ class TestLayoutParamsActivity : BaseActivity() {
 
     }
 
+    private fun testViewApis(view: NewUserLayout) {
+
+        getUiHandler().postDelayed(Runnable {
+            xlog("test invalidate()::")
+            // 结论：invalidate()操作只会导致重绘（一般来说是这样，除非布局也发生变化就另说了）
+            view.invalidate()
+
+        }, 5000)
+
+        getUiHandler().postDelayed(Runnable {
+            xlog("test requestLayout()::")
+            // 结论：requestLayout操作会导致 onMeasure onLayout onDraw三部曲都执行
+            view.requestLayout()
+
+        }, 10_000)
+
+        getUiHandler().postDelayed(Runnable {
+            xlog("test scrollBy()::")
+            // 结论：scrollBy等操作只会导致重绘，即onDraw，效果跟invalidate()一样，从定义上来看scrollBy只是改变了view的位置而已，其布局（布局是对它的children而言的）是没变化的，所以不会执行measure layout等操作
+            view.scrollBy(40, 80)
+
+        }, 20_000)
+
+    }
+
     override fun onResume() {
         super.onResume()
-
 //        testAddView()
 
     }

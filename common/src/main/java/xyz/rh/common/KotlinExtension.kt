@@ -1,6 +1,8 @@
 package xyz.rh.common
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 
 /**
@@ -28,4 +30,11 @@ private fun applyDimension(value: Float): Int {
     if (res != 0) return res
     if (value == 0f) return 0
     return if (value > 0) 1 else -1
+}
+
+
+val UI_HANDLER = Handler(Looper.getMainLooper())
+
+fun getUiHandler() : Handler {
+    return UI_HANDLER
 }
