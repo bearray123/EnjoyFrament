@@ -2,6 +2,8 @@ package xyz.rh.enjoyfragment.viewpager2.dota
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.R
@@ -97,6 +100,14 @@ class DotaFragment : BaseFragment() {
         })
 
         getAndUpdate(mListAdapter)
+
+        Handler(Looper.getMainLooper()).postDelayed(object : Runnable{
+            override fun run() {
+                xlog("test notifyDataSetChanged====")
+                mListAdapter.notifyDataSetChanged()
+            }
+
+        }, 10_000)
 
     }
 
