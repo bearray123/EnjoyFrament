@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintLayout
 import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.R
@@ -26,36 +27,84 @@ class NewUserLayout @JvmOverloads constructor(
         setWillNotDraw(false)
 
         setBackgroundColor(Color.BLUE)
-        xlog("NewUserLayout:lifecycle constructor()")
+        xlog("View::lifecycle:NewUserLayout: constructor()")
     }
 
+    // region 绘制相关
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        xlog("NewUserLayout:lifecycle onMeasure()")
+        xlog("View::lifecycle:NewUserLayout: onMeasure()")
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        xlog("NewUserLayout:lifecycle onLayout()")
+        xlog("View::lifecycle:NewUserLayout: onLayout()")
     }
 
     override fun draw(canvas: Canvas?) {
         super.draw(canvas)
-        xlog("NewUserLayout:lifecycle draw()")
+        xlog("View::lifecycle:NewUserLayout: draw()")
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        xlog("NewUserLayout:lifecycle onDraw()  measureWidth = $measuredWidth, mesureHeight=$measuredHeight")
+        xlog("View::lifecycle:NewUserLayout: onDraw()  measureWidth = $measuredWidth, mesureHeight=$measuredHeight")
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
-        xlog("NewUserLayout:lifecycle dispatchDraw()")
+        xlog("View::lifecycle:NewUserLayout: dispatchDraw()")
+    }
+    // region end
+
+    // region 触摸相关
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        xlog("View::lifecycle:NewUserLayout: onTouchEvent()")
+//        return super.onTouchEvent(event)
+        return true
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        xlog("View::lifecycle:NewUserLayout: onInterceptTouchEvent()")
+        return super.onInterceptTouchEvent(ev)
+//        return true
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        xlog("View::lifecycle:NewUserLayout: dispatchTouchEvent()")
+        return super.dispatchTouchEvent(ev)
+    }
+    // region end
+
+    // region view挂载相关
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        xlog("View::lifecycle:NewUserLayout: onAttachedToWindow()")
+        parent.requestDisallowInterceptTouchEvent(true)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        xlog("View::lifecycle:NewUserLayout: onDetachedFromWindow()")
+    }
+    // region end
+
+
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        xlog("View::lifecycle:NewUserLayout: onFinishInflate()")
     }
 
 
+    override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+        xlog("View::lifecycle:NewUserLayout: onScrollChanged()")
+        super.onScrollChanged(l, t, oldl, oldt)
+    }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        xlog("View::lifecycle:NewUserLayout: onSizeChanged()")
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
 
 
 
