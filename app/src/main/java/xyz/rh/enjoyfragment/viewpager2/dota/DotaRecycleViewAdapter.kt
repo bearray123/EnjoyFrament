@@ -28,7 +28,7 @@ class DotaRecycleViewAdapter(diffCallback: DiffUtil.ItemCallback<DotaHero>) : Li
     lateinit var mItemRootView: View
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DotaHeroViewHolder {
 
-        Log.d(TAG, "lifecycle: onCreateViewHolder()")
+        Log.d(TAG, "DotaRecycleView:lifecycle: onCreateViewHolder()")
 
 
         // ItemView
@@ -38,7 +38,7 @@ class DotaRecycleViewAdapter(diffCallback: DiffUtil.ItemCallback<DotaHero>) : Li
     }
 
     override fun onBindViewHolder(holder: DotaHeroViewHolder, position: Int) {
-        Log.d(TAG, "lifecycle: onBindViewHolder()")
+        Log.d(TAG, "DotaRecycleView:lifecycle: onBindViewHolder()")
 
         holder.bindView(getItem(position))
     }

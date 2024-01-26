@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
+import xyz.rh.enjoyfragment.viewpager2.csgo.CSGOFragment
 import xyz.rh.enjoyfragment.viewpager2.dota.DotaFragment
 
 /**
