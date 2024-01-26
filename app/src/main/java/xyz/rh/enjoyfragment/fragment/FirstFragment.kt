@@ -1,10 +1,17 @@
 package xyz.rh.enjoyfragment.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ComponentCallbacks2
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +19,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
 import xyz.rh.common.BaseFragment
+import xyz.rh.common.xlog
+import xyz.rh.enjoyfragment.FileWriteManager
 import xyz.rh.enjoyfragment.R
 import xyz.rh.enjoyfragment.dialog.RHDialogFragment.Companion.newInstance
 import xyz.rh.enjoyfragment.fragment.model.GameHeroViewModel
@@ -28,8 +40,16 @@ import xyz.rh.enjoyfragment.fragment.model.GameHeroViewModel
  */
 class FirstFragment : BaseFragment() {
 
+    companion object {
+        const val TAG = "FirstFragment"
+    }
+
     private var textView: TextView? = null
     private var firstImg: ImageView? = null
+    private var secondImg: ImageView? = null
+    private var thirdImg: ImageView? = null
+
+
     private var mText: String? = null
     private var mShowDialogBtn: Button? = null
     private var mStartSubFragment: Button? = null
@@ -43,6 +63,22 @@ class FirstFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        context?.registerComponentCallbacks(object : ComponentCallbacks2 {
+            override fun onConfigurationChanged(newConfig: Configuration) {
+            }
+
+            override fun onLowMemory() {
+                Log.d(TAG, "ComponentCallbacks2:: onLowMemory() invoke")
+
+            }
+
+            override fun onTrimMemory(level: Int) {
+                Log.d(TAG, "ComponentCallbacks2:: onTrimMemory() invoke, level = $level")
+
+            }
+
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -60,6 +96,9 @@ class FirstFragment : BaseFragment() {
         )
         textView = rootView.findViewById(R.id.textview_first)
         firstImg = rootView.findViewById(R.id.first_image)
+        secondImg = rootView.findViewById(R.id.second_image)
+        thirdImg = rootView.findViewById(R.id.third_image)
+
 
         val fragmentList = parentFragmentManager.fragments
         val currentFragmentIndex = fragmentList.indexOf(this)
@@ -121,6 +160,10 @@ class FirstFragment : BaseFragment() {
         val gongliSexyUrl =
             "https://pic.rmb.bdstatic.com/bjh/down/4e168e78e07d8f742ede564b7ac9b8d1.jpeg"
 
+        val zhangxinyu = "http://pic1.win4000.com/wallpaper/2017-11-25/5a190829af0c5.jpg" // 1920*1200, 184K
+        val yangmi0 = "http://pic1.win4000.com/wallpaper/2019-05-08/5cd2380832d67.jpg" // 1920*1200, 1.6M
+        val yangmi1 = "https://n.sinaimg.cn/translate/w500h266/20171211/SVV3-fypnsip8276480.gif" // 2.5M
+
         // 重点知识点！！！
         // 对于Glide.with(View|Context|Activity|Fragment|FragmentActivity) 传入的类型大有文章，他可以是View，可以是fragment, 可以是 Activity，甚至可以是applicationContext，不同的类型决定了图片请求链路的生命周期：
         // 如果传入的是Activity，则当当前请求请求图片的fragment容器销毁（已经被detach），fragment所在Activity容器没有销毁时，请求链路不会终止，当数据完成后还会继续回调onResourceReady，因为链路的生命周期跟随当前with传入的activity生命周期
@@ -135,10 +178,10 @@ class FirstFragment : BaseFragment() {
         Glide.with(requireContext()) // 如果传getContext()，其实是host，即Activity，会出现fragment被销毁后，还会继续回调onResourceReady；
             //Glide.with(this) // 如果传this, 即当前fragment，则当fragment销毁后不会回调onResourceReady
             //Glide.with(firstImg) // 如果传当前加载的view，则当fragment销毁后其实view自身也就消化了，也不会回调onResourceReady
-            .load(gongliSexyUrl)
+            .load(yangmi1)
             .skipMemoryCache(true) // 为了测试禁用内存缓存
             .diskCacheStrategy(DiskCacheStrategy.NONE) // 为了是测试禁用磁盘缓存
-            .into(object : CustomTarget<Drawable?>() {
+            .into(object : CustomViewTarget<ImageView, Drawable>(firstImg!!) {
                 override fun onResourceReady(
                     resource: Drawable,
                     transition: Transition<in Drawable?>?
@@ -152,10 +195,34 @@ class FirstFragment : BaseFragment() {
                     //Log.d(TAG, "First ImageView:: onResourceReady() ====  getChildFragmentManager == " + childFragmentManager);
                 }
 
-                override fun onLoadCleared(placeholder: Drawable?) {
-                    Log.d(TAG, "First ImageView:: onLoadCleared()")
+//                override fun onLoadCleared(placeholder: Drawable?) {
+//                    Log.d(TAG, "First ImageView:: onLoadCleared()")
+//                }
+
+                override fun onResourceCleared(placeholder: Drawable?) {
+                    Log.d(TAG, "First ImageView:: onResourceCleared()")
                 }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    Log.d(TAG, "First ImageView:: onLoadFailed()")
+                }
+
             })
+
+
+        Glide.with(requireContext())
+            .load(zhangxinyu)
+//            .skipMemoryCache(true) // 为了测试禁用内存缓存
+//            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(secondImg!!)
+        Glide.with(requireContext())
+            .asGif()
+            .load(yangmi1)
+//            .skipMemoryCache(true) // 为了测试禁用内存缓存
+//            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(thirdImg!!)
+
+
         //////////////////////////////////////////////////////////////////
         // 这里用空fragment只是想测试 以不带containerViewId来add一个fragment是什么效果：
         // 结论：空fragment可感知父fragment的生命周期，另外空fragment由于没有containerViewId其实是不会加到视图中去的！
@@ -163,6 +230,21 @@ class FirstFragment : BaseFragment() {
         val fragmentTransaction = childFm.beginTransaction()
         fragmentTransaction.add(EmptyFragment(), "xyz.xionglei")
         fragmentTransaction.commitAllowingStateLoss()
+
+//        checkWritePermission(requireActivity())
+
+
+        Handler().postDelayed(object : Runnable {
+            override fun run() {
+
+//                firstImg?.drawable.is
+                xlog("test clear=======")
+                Glide.get(requireContext()).clearMemory()
+
+            }
+
+        }, 5000)
+
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -214,7 +296,58 @@ class FirstFragment : BaseFragment() {
         mText = text
     }
 
-    companion object {
-        const val TAG = "FirstFragment"
+    private val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 100
+    private val fwm = FileWriteManager()
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            WRITE_EXTERNAL_STORAGE_REQUEST_CODE -> {
+                // 用户授予了写入外部存储权限
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    xlog("writeRandomDataToFile= 允许了权限")
+                    // 执行需要写入SD卡的操作
+                    // ...
+
+                    fwm.writeRandomDataFor5Seconds()
+
+                } else {
+                    xlog("writeRandomDataToFile= 拒绝了权限")
+                    // 用户拒绝了权限请求，可以根据需要进行处理
+                    // ...
+                }
+            }
+            // 处理其他权限请求的结果
+            // ...
+        }
     }
+
+    private fun checkWritePermission(context: Activity) {
+        // 检查写入外部存储权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // 如果没有权限，请求权限
+                ActivityCompat.requestPermissions(
+                    context,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE
+                )
+            } else {
+                // 已经有权限，执行需要写入SD卡的操作
+                // ...
+                fwm.writeRandomDataFor5Seconds()
+            }
+        } else {
+            // 在Android 5.0以下的版本，权限在安装时授予，无需请求
+            // ...
+        }
+    }
+
 }
