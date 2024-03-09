@@ -1,5 +1,6 @@
 package xyz.rh.enjoyfragment.temp
 
+import xyz.rh.common.log
 import xyz.rh.enjoyfragment.javacallkt.MyJavaClass
 
 /**
@@ -10,9 +11,20 @@ import xyz.rh.enjoyfragment.javacallkt.MyJavaClass
 fun main() {
 
 
-    val reset = "" !is String
 
-    println(" test foreach return ---- $reset")
+    var pendingJumpNodeList = ArrayList<String>(5)
+    pendingJumpNodeList.add("11111sss")
+    pendingJumpNodeList.add("222222")
+    pendingJumpNodeList.add("3333333sss")
+    pendingJumpNodeList.add("44444444sss")
+    pendingJumpNodeList.add("555555555sss")
+
+    pendingJumpNodeList.add("6666666666")
+
+    val find = pendingJumpNodeList.findLast {
+        it.contains("sss")
+    }
+    println("find last string == $find")
 
 
     val cfn1 = Class.forName("xyz.rh.enjoyframent.temp.TestGson")

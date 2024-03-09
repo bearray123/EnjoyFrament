@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.postDelayed
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.gif.GifDrawable
@@ -53,6 +54,10 @@ class TestLayoutParamsActivity : BaseActivity() {
 
     private val netImage2: ImageView by lazy {
         findViewById(R.id.net_image_1)
+    }
+
+    private val centerGroup: ConstraintLayout by lazy {
+        findViewById(R.id.center_group)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,9 +134,36 @@ class TestLayoutParamsActivity : BaseActivity() {
         })
 
 
+        val centerContainer = CenterContainer(this)
+        centerGroup.addView(centerContainer.rootView)
+
+        // EXACTLY: 精确模式，表示父布局已经决定了子视图的确切大小，子视图应该遵循这个大小。当使用EXACTLY模式时，你是在告诉子视图它的确切大小应该是多少，不管子视图的内容或内部布局是如何的。这通常用于当父视图已经决定了子视图的大小，子视图需要遵循这个大小。
+        // UNSPECIFIED：未指定模式，表示父布局对子视图大小没有任何限制，子视图可以任意大。使用这个模式时，子视图会根据其内容和内部逻辑来决定最合适的大小。这在你想要让布局完全根据其内容来决定自己的大小时非常有用，比如当你不知道子视图需要多大空间时。
+        // AT_MOST：最大模式，表示子视图最多只能达到指定大小，它可以是任何小于等于这个大小的值。这个模式适合在你想要设定一个上限，但允许视图根据其内容来选择更小的尺寸时使用。
+
+        centerGroup.post {
+            // 设置成UNSPECIFIED（不受限制）在view的自动布局测量之前是可以正常拿到 手动测量的宽高的。但EXACTLY（精确模式）和AT_MOST则获取的都是0
+//            centerContainer.rootView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            centerContainer.rootView.measure(View.MeasureSpec.makeMeasureSpec(centerGroup.width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(centerGroup.height, View.MeasureSpec.EXACTLY))
+            xlog("CenterContainer::: addView and getHeight = ${centerContainer.rootView.measuredHeight}")
+        }
+
+
+
+
+        centerContainer.rootView.post {
+            xlog("CenterContainer::: addView and getHeight ===> in post block = ${centerContainer.rootView.measuredHeight}")
+        }
+
+        Handler().postDelayed(Runnable {
+            xlog("CenterContainer::: addView and getHeight ===> in postDelayed block = ${centerContainer.rootView.measuredHeight}")
+        }, 10_000)
+
+        centerContainer.setData("http://pic1.win4000.com/pic/1/b8/3dbb272654.jpg")
 
 
     }
+
 
     private fun testViewApis(view: NewUserLayout) {
 

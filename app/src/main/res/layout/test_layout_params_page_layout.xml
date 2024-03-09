@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xyz.rh.enjoyfragment.layoutparams.MyConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<xyz.rh.enjoyfragment.layoutparams.ConstraintLayout2 xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -66,6 +66,17 @@
       android:visibility="visible"
       android:layout_marginTop="2dp"/>
 
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/center_group"
+      android:layout_width="wrap_content"
+      android:layout_height="20dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/top_container"
+      android:layout_marginTop="50dp"
+      tools:layout_height="100dp"
+      tools:layout_width="200dp"
+      tools:background="#9C27B0"
+      />
 
   <xyz.rh.enjoyfragment.layoutparams.NewUserLayout
       android:id="@+id/new_user_layout_container"
@@ -99,4 +110,4 @@
   </xyz.rh.enjoyfragment.layoutparams.NewUserLayout>
 
 
-</xyz.rh.enjoyfragment.layoutparams.MyConstraintLayout>
+</xyz.rh.enjoyfragment.layoutparams.ConstraintLayout2>

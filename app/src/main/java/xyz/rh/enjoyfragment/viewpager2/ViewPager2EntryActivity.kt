@@ -1,8 +1,14 @@
 package xyz.rh.enjoyfragment.viewpager2
 
+import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.NestedScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -10,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import xyz.rh.common.dp
+import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
 import xyz.rh.enjoyfragment.viewpager2.csgo.CSGOFragment
@@ -24,22 +32,51 @@ class ViewPager2EntryActivity : BaseActivity() {
         const val TAG = "ViewPager2EntryActivity"
     }
 
+    val nestedScrollView: MyNestedScrollView by lazy {
+        findViewById(R.id.outer_nestedscrollview)
+    }
 
-    val mViewPager: ViewPager2 by lazy {
+    private val viewPager: ViewPager2 by lazy {
         findViewById(R.id.host_view_pager)
     }
 
-    val mTabLayout: TabLayout by lazy {
+    private val bannerImg: ImageView by lazy {
+        findViewById(R.id.banner_img)
+    }
+
+    private val tabLayout: TabLayout by lazy {
         findViewById(R.id.host_tab_layout)
     }
+
+    private fun getStatusBarHeight() : Int {
+        val resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android")
+        return Resources.getSystem().getDimensionPixelSize(resourceId)
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Log.d(TAG, "lifecycle:: onCreate()")
+        xlog("ViewPager2EntryActivity:: getStatusBarHeight ---> ${getStatusBarHeight()}")
+
+
 
         setContentView(R.layout.viewpager2_activity_layout)
+
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            val rect = Rect()
+            tabLayout.getGlobalVisibleRect(rect)
+            xlog("NestedScrollView:onScrollChange --->Watch::tabLayout.top = ${rect.top}")
+        })
+
+        bannerImg.apply {
+//            setBackgroundColor(Color.GRAY)
+            val backGroupDrawable = context.resources.getDrawable(R.drawable.dota_all_hero)
+            background = backGroupDrawable
+            layoutParams.height = 200.dp // 高度设置
+        }
 
         val dotaTab = GaTab("DOTA", R.drawable.tab_icon_dota, DotaFragment())
         val csgoTab = GaTab("CSGO", R.drawable.tab_icon_csgo, CSGOFragment())
@@ -63,14 +100,15 @@ class ViewPager2EntryActivity : BaseActivity() {
 
 
         // 设置离屏显示的page数
-        mViewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 1
         val fragmentStateAdapter = MyFragmentStateAdapter(this)
         fragmentStateAdapter.dataList = tabList
-        mViewPager.adapter = fragmentStateAdapter
+        viewPager.adapter = fragmentStateAdapter
+        viewPager.offscreenPageLimit = 1
 
-        mTabLayout.setSelectedTabIndicatorColor(Color.CYAN)
-        val tabLayoutMediator = TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
-            val adapter = (mViewPager.adapter as? MyFragmentStateAdapter)
+        tabLayout.setSelectedTabIndicatorColor(Color.CYAN)
+        val tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            val adapter = (viewPager.adapter as? MyFragmentStateAdapter)
             tab.text = adapter?.dataList?.get(position)?.title
             adapter?.dataList?.get(position)?.icon?.let {
                 tab.setIcon(it)
