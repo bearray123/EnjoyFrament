@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
+
+
+  <Button
+      android:id="@+id/test1111"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="发啥课啊11111"
+      app:layout_constraintVertical_chainStyle="spread"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toTopOf="@id/test22222"
+      />
+
+  <Button
+      android:id="@+id/test22222"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="发啥课啊222222"
+      android:layout_marginLeft="80dp"
+      android:visibility="visible"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test1111"
+      app:layout_constraintBottom_toBottomOf="parent"
+      />
+
+
+  <!--<Button
+      android:id="@+id/test33333"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="发啥课啊333333"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/test22222"
+      app:layout_constraintBottom_toBottomOf="parent"
+      />-->
+
+
+
+
+</merge>
