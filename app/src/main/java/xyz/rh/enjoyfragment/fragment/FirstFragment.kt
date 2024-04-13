@@ -111,7 +111,8 @@ class FirstFragment : BaseFragment() {
             dialogFragment.setBgColor(Color.GREEN)
 
             // 测试fragment嵌套fragment时ChildFragmentManager的使用：
-            // 如果外层fragment以ADD的模式启动，再以childFragmentManager启动fragmentDialog后，再以ADD的模式启动另一个fragment后 dialog会显示在最顶层！！！
+            // 如果外层fragment以ADD的模式启动，再以childFragmentManager启动fragmentDialog后，再以ADD的模式启动另一个fragment后 dialog会显示在最顶层！！！原因是走的ADD模式（跟我们的视图栈里一样，hide当前，add下个页面），dialogFragment的容器fragment本身只是进行了hide，dialogFragment本身还是处于显示状态，所以页面跳转后还是会显示到下个页面之上！
+
             // 如果是replace的方式则childFragmentManager可以发挥正常，当fragment跳转后dialogFragment会被盖住：其实不是真盖住了，是因为replace启动fragment后会导致前一个fragment以及它包裹的dialogfragment走onDestroyView逻辑，
             // 再次返回后其实是重新走了一遍onCreateView->onStart 等流程，是重新创建了view
 
