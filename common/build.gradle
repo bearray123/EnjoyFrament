@@ -90,7 +90,7 @@ dependencies {
   // https://github.com/square/moshi
   api("com.squareup.moshi:moshi-kotlin:1.14.0")
 
-  api 'com.google.code.gson:gson:2.8.2'
+  api 'com.google.code.gson:gson:2.9.0'  // 2.8.2是老版本，存在int解析成double的问题
 
 
 }
