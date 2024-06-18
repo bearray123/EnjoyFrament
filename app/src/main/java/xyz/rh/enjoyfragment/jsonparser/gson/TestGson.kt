@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by rayxiong on 2023/10/15.
  */
-class TestGson {
-}
-
 
 fun main() {
 
@@ -32,6 +29,8 @@ fun main() {
         .create()
     val parserResult1 = myGson.fromJson(modelStr2, Model1::class.java)
 
+
+    println("parserResult1.age = ${parserResult1.age}")
     println("parserResult1 = $parserResult1")
 
 
@@ -50,6 +49,7 @@ data class Model1(
     var data: JsonElement?,
 
     // 验证GSon在低版本里的缺陷：如果定义map类型，里面的value如果下发是int，long时，会默认解析成double类型
+    // 只要是非基础类型的引用类型都需要定义成可空类型Map<String, Any>?，否则服务端下发有问题就会出现NPE
     @SerializedName("map_data")
     var mapData: Map<String, Any>,
 
@@ -74,7 +74,7 @@ val modelStr1 = """
 val modelStr2 = """
         {
             "name": "xionglei-这里data是JsonArray",
-            "age": 30.1,
+            "age": null,
             "data": [{
                 "a1": "v1-str",
                 "a2": 2,
