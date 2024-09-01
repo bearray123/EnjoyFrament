@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import xyz.rh.common.KotlinExtensionKt;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
+import xyz.rh.enjoyfragment.coroutine.TestCoroutineActivity;
 import xyz.rh.enjoyfragment.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyfragment.di.test.BussA;
 import xyz.rh.enjoyfragment.di.test.BussBFrom3rdParty;
@@ -157,6 +158,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding.openDidiApp.setOnClickListener(this);
 
         _layoutBinding.testScroll.setOnClickListener(this);
+
+        _layoutBinding.openCoroutineTestPage.setOnClickListener(this);
 
 
         // 首页注册EventPublisher事件
@@ -352,6 +355,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         else if (v == _layoutBinding.testScroll) {
             startActivity(new Intent(this, TestScrollActivity.class));
+        }
+        else if (v == _layoutBinding.openCoroutineTestPage) {
+            startActivity(new Intent(this, TestCoroutineActivity.class));
         }
 
     }

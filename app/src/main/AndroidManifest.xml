@@ -84,6 +84,9 @@
         <category android:name="android.intent.category.BROWSABLE" />
       </intent-filter>
     </activity>
+    <activity android:name=".coroutine.TestCoroutineActivity"
+        android:theme="@style/Theme.EnjoyFrament.NoActionBar"
+      />
 
   </application>
 

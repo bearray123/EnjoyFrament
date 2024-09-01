@@ -2,6 +2,8 @@ package xyz.rh.enjoyfragment
 
 import android.app.Application
 import android.content.Context
+import android.os.Looper
+import android.util.Log
 import xyz.rh.common.log
 
 /**
@@ -22,6 +24,10 @@ class EnjoyApplication: Application() {
         log("EnjoyApplication:: attachBaseContext()")
 
         log("EnjoyApplication:: attachBaseContext --> app = $this, app.applicationContext = ${this.applicationContext}")
+
+        Looper.getMainLooper().setMessageLogging { log ->
+//            Log.d("","log message => $log")
+        }
 
 
     }
