@@ -5,6 +5,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,8 +26,12 @@ class TestCoroutineActivity : AppCompatActivity() {
             xlog("TestCoroutineActivity==>点击了button1")
         }
 
+        // 这个协程Scope的调度器是Main
+//        val mainScope = MainScope()
+
         // 调度器是Dispatchers.Main.immediate: 1和4 是一个message，同属于onCreate的那个消息，3是另外单独的一个message
         // 此时打印顺序：1111 -> 4444 -> 2222 -> 3333
+
         // 调度器是Dispatchers.Main: 1和4不是同一个message，3是另外单独的一个message
         // 此时打印顺序：4444 -> 1111 -> 2222 -> 3333
         // 如果不申明调度器，默认是Main.immediate，具体可以查看lifecycleScope的源码，里面register时采用的是immediate
