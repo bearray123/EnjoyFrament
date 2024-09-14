@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import android.view.ViewTreeObserver
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.postDelayed
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.gif.GifDrawable
@@ -35,6 +37,8 @@ import kotlin.concurrent.thread
  */
 class TestLayoutParamsActivity : BaseActivity() {
 
+
+    private var popupWindow: PopupWindow? = null
 
     private val addViewButton: Button by lazy {
         findViewById(R.id.add_subview_btn)
@@ -80,9 +84,34 @@ class TestLayoutParamsActivity : BaseActivity() {
         viewStub.visibility = View.VISIBLE
 
         addViewButton.setOnClickListener {
+            xlog("test window ==== 1111 === ${addViewButton.windowToken}")
             val volumeView = VolumeView(this)
             xlog("test w::h ###only new View, before addView### :: volumeView.measuredHeight=${volumeView.measuredHeight}, volumeView.measuredWidth=${volumeView.measuredWidth}, volumeView.height=${volumeView.height}, volumeView.width=${volumeView.width}")
             topContainer.addView(volumeView)
+
+
+            popupWindow?.dismiss()
+            popupWindow = PopupWindow().apply {
+                this.height = 30.dp
+                this.width = 80.dp
+                this.contentView = View(this@TestLayoutParamsActivity).apply {
+                    this.setBackgroundColor(Color.BLUE)
+                    this.setBackgroundResource(R.drawable.shape_round_corner_rect)
+                    this.startAnimation(AnimationUtils.loadAnimation(this@TestLayoutParamsActivity, R.anim.popupwindow_scale_anim))
+                    this.setOnClickListener {
+                        xlog("PopupWindow被点击")
+                        Toast.makeText(this@TestLayoutParamsActivity, "PopupWindow被点击",Toast.LENGTH_SHORT).show()
+                    }
+                }
+//                this.enterTransition = R.styleable.Popupwindow_
+            }
+            popupWindow?.showAsDropDown(addViewButton)
+            popupWindow?.contentView?.post {
+                // 这里必须post不然拿不到windowtoken，因为还没绘制
+                // 目前测出来的结论：popupWindow是独立的window！打印出来的windowToken与activity里view获取到的不一样！
+                xlog("test window ==== 2222 === ${popupWindow?.contentView?.windowToken}")
+            }
+
 //            Thread.sleep(3000)
             Handler().post {
                 xlog("test w::h 123456")
@@ -263,7 +292,8 @@ class TestLayoutParamsActivity : BaseActivity() {
             xlog("textView-------------->addOnGlobalLayoutListener()")
         }
         tx.viewTreeObserver.addOnDrawListener {
-            xlog("textView-------------->addOnDrawListener()")
+            // 因为有小桔视的探头动画不停的重复播放，这里会不停地打印，去掉log
+//            xlog("textView-------------->addOnDrawListener()")
         }
 
         tx.viewTreeObserver.addOnWindowAttachListener(object : ViewTreeObserver.OnWindowAttachListener {
