@@ -54,7 +54,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      */
     private MainActivityLayoutBinding _layoutBinding;
 
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -79,20 +78,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         Log.d(TAG, "MainActivity::onCreate  ---> this = " + this + " ,savedInstanceState = " + savedInstanceState);
-
         registerReceiver(mReceiver, new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION));
-
         Log.d("","getApplication == " + getApplication() + ",,,,,getApplication().getApplicationContext()" + getApplication().getApplicationContext());
-
         super.onCreate(savedInstanceState);
-
         KotlinExtensionKt.setApplication(getApplication().getApplicationContext());
-
         DaggerBussComponent.create().injectMainActivity(this);
 
         /////////////////////// test Lifecycle ////////////////////////////
@@ -105,7 +97,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
         /////////////////////////////////////////////////////////////////
 
-
         Log.d(TAG, "BussA = " + mBussA + ", BussB=" + mBussB);
         mBussA.method1A();
         mBussB.method1B();
@@ -116,12 +107,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding = MainActivityLayoutBinding.inflate(getLayoutInflater());
         View rootView = _layoutBinding.getRoot();
 
-
-
         // setContentView之后就把当前我们定义的layout布局添加到了decorView上，这样decorView就有了一个children
         // 它的child就是ConstraintLayout，即我们在layout里定义的根视图 rootView：ConstraintLayout
         setContentView(rootView);
-
 
         // 测试 activity中任何一个view的RootView是什么：
         // Activity中任何一个view的rootView是 DecorView，自己的layout文件inflate出来然后setContentView的 不是DecorView。
@@ -137,10 +125,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Log.d(TAG, "test getParent ==== testFragmentEntry.getParent" + _layoutBinding.testFragmentEntry.getParent() + " ##### rootViewForFragmentEntry.getParent =" + rootViewForFragmentEntry.getParent());
             }
         });
-
-
-
-
 
         Window activityWindow = getWindow();
         Log.d(TAG, "window:: getWindow()=== " + activityWindow);
@@ -161,154 +145,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         _layoutBinding.openCoroutineTestPage.setOnClickListener(this);
 
-
         // 首页注册EventPublisher事件
         testEventPublisher();
 
-        //try {
-        //    GradientDrawable drawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[] {});
-        //    _layoutBinding.testTouchEvent.setBackground(drawable);
-        //} catch (Throwable e) {
-        //    Log.d(TAG, "eeeeeeee======111111 " + activityWindow);
-        //    e.printStackTrace();
-        //}
-
         Uri uri = Uri.parse("onetravel://dache_anycar/confirm/cccc");
-
-
-
         Log.d(TAG, "eeeeeeee======22222 uri.getAuthority()====" + uri.getAuthority()); //dache_anycar
         Log.d(TAG, "eeeeeeee======22222 uri.getHost()====" + uri.getHost()); //dache_anycar
         Log.d(TAG, "eeeeeeee======22222 uri.getPath()===" + uri.getPath()); ///confirm/cccc
         Log.d(TAG, "eeeeeeee======22222 uri.getScheme()===" + uri.getScheme()); ///confirm/cccc
 
-        //String originStr = "{\"sids\": [{\"k1\": 1}, {\"k2\": 2}, {\"k2\": 2}, {\"k2\": 2}]}";
-        String originStr = "{\"sids\": {\"k1\": 1, \"k2\": 2, \"k3\": 4, \"k4\": \"5\"}}";
-        //{
-        //    "sids": {
-        //        "k1": 1,
-        //        "k2": 2,
-        //        "k2": 2,
-        //        "k2": 2
-        //    }
-        //}
-
-        //try {
-        //    //JSONObject JSO = new JSONObject(json);
-        //    //JSONObject jsonObject = JSO.getJSONObject("sids");
-        //    //JSONArray jsonArray = JSO.optJSONArray("sids");
-        //    //jsonArray.
-        //
-        //    Config config = JSON.parseObject(originStr, Config.class);
-        //
-        //    Map jsonObject = JSON.parseObject(config.sids, Map.class); // 得到的是一个HashMap
-        //    //Map<String, String> transMap = (Map<String, String>)JSON.parse(originStr);
-        //
-        //    Log.d(TAG, "eeeeeeee======" + jsonObject); ///confirm/cccc
-        //
-        //    if (jsonObject.containsKey("k2")) {
-        //        jsonObject.keySet();
-        //    }
-        //
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
-
-        //try {
-        //    new Thread() {
-        //
-        //        @Override public void run() {
-        //            while (true) {
-        //                try {
-        //                    Thread.sleep(2000);
-        //                }catch (Exception e) {
-        //
-        //                }
-        //                throw new RuntimeException("xl1000");
-        //            }
-        //        }
-        //    }.start();
-        //} catch (Exception E) {
-        //    E.printStackTrace();
-        //}
-
-        JSONObject JSO = null;
-        try {
-            JSO = new JSONObject(data111);
-            JSONArray jsonArray = JSO.getJSONArray("multi_require_product");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //JSONObject jsonObject = JSO.getJSONObject("sids");
-        //    JSONArray jsonArray = JSO.optJSONArray("sids");
-
-        //try {
-        //    JSO = new JSONObject("{\n"
-        //        + "\t\"errno\": \"0\",\n"
-        //        + "\t\"errmsg\": \"SUCCESS\",\n"
-        //        + "\t\"data\": \"OKxjFuFTzRtqRroGLyrk6YZW4WlOW2oz1QEEtyrMm7SSZHrjzGEVbsGF4Ei6+i14vVb34DdSQdjDojG6rmk3Ea4YpwY8OjtZfmzk0IIii4auS3rLBot9Jcht8cAnboDzwIgeVwtz2EIM7TkBmC7WUw==\"\n"
-        //        + "}");
-        //
-        //    // {"errno": "0","errmsg": "SUCCESS","username": {"key1":"yhyhyhyhh"}}
-        //    JSO = new JSONObject("{\"errno\": \"0\",\"errmsg\": \"SUCCESS\",\"username\": \"yhyhyhyhh\"}");
-        //    JSONObject data = JSO.optJSONObject("username");
-        //    //String data = JSO.optString("username");
-        //
-        //    if (JSO.has("data")) {
-        //        Log.d("", "HAS DATA ");
-        //    }
-        //
-        //    Log.d("", "data === " + data.toString());
-        //} catch (JSONException e) {
-        //    e.printStackTrace();
-        //}
-
-
-    }
-
-    public String data111 = "{\"multi_require_product\": [\n"
-        + "        {\n"
-        + "            \"estimate_id\": \"fe994b84f228258b52b6b312c8698283\",\n"
-        + "            \"product_id\": 3,\n"
-        + "            \"business_id\": 260,\n"
-        + "            \"combo_type\": 0,\n"
-        + "            \"require_level\": 600,\n"
-        + "            \"level_type\": 0,\n"
-        + "            \"combo_id\": 0,\n"
-        + "            \"route_type\": 0,\n"
-        + "            \"is_special_price\": 0,\n"
-        + "            \"count_price_type\": 0,\n"
-        + "            \"pay_type\": \"2\",\n"
-        + "            \"product_category\": 1\n"
-        + "        },\n"
-        + "        {\n"
-        + "            \"estimate_id\": \"5e9df2595d9f2ed8c10b2822b0821cc1\",\n"
-        + "            \"product_id\": 3,\n"
-        + "            \"business_id\": 260,\n"
-        + "            \"combo_type\": 314,\n"
-        + "            \"require_level\": 600,\n"
-        + "            \"level_type\": 0,\n"
-        + "            \"combo_id\": 0,\n"
-        + "            \"route_type\": 0,\n"
-        + "            \"is_special_price\": 0,\n"
-        + "            \"count_price_type\": 0,\n"
-        + "            \"pay_type\": \"2\",\n"
-        + "            \"product_category\": 61\n"
-        + "        }\n"
-        + "    ]\n"
-        + "}";
-
-
-    public static class Config {
-        public String sids;
-
-        public void setSids(String sids) {
-            this.sids = sids;
-        }
-
-        //public String getSids() {
-        //    return sids;
-        //}
     }
 
     @Override protected void onResume() {
@@ -334,9 +179,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         else if (v == _layoutBinding.mySkipBtn) {
             startActivity(new Intent(this, TestLayoutParamsActivity.class));
         }
-        //else if (v == _layoutBinding.superAppShieldIcon) {
-        //    startActivity(new Intent(this, TestLayoutParamsActivity.class));
-        //}
         else if (v == _layoutBinding.testJsonParser) {
             startActivity(new Intent(this, TestJsonParserActivity.class));
         }
@@ -392,25 +234,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         Object windowServiceFromActivityContextGet = getSystemService(Context.WINDOW_SERVICE);
 
-        Log.d(TAG, "windowServiceFromApplicationContextGet ?= windowServiceFromActivityContextGet = " + (windowServiceFromApplicationContextGet == windowServiceFromActivityContextGet));
+        Log.d(TAG, "windowServiceFromApplicationContextGet ?= windowServiceFromActivityContextGet = " + (windowServiceFromApplicationContextGet == windowServiceFromActivityContextGet)); // false
 
-        Dialog dialog = new Dialog(getApplicationContext());
-        Log.d(TAG, "Dialog.getWindow ?= activity.getWindow = " + (dialog.getWindow() == this.getWindow()));
+        //Dialog dialog = new Dialog(getApplicationContext()); // Crash
+        Dialog dialog = new Dialog(this);
+        Log.d(TAG, "Dialog.getWindow ?= activity.getWindow = " + (dialog.getWindow() == this.getWindow())); // false
 
         dialog.setTitle("弹框Title");
         TextView contentView = new TextView(this);
         contentView.setText("Dialog弹窗的内容！");
         dialog.setContentView(contentView);
-
         dialog.show();
 
     }
 
-
     public void onViewPager2Clicked(View view) {
         startActivity(new Intent(this, ViewPager2EntryActivity.class));
     }
-
 
     private void testEventPublisher() {
         Log.d(TAG, "xl::::testEventPublisher");
@@ -423,6 +263,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             });
     }
-
 
 }

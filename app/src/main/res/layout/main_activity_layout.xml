@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:paddingBottom="8dp"
+    >
   <!--轻启动：测试无障碍-->
   <FrameLayout
+      android:id="@+id/left_top_container"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:layout_constraintEnd_toEndOf="parent"
@@ -27,165 +29,163 @@
         />
   </FrameLayout>
 
-
-  <Button
-      android:id="@+id/test_kotlin"
+  <ScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:text="kotlin"
-      />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/left_top_container"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_marginTop="8dp"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="18dp"
+        >
+      <Button
+          android:id="@+id/test_kotlin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:text="kotlin"
+          />
+      <Button
+          android:id="@+id/test_touch_event"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="touch测试"
+          />
+      <Button
+          android:id="@+id/test_fragment_entry"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="Fragment周期"
+          />
+      <Button
+          android:id="@+id/test_viper"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="VIPER"
+          />
+      <Button
+          android:id="@+id/test_dialog"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:onClick="onDialogEntryClicked"
+          android:text="Dialog"
+          tools:ignore="UsingOnClickInXml"
+          />
+      <Button
+          android:id="@+id/test_viewpager2"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:onClick="onViewPager2Clicked"
+          android:text="ViewPager2"
+          tools:ignore="UsingOnClickInXml"
+          />
+      <Button
+          android:id="@+id/test_layoutparams"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="测试layoutParams"
+          />
+      <Button
+          android:id="@+id/test_json_parser"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="Json解析"
+          />
+      <Button
+          android:id="@+id/open_didi_app"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="打开滴滴出行"
+          />
+      <Button
+          android:id="@+id/test_scroll"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="scroll相关"
+          />
+      <Button
+          android:id="@+id/open_coroutine_test_page"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="Deep into Coroutine"
+          />
+      <Button
+          android:id="@+id/other_todo_button1"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="other_todo_button1"
+          />
+      <Button
+          android:id="@+id/other_todo_button2"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="other_todo_button2"
+          />
+      <Button
+          android:id="@+id/other_todo_button3"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="other_todo_button3"
+          />
 
-  <Button
-      android:id="@+id/test_touch_event"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_kotlin"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:text="touch测试"
-    />
-
-    <Button
-      android:id="@+id/test_fragment_entry"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_touch_event"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:text="Fragment周期"
-      />
-
-    <Button
-      android:id="@+id/test_viper"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_fragment_entry"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:text="VIPER"
-      />
-
-    <Button
-      android:id="@+id/test_dialog"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_fragment_entry"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onDialogEntryClicked"
-      android:text="Dialog"
-        tools:ignore="UsingOnClickInXml" />
-
-     <Button
-      android:id="@+id/test_viewpager2"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_dialog"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="ViewPager2"
-      tools:ignore="UsingOnClickInXml" />
-
-
-  <Button
-      android:id="@+id/test_layoutparams"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_viewpager2"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="测试layoutParams"
-      tools:ignore="UsingOnClickInXml" />
-
-  <Button
-      android:id="@+id/test_json_parser"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_layoutparams"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="Json解析"
-      tools:ignore="UsingOnClickInXml" />
-
-  <Button
-      android:id="@+id/open_didi_app"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_json_parser"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="打开滴滴出行"
-      tools:ignore="UsingOnClickInXml" />
-
-  <Button
-      android:id="@+id/test_scroll"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/open_didi_app"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="scroll相关"
-      tools:ignore="UsingOnClickInXml" />
-
-  <Button
-      android:id="@+id/open_coroutine_test_page"
-      android:textAllCaps="false"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/test_scroll"
-      android:layout_marginLeft="50dp"
-      android:layout_marginRight="50dp"
-      android:layout_marginTop="20dp"
-      android:onClick="onViewPager2Clicked"
-      android:text="Deep into Coroutine"
-      tools:ignore="UsingOnClickInXml" />
-
+    </LinearLayout>
+  </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
