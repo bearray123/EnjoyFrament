@@ -112,11 +112,6 @@ class TestLayoutParamsActivity : BaseActivity() {
                 xlog("test window ==== 2222 === ${popupWindow?.contentView?.windowToken}")
             }
 
-//            Thread.sleep(3000)
-            Handler().post {
-                xlog("test w::h 123456")
-            }
-
             testThreadId()
 
             xlog("test w::h ###after addView###, addViewButton.onClick:: volumeView.measuredHeight=${volumeView.measuredHeight}, volumeView.measuredWidth=${volumeView.measuredWidth}, volumeView.height=${volumeView.height}, volumeView.width=${volumeView.width}")
@@ -125,8 +120,6 @@ class TestLayoutParamsActivity : BaseActivity() {
                 xlog("test w::h ###after volumeView.post### :: volumeView.measuredHeight=${volumeView.measuredHeight}, volumeView.measuredWidth=${volumeView.measuredWidth}, volumeView.height=${volumeView.height}, volumeView.width=${volumeView.width}")
             }
         }
-
-
 
         ////////// 测试100帧的juxiaodi gif是否卡顿
         Glide.with(this).load(/*R.drawable.juxiaodi_100frame*/"https://dpubstatic.udache.com/static/dpubimg/Ba8ykguX0P2m_jTimf97Z.gif")
@@ -177,9 +170,6 @@ class TestLayoutParamsActivity : BaseActivity() {
             xlog("CenterContainer::: addView and getHeight = ${centerContainer.rootView.measuredHeight}")
         }
 
-
-
-
         centerContainer.rootView.post {
             xlog("CenterContainer::: addView and getHeight ===> in post block = ${centerContainer.rootView.measuredHeight}")
         }
@@ -192,7 +182,6 @@ class TestLayoutParamsActivity : BaseActivity() {
 
 
     }
-
 
     private fun testViewApis(view: NewUserLayout) {
 
@@ -230,7 +219,6 @@ class TestLayoutParamsActivity : BaseActivity() {
     // 测试验证 addView操作之后是不是可以立即拿到宽高，是否立即去绘制
     // 结论：无法立即拿到，addView只是给ViewGroup添加了childView，到绘制环节其实还是需要依赖vsync信号机制来刷新
     private fun testAddView() {
-
         Handler().postDelayed(Runnable {
 
             xlog("onResume:: topContainer ---> before add view ---》 topContainer.measuredHeight = ${topContainer.measuredHeight}")
@@ -257,11 +245,8 @@ class TestLayoutParamsActivity : BaseActivity() {
             topContainer.post {
                 xlog("onResume:: topContainer ---> after post ---》 topContainer.measuredHeight = ${topContainer.measuredHeight}")
             }
-
-
         }, 5_000)
     }
-
 
     // 理解线程id在两个领域的区别：
     fun testThreadId() {
@@ -282,7 +267,6 @@ class TestLayoutParamsActivity : BaseActivity() {
             xlog("test thread id:: current process id = ${Process.myPid()}, uid = ${Process.myUid()}, tid = ${Process.myTid()}")
         }
     }
-
 
     // 测试viewTreeObserver
     fun testViewTreeObserver() {
@@ -306,7 +290,6 @@ class TestLayoutParamsActivity : BaseActivity() {
             }
 
         })
-
         tx.viewTreeObserver.addOnWindowFocusChangeListener {
             xlog("textView-------------->addOnWindowFocusChangeListener()")
         }
@@ -314,17 +297,12 @@ class TestLayoutParamsActivity : BaseActivity() {
         tx.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
             xlog("textView-------------->addOnGlobalFocusChangeListener()")
         }
-
         tx.viewTreeObserver.addOnGlobalLayoutListener {
             xlog("textView-------------->addOnGlobalLayoutListener()")
         }
-
-
         tx.post {
             xlog("========== tx.y = ${tx.y} , tx.translationY = ${tx.translationY} , topContainer.y = ${topContainer.y}")
-
         }
-
     }
 
     fun testMarquee() {
