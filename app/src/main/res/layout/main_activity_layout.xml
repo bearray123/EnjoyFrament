@@ -50,7 +50,8 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
-          android:text="kotlin"
+          android:textAllCaps="false"
+          android:text="Kotlin"
           />
       <Button
           android:id="@+id/test_touch_event"
@@ -59,6 +60,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
+          android:textAllCaps="false"
           android:text="touch测试"
           />
       <Button
