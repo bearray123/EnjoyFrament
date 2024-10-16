@@ -12,4 +12,11 @@
       android:layout_height="match_parent"
       android:text="地图区域" />
 
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:src="@drawable/beijing_map_google"
+      android:scaleType="fitXY"
+    />
+
 </FrameLayout>

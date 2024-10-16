@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.TypedValue
+import android.view.WindowManager
 
 /**
  * Created by rayxiong on 2023/4/23.
@@ -30,6 +31,12 @@ private fun applyDimension(value: Float): Int {
     if (res != 0) return res
     if (value == 0f) return 0
     return if (value > 0) 1 else -1
+}
+
+// 获取屏幕的高度
+fun getScreenHeight(ctx: Context): Int {
+    val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    return wm.defaultDisplay.height
 }
 
 
