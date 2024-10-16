@@ -27,6 +27,7 @@ import xyz.rh.enjoyfragment.databinding.MainActivityLayoutBinding;
 import xyz.rh.enjoyfragment.di.test.BussA;
 import xyz.rh.enjoyfragment.di.test.BussBFrom3rdParty;
 import xyz.rh.enjoyfragment.di.test.DaggerBussComponent;
+import xyz.rh.enjoyfragment.didihierarchy.TestFragmentsHierarchyActivity;
 import xyz.rh.enjoyfragment.fragment.TestFragmentEntryActivity;
 import xyz.rh.enjoyfragment.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyfragment.kotlin.KotlinMainActivity;
@@ -144,6 +145,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding.testScroll.setOnClickListener(this);
 
         _layoutBinding.openCoroutineTestPage.setOnClickListener(this);
+        _layoutBinding.uiHierarchyTest.setOnClickListener(this);
 
         // 首页注册EventPublisher事件
         testEventPublisher();
@@ -200,6 +202,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         else if (v == _layoutBinding.openCoroutineTestPage) {
             startActivity(new Intent(this, TestCoroutineActivity.class));
+        }
+        else if (v == _layoutBinding.uiHierarchyTest) {
+            startActivity(new Intent(this, TestFragmentsHierarchyActivity.class));
         }
 
     }

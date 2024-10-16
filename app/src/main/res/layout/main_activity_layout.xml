@@ -158,17 +158,17 @@
           android:text="Deep into Coroutine"
           />
       <Button
-          android:id="@+id/other_todo_button1"
+          android:id="@+id/ui_hierarchy_test"
           android:textAllCaps="false"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="other_todo_button1"
+          android:text="模拟视图层级"
           />
       <Button
-          android:id="@+id/other_todo_button2"
+          android:id="@+id/todo1"
           android:textAllCaps="false"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
           android:text="other_todo_button2"
           />
       <Button
-          android:id="@+id/other_todo_button3"
+          android:id="@+id/todo2"
           android:textAllCaps="false"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
