@@ -23,7 +23,6 @@ public class EnjoyTouchEventActivity extends BaseActivity {
    private LinearLayout mLinearlayout;
 
    private RHButton rhButton;
-   private RHView rhView;
 
    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -52,7 +51,7 @@ public class EnjoyTouchEventActivity extends BaseActivity {
       rhButton = findViewById(R.id.rh_button);
       rhButton.setOnClickListener(new View.OnClickListener() {
          @Override public void onClick(View v) {
-            mLinearlayout.addView(rhView);
+            mLinearlayout.addView(generateRNView());
             Log.d(TAG, "rhView:: has been added to mLinearlayout");
          }
       });
@@ -76,22 +75,21 @@ public class EnjoyTouchEventActivity extends BaseActivity {
       //   }
       //});
 
-      rhView = new RHView(this);
+
+   }
+
+   private RHView generateRNView() {
+      RHView rhView = new RHView(this);
       //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
       //    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-      LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 50);
+      LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 150);
 
       rhView.setLayoutParams(layoutParams);
       rhView.measure(View.MeasureSpec.makeMeasureSpec(40, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(20, View.MeasureSpec.EXACTLY));
       rhView.layout(0,0, rhView.getMeasuredWidth(), rhView.getMeasuredHeight());
       rhView.setBackgroundColor(Color.GREEN);
-
-      Log.d(TAG, "rhView:: width=" + rhView.getWidth() + ", rhView.Height=" + rhView.getHeight());
-
-
-
-
+      return rhView;
    }
 
    @Override public boolean dispatchTouchEvent(MotionEvent ev) {
