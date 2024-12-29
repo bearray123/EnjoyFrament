@@ -2,6 +2,7 @@ package xyz.rh.enjoyfragment.touchevent;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,11 +48,34 @@ public class EnjoyTouchEventActivity extends BaseActivity {
 
              }
           });
+      mLinearlayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+         @Override
+         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+             int oldTop, int oldRight, int oldBottom) {
+            String layoutData = "left=" + left + ",top=" + top + ",right=" + right + ",bottom=" + bottom;
+            Log.d(TAG, "Linearlayout::onLayoutChange[布局变化] ----> " + layoutData);
+
+         }
+      });
+
+      mLinearlayout.getViewTreeObserver().addOnPreDrawListener(
+          new ViewTreeObserver.OnPreDrawListener() {
+             @Override public boolean onPreDraw() {
+                Log.d(TAG, "Linearlayout::onPreDraw");
+                return true;
+             }
+          });
+
+      new Handler().postDelayed(new Runnable() {
+         @Override public void run() {
+            mLinearlayout.addView(generateRHView());
+         }
+      }, 1000);
 
       rhButton = findViewById(R.id.rh_button);
       rhButton.setOnClickListener(new View.OnClickListener() {
          @Override public void onClick(View v) {
-            mLinearlayout.addView(generateRNView());
+            mLinearlayout.addView(generateRHView());
             Log.d(TAG, "rhView:: has been added to mLinearlayout");
          }
       });
@@ -78,7 +102,7 @@ public class EnjoyTouchEventActivity extends BaseActivity {
 
    }
 
-   private RHView generateRNView() {
+   private RHView generateRHView() {
       RHView rhView = new RHView(this);
       //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
       //    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

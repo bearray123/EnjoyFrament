@@ -5,7 +5,9 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -35,16 +37,33 @@ class TestCoroutineActivity : AppCompatActivity() {
         // 调度器是Dispatchers.Main: 1和4不是同一个message，3是另外单独的一个message
         // 此时打印顺序：4444 -> 1111 -> 2222 -> 3333
         // 如果不申明调度器，默认是Main.immediate，具体可以查看lifecycleScope的源码，里面register时采用的是immediate
-        lifecycleScope.launch {
-            xlog("TestCoroutineActivity==>onCreate 1111")
-            // 这里开始切线程，所以3就被切到另一个message中去了，3必然会等到这个切线程操作执行完成后才进一步执行
-            withContext(Dispatchers.IO) {
-                xlog("TestCoroutineActivity==>onCreate 2222")
+//        lifecycleScope.launch {
+//            xlog("TestCoroutineActivity==>onCreate 1111")
+//            // 这里开始切线程，所以3就被切到另一个message中去了，3必然会等到这个切线程操作执行完成后才进一步执行
+//            withContext(Dispatchers.IO) {
+//                xlog("TestCoroutineActivity==>onCreate 2222")
+//                delay(3000)
+//            }
+//            xlog("TestCoroutineActivity==>onCreate 3333")
+//        }
+//        xlog("TestCoroutineActivity==>onCreate 4444")
+
+
+        GlobalScope.launch(Dispatchers.IO) {
+            xlog("TestCoroutineActivity==> onCreate111111")
+            async {
+                xlog("TestCoroutineActivity==> onCreate2222222")
                 delay(3000)
+                xlog("TestCoroutineActivity==>delay done!~")
             }
-            xlog("TestCoroutineActivity==>onCreate 3333")
+//            val r = withContext(Dispatchers.Default) {
+//                xlog("TestCoroutineActivity==> onCreate2222222")
+//                delay(3000)
+//                1
+//            }
+
+            xlog("TestCoroutineActivity==> onCreate33333")
         }
-        xlog("TestCoroutineActivity==>onCreate 4444")
 
 
     }

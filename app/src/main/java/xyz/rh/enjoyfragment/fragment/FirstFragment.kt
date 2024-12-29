@@ -15,6 +15,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLayoutChangeListener
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -119,6 +120,8 @@ class FirstFragment : BaseFragment() {
             // 这里在show时：如果传入的fragmentManager是getChildFragmentManager，则fragment跳走后当前fragmentDialog会正常被盖住
             // 如果传入的fragmentManager是activity.getSupportFragmentManager，在页面跳走后当前fragmentDialog不会消失，会覆盖到目标fragment之上
             dialogFragment.show(childFragmentManager, "")
+            xlog("exe dialog.isShowing ===== ${dialogFragment.dialog?.isShowing}")
+
 
 
             // 为什么 DialogFragment用dismiss好使，而用fragmentManager不好使？？？？

@@ -1,19 +1,25 @@
 package xyz.rh.enjoyfragment.dialog
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLayoutChangeListener
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.fragment.app.DialogFragment
+import xyz.rh.common.dp
 import xyz.rh.common.log
 import xyz.rh.enjoyfragment.R
+import xyz.rh.enjoyfragment.fragment.FirstFragment.Companion.TAG
 import xyz.rh.enjoyfragment.fragment.NavigationManager
 import xyz.rh.enjoyfragment.fragment.SecondFragment
 
@@ -105,7 +111,57 @@ class RHDialogFragment : DialogFragment() {
                 dismissAllowingStateLoss()
             }, /*3000*/0)
         }
+
+        rootView.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
+                log("RHDialogFragment::Lifecycle::onLayoutChange ---------- measureHeight=${rootView.measuredHeight}, height=${rootView.height}")
+            }
+
+        })
+
+        rootView.post {
+            Log.d(TAG, "testAddView:: RootView.post {}.invoke --> measureHeight = " + rootView.measuredHeight + ", height = " + rootView.height)
+        }
+        testAddView(rootView as ViewGroup)
+
         return rootView
+    }
+
+    private fun testAddView(root: ViewGroup) {
+        val subView = TextView(context).apply {
+            text = "这是动态加的TextView哈哈哈"
+            textSize = 50f
+        }
+        subView.post {
+            Log.d(TAG, "testAddView:: TextView.post {}.invoke --> measureHeight = " + subView.measuredHeight + ", height = " + subView.height)
+        }
+        subView.addOnLayoutChangeListener(object : OnLayoutChangeListener {
+            override fun onLayoutChange(
+                v: View?,
+                left: Int,
+                top: Int,
+                right: Int,
+                bottom: Int,
+                oldLeft: Int,
+                oldTop: Int,
+                oldRight: Int,
+                oldBottom: Int
+            ) {
+                Log.d(TAG, "testAddView:: TextView.onLayoutChange().invoke --> measureHeight = " + subView.measuredHeight + ", height = " + subView.height + " &&&& rootView.measureHeight=" + rootView.measuredHeight + ", rootView.height=" + rootView.height)
+            }
+
+        })
+        root.addView(subView)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,9 +171,19 @@ class RHDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        log("RHDialogFragment::Lifecycle::onResume()")
+        log("RHDialogFragment::Lifecycle::onResume() ======= measureHeight=${rootView.measuredHeight}, height=${rootView.height}  ,,,,, dialog.isShowing=${dialog?.isShowing}")
         // context是Activity容器，对应的window和dialog本身对应的window是不一样的对象！
         log("RHDialogFragment:: ---> context.window = ${(context as Activity).window}, dialog?.window = ${dialog?.window}")
+
+        Handler().postDelayed(object : Runnable {
+            override fun run() {
+                val textview = TextView(context)
+                textview.text = "这是动态添加的TextView"
+                (rootView as ViewGroup).addView(textview)
+            }
+
+        }, 3000)
+
     }
 
     /**

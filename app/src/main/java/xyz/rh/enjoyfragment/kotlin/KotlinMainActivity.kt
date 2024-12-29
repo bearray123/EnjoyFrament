@@ -7,12 +7,17 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import kotlinx.coroutines.*
 import xyz.rh.common.xlog
+import xyz.rh.enjoyfragment.MainActivity
 import xyz.rh.enjoyfragment.R
 
 /**
  * Created by xionglei01@baidu.com on 2022/10/11.
  */
 class KotlinMainActivity : ComponentActivity() {
+
+    companion object {
+        var COUNT = 1
+    }
 
     val mainScope = MainScope()
 
@@ -26,39 +31,53 @@ class KotlinMainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kotlin_main_activity_layout)
 
+        xlog("KotlinMainActivity::onCreate ===> this=$this")
 
+//        button1.setOnClickListener {
+//
+//            mainScope.launch {
+//
+//                // 取数据要10秒
+//                xlog("getData -----> start  ---->")
+//                val response = getData()
+//                xlog("getData -----> end  ----> $response")
+//
+//
+//                startActivityForResult(Intent().apply {
+//                    this.setClass(this@KotlinMainActivity, KotlinSecondActivity::class.java)
+//                }, 999)
+//
+//
+//                KotlinSecondActivity.callback = object : OnResultCallback {
+//                    override fun onResult(ret: String) {
+//
+//                        Toast.makeText(this@KotlinMainActivity, "从Second页面回来了，返回的数据是：$ret", Toast.LENGTH_SHORT).show()
+//
+//                    }
+//
+//                }
+//
+//            }
+//
+//        }
 
         button1.setOnClickListener {
-
-            mainScope.launch {
-
-                // 取数据要10秒
-                xlog("getData -----> start  ---->")
-                val response = getData()
-                xlog("getData -----> end  ----> $response")
-
-
-                startActivityForResult(Intent().apply {
-                    this.setClass(this@KotlinMainActivity, KotlinSecondActivity::class.java)
-                }, 999)
-
-
-                KotlinSecondActivity.callback = object : OnResultCallback {
-                    override fun onResult(ret: String) {
-
-                        Toast.makeText(this@KotlinMainActivity, "从Second页面回来了，返回的数据是：$ret", Toast.LENGTH_SHORT).show()
-
-                    }
-
-                }
-
+            if (COUNT++ <= 3) {
+                Toast.makeText(this, "第${COUNT}次启动！", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@KotlinMainActivity, KotlinMainActivity::class.java))
+            } else {
+                Toast.makeText(this, "oh, 满了，需要启动Main了！", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@KotlinMainActivity, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                })
             }
 
         }
 
 
-    }
 
+    }
 
     suspend fun getData() : String {
         return withContext(Dispatchers.IO) {

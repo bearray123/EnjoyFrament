@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import xyz.rh.common.xlog
 
@@ -26,22 +27,23 @@ class RHView @JvmOverloads constructor(
     }
 
     companion object {
-        const val TAG = "RHView::"
+        const val TAG = "RHView"
     }
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        xlog(TAG, "onMeasure()")
+        Log.d(TAG, "draw lifecycle:: onMeasure 测量-> RHView")
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        xlog(TAG, "onLayout()")
+        Log.d(TAG, "draw lifecycle:: onLayout 布局-> RHView")
     }
 
     override fun onDraw(canvas: Canvas?) {
 //        super.onDraw(canvas)
+        Log.d(TAG, "draw lifecycle:: onDraw 绘制-> RHView")
         canvas?.save()
         xlog(TAG, "onDraw() ----> measuredWidth = $measuredWidth, measuredHeight = $measuredHeight, width = $width, height = $height")
         canvas?.drawCircle(20f*2, 20f*3, 20f, paint)
@@ -56,6 +58,11 @@ class RHView @JvmOverloads constructor(
         val text = "壹、贰、叁、肆、伍、陆、柒、捌、玖、拾"
         val rect = Rect()
         paint.getTextBounds(text, 0, 1, rect)
+
+        // 这行代码是限制在画布上绘制时不超出视图的边界，如果不加这行代码绘制的东西是可以超出视图本身边界的~
+        // Canvas默认不会限制绘制操作的边界，即使是超出了视图的实际尺寸。
+        // 如果你希望确保在视图边界内绘制，可以使用 Canvas 的裁剪方法。例如，你可以在 onDraw 方法中使用 clipRect 方法，来限制绘制区域
+        canvas?.clipRect(0,0,width, height)
 
         canvas?.drawText(text, 10f, (rect.height() - rect.bottom).toFloat(), paint)
         canvas?.restore()
