@@ -35,6 +35,7 @@ import xyz.rh.enjoyfragment.FileWriteManager
 import xyz.rh.enjoyfragment.R
 import xyz.rh.enjoyfragment.dialog.RHDialogFragment.Companion.newInstance
 import xyz.rh.enjoyfragment.fragment.model.GameHeroViewModel
+import kotlin.concurrent.thread
 
 /**
  * Created by rayxiong on 2023/9/9.
@@ -106,6 +107,14 @@ class FirstFragment : BaseFragment() {
         val mode = arguments?.getString("mode")
         textView?.text = "${textView?.text} :: 启动模式 $mode ---> fragmentList.indexOf(this) = $currentFragmentIndex" // index从0开始的
         mShowDialogBtn = rootView.findViewById(R.id.show_dialog_btn)
+        // 测试子线程更新UI
+//        thread(name = "my_new_sthread"){
+//            Log.d("test_new_thread", "my_new_sthread sleep 10ms, setVisible")
+//            Thread.sleep(10)
+//            // 等待时间很短10ms不会崩溃可以正常隐藏；如果等待的时间长一点（例如100ms以上），就会出现崩溃！
+//            // android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+//            mShowDialogBtn!!.visibility = View.GONE
+//        }
         mShowDialogBtn?.setOnClickListener {
             // 方式一：采用DialogFragment来实现弹窗
             val dialogFragment = newInstance("", "")
