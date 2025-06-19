@@ -2,6 +2,8 @@ package xyz.rh.enjoyfragment.temp
 
 /**
  * 分析kotlin的型变
+ * 在kotlin，JS/TS这类函数式语言中（函数可以作为一种类型，反之Java没有函数类型），函数类型的参数是逆变的，函数的返回值是协变的！
+ * kotlin 泛型本身是不变的，如果想让泛型支持协变or逆变，需要用out/in关键字控制！
  * Created by rayxiong on 2025/6/18.
  */
 
