@@ -3,8 +3,10 @@ package xyz.rh.enjoyfragment.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ComponentCallbacks2
 import android.content.Context
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
@@ -17,11 +19,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLayoutChangeListener
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
@@ -131,6 +135,21 @@ class FirstFragment : BaseFragment() {
             dialogFragment.show(childFragmentManager, "")
             xlog("exe dialog.isShowing ===== ${dialogFragment.dialog?.isShowing}")
 
+
+            // 传统Dialog的显示，也不会导致Fragment和Activity走onPause
+//            AlertDialog.Builder(context).setTitle("AlertDialog的标题")
+//                .setPositiveButton("确定", object : DialogInterface.OnClickListener{
+//                    override fun onClick(dialog: DialogInterface?, which: Int) {
+//                    }
+//
+//                })
+//                .setNegativeButton("取消", object: DialogInterface.OnClickListener{
+//                    override fun onClick(dialog: DialogInterface?, which: Int) {
+//
+//                    }
+//
+//                })
+//                .create().show()
 
 
             // 为什么 DialogFragment用dismiss好使，而用fragmentManager不好使？？？？

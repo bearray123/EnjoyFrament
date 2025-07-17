@@ -19,12 +19,12 @@ open class BaseFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "lifecycle:: onAttach()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onAttach() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "lifecycle:: onCreate()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onCreate() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onCreateView(
@@ -32,48 +32,48 @@ open class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "lifecycle:: onCreateView()  >>>> hashcode=${hashCode()} >>>>> window = ${(context as Activity).window}")
+        Log.d(TAG, "lifecycle:: onCreateView() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()} >>>>> window = ${(context as Activity).window}")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "lifecycle:: onViewCreated()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onViewCreated() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "lifecycle:: onStart()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onStart() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "lifecycle:: onResume()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onResume() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "lifecycle:: onPause()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onPause() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "lifecycle:: onStop()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onStop() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "lifecycle:: onDestroyView()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onDestroyView() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG, "lifecycle:: onDestroy()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onDestroy() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d(TAG, "lifecycle:: onDetach()  >>>> hashcode=${hashCode()}")
+        Log.d(TAG, "lifecycle:: onDetach() >>>> ${this.javaClass.simpleName} >>> hashcode=${hashCode()}")
     }
 
 

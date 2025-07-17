@@ -93,6 +93,11 @@ public class TestFragmentEntryActivity extends BaseActivity implements View.OnCl
         super.onResume();
     }
 
+    @Override public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        Log.d(TAG, "TestFragmentEntryActivity::onWindowFocusChanged 容器焦点变化了");
+    }
+
     @Override public void onClick(View v) {
 
         if (v == btn1) {
