@@ -28,11 +28,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.transition.Transition
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import xyz.rh.common.BaseFragment
 import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.FileWriteManager
@@ -70,6 +77,8 @@ class FirstFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        testCoroutine()
+
         context?.registerComponentCallbacks(object : ComponentCallbacks2 {
             override fun onConfigurationChanged(newConfig: Configuration) {
             }
@@ -85,6 +94,29 @@ class FirstFragment : BaseFragment() {
             }
 
         })
+    }
+
+    // 测试几种常见协程scope启动协程后的执行时序
+    private fun testCoroutine() {
+        xlog("ray::testmainscope =======1")
+
+
+        // GlobalScope
+//        GlobalScope.launch(Dispatchers.Main) { // 打印顺序：1 -> 4 -> 2 -> 3
+//        GlobalScope.launch(Dispatchers.Main, start = CoroutineStart.UNDISPATCHED) { // 打印顺序：1 -> 2 -> 4 -> 3
+//        GlobalScope.launch(Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) { // 打印顺序：1 -> 2(也在main线程) -> 4 -> 3
+
+        // lifecycleScope去launch后默认就是走的同步message调用，打印顺序：1 -> 2 -> 4 -> 3
+//        lifecycleScope.launch {
+
+        // MainScope()去launch后默认的start方式会在进入协程块后异步message调用，不会走同步，如果想走同步的话得用start = start = CoroutineStart.UNDISPATCHED
+//        MainScope().launch { // 打印顺序 1 -> 4 -> 2 -> 3
+        MainScope().launch(start = CoroutineStart.UNDISPATCHED) { // 打印顺序 1 -> 2 -> 4 ->3
+            xlog("ray::testmainscope ==== in globalScope ===2")
+            delay(5000)
+            xlog("ray::testmainscope ==== in globalScope, 5秒后 ===3")
+        }
+        xlog("ray::testmainscope =======4")
     }
 
     @SuppressLint("SetTextI18n")
