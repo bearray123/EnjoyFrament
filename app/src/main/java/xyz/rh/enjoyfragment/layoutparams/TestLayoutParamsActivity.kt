@@ -8,6 +8,7 @@ import android.os.Process
 import android.view.View
 import android.view.View.MeasureSpec
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import android.view.ViewStub
 import android.view.ViewTreeObserver
 import android.view.animation.AnimationUtils
@@ -188,12 +189,13 @@ class TestLayoutParamsActivity : BaseActivity() {
     private fun testMeasureAndLayout(rootView: ViewGroup) {
         rootView.post {
             xlog("test measureSpec:: topContainer 父 measureWidth=${rootView.measuredWidth}, measuredHeight=${rootView.measuredHeight}")
-//            val subView =/* QUCommonVideoViewV3(this)*/ TextView(this).apply {
-//                text = "这是一段文字"
-//            }
-            val subView = CustomViewContainer(this)
-            val pWMeasureSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredWidth, MeasureSpec.EXACTLY)
-            val pHMeasureSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredHeight, MeasureSpec.EXACTLY)
+            val subView = TextView(this).apply {
+                text = "这是一段文字，这是一段文字"
+                layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, 51)
+            }
+//            val subView = CustomViewContainer(this) // 也可以换这个自定义view测试
+            val pWMeasureSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredWidth, MeasureSpec.AT_MOST)
+            val pHMeasureSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredHeight, MeasureSpec.AT_MOST)
 
             val widthUsed  = rootView.paddingLeft + rootView.paddingRight + subView.marginLeft + subView.marginRight
             val heightUsed = rootView.paddingTop  + rootView.paddingBottom + subView.marginTop  + subView.marginBottom
@@ -224,9 +226,21 @@ class TestLayoutParamsActivity : BaseActivity() {
         rootView.post { // post后 measuredHeight == height，用谁都一样
             xlog("CenterContainer::: 看看父容器 的Height = ${rootView.measuredHeight}")
 
+
+            val parentWidthSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredWidth, MeasureSpec.AT_MOST)
+            val parentHeightSpec = View.MeasureSpec.makeMeasureSpec(rootView.measuredHeight, MeasureSpec.AT_MOST)
+
+            val widthUsed  = rootView.paddingLeft + rootView.paddingRight + centerContainer.rootView.marginLeft + centerContainer.rootView.marginRight
+            val heightUsed = rootView.paddingTop  + rootView.paddingBottom + centerContainer.rootView.marginTop  + centerContainer.rootView.marginBottom
+
+            val childWidthMeasureSpec = ViewGroup.getChildMeasureSpec(parentWidthSpec, widthUsed, centerContainer.rootView.layoutParams.width)
+            val childHeightMeasureSpec = ViewGroup.getChildMeasureSpec(parentHeightSpec, heightUsed, centerContainer.rootView.layoutParams.height)
+            centerContainer.rootView.measure(childWidthMeasureSpec, childHeightMeasureSpec)
+
+
 //            centerContainer.rootView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-            // 这里测量出来的好像都是父容器的宽高（EXACTLY和AT_MOST）?? 为啥？todo
-            centerContainer.rootView.measure(View.MeasureSpec.makeMeasureSpec(rootView.width, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(rootView.height, View.MeasureSpec.AT_MOST))
+            // 这里测量出来的好像都是父容器的宽高（EXACTLY和AT_MOST）?? 为啥？ 得用getChildMeasureSpec 才可以测出来child自身设置的宽高
+//            centerContainer.rootView.measure(View.MeasureSpec.makeMeasureSpec(rootView.width, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(rootView.height, View.MeasureSpec.AT_MOST))
             xlog("CenterContainer::: 在addView之前看看高度，and getHeight = ${centerContainer.rootView.measuredHeight}")
         }
 
