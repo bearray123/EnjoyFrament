@@ -1,11 +1,14 @@
 package xyz.rh.enjoyfragment.touchevent;
 
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.TouchDelegate;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -24,6 +27,8 @@ public class EnjoyTouchEventActivity extends BaseActivity {
    private LinearLayout mLinearlayout;
 
    private RHButton rhButton;
+   private RHView rhView;
+
 
    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -41,6 +46,9 @@ public class EnjoyTouchEventActivity extends BaseActivity {
           });
 
       mLinearlayout = findViewById(R.id.linear_layout);
+      mLinearlayout.setOnClickListener(v-> {
+         Log.d(TAG, "ray::click ==> 黄色区域的RHLinearLayout被点击了，它是RHView的父容器~");
+      });
       mLinearlayout.getViewTreeObserver().addOnGlobalLayoutListener(
           new ViewTreeObserver.OnGlobalLayoutListener() {
              @Override public void onGlobalLayout() {
@@ -71,6 +79,25 @@ public class EnjoyTouchEventActivity extends BaseActivity {
             mLinearlayout.addView(generateRHView());
          }
       }, 1000);
+
+      rhView = findViewById(R.id.rh_view);
+
+      rhView.post(() -> {
+         // 1. 先拿到 child 在父容器坐标系下的可点击区域
+         Rect delegateArea = new Rect();
+         rhView.getHitRect(delegateArea);
+         Log.d(TAG, "ray::click ==> RHView 原始的点击范围:" + delegateArea);
+         // 2. 根据需要扩展区域，比如向上多 100px、向左多 50px...
+         delegateArea.right  += 500;
+         // 3. 创建 TouchDelegate，并设置到父 View
+         TouchDelegate touchDelegate = new TouchDelegate(delegateArea, rhView);
+         // 注意：TouchDelegate 只能设置给最直接的父 View
+         ((ViewGroup)rhView.getParent()).setTouchDelegate(touchDelegate);
+      });
+
+      rhView.setOnClickListener(v -> {
+         Log.d(TAG, "ray::click ==> RHView 被点击了~");
+      });
 
       rhButton = findViewById(R.id.rh_button);
       rhButton.setOnClickListener(new View.OnClickListener() {

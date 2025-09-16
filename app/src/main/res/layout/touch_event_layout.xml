@@ -30,6 +30,7 @@
       android:layout_marginTop="50dp"
       android:layout_marginBottom="100dp"
       android:clipChildren="false"
+      android:clipToPadding="false"
       android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
@@ -38,6 +39,7 @@
       />
 <!--    想要子view超出父容器显示出来必须设置两层父容器的 clipChildren=false，一层不可行-->
     <xyz.rh.enjoyfragment.touchevent.RHView
+        android:id="@+id/rh_view"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:background="@color/light_blue_A400"

@@ -65,8 +65,8 @@ public class RHLinearLayout extends LinearLayout {
 
     @Override public boolean onTouchEvent(MotionEvent event) {
         Log.d(TAG, "Event::: onTouchEvent(), touchEvent == " + event.getAction());
-        //return super.onTouchEvent(event);
-        return true;
+        return super.onTouchEvent(event);
+        //return true;
     }
 
 
