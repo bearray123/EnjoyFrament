@@ -69,13 +69,28 @@
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/center_group"
       android:layout_width="wrap_content"
-      android:layout_height="20dp"
+      android:layout_height="120dp"
+      android:padding="3dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/top_container"
       android:layout_marginTop="50dp"
+      android:background="#9C27B0"
       tools:layout_height="100dp"
       tools:layout_width="200dp"
-      tools:background="#9C27B0"
+      />
+
+  <LinearLayout
+      android:id="@+id/linear_group"
+      android:layout_width="wrap_content"
+      android:layout_height="50dp"
+      android:orientation="vertical"
+      android:padding="3dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/center_group"
+      android:layout_marginTop="8dp"
+      android:background="#e26256"
+      tools:layout_height="100dp"
+      tools:layout_width="200dp"
       />
 
   <xyz.rh.enjoyfragment.layoutparams.NewUserLayout

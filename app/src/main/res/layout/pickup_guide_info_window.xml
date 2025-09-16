@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="44dp"
+    android:layout_height="80dp"
     android:background="#FF7700"
     >
 
@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="#ff00ff" />
+        android:background="#ff00ff"
+        tools:background="#ff00ff"/>
 
     <TextView
         android:id="@+id/qu_wait_map_guide_title_view"
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="9dp"
+        android:text="附近有199人叫车..."
         android:textColor="#000000"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/qu_wait_map_guide_left_icon"
@@ -36,7 +38,7 @@
     <ImageView
         android:id="@+id/qu_wait_map_pickup_guide_icon"
         android:layout_width="38dp"
-        android:layout_height="30dp"
+        android:layout_height="60dp"
         android:layout_marginRight="2dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
@@ -44,6 +46,7 @@
         app:layout_constraintStart_toEndOf="@+id/qu_wait_map_guide_title_view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#00ffff"
         tools:background="#00ffff" />
 
 </xyz.rh.enjoyfragment.layoutparams.MyConstraintLayout>
