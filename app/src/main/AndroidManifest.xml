@@ -52,7 +52,7 @@
         android:name=".jsonparser.TestJsonParserActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar" />
     <activity
-        android:name=".scroll.TestScrollActivity"
+        android:name=".scrollview.TestScrollActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar" />
     <activity
         android:name=".deeplink.DeepLinkActivity"
@@ -77,7 +77,6 @@
     <activity
         android:name=".didihierarchy.TestFragmentsHierarchyActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar" />
-
   </application>
 
 </manifest>

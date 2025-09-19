@@ -1,4 +1,4 @@
-package xyz.rh.enjoyfragment.scroll
+package xyz.rh.enjoyfragment.scrollview
 
 import android.os.Build
 import android.os.Bundle

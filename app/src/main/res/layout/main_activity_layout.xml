@@ -5,35 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="8dp"
+    android:paddingTop="20dp"
     >
-  <!--轻启动：测试无障碍-->
-  <FrameLayout
-      android:id="@+id/left_top_container"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:background="@android:color/holo_red_light"
-    >
-    <TextView
-        android:id="@+id/my_skip_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:text="跳过"
-        android:textSize="22dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        />
-  </FrameLayout>
 
   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/left_top_container"
+      app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintBottom_toBottomOf="parent"
       android:layout_marginTop="8dp"
@@ -74,16 +53,6 @@
           android:text="Fragment周期"
           />
       <Button
-          android:id="@+id/test_viper"
-          android:textAllCaps="false"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="50dp"
-          android:layout_marginRight="50dp"
-          android:layout_marginTop="10dp"
-          android:text="VIPER"
-          />
-      <Button
           android:id="@+id/test_dialog"
           android:textAllCaps="false"
           android:layout_width="match_parent"
@@ -104,7 +73,7 @@
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
           android:onClick="onViewPager2Clicked"
-          android:text="ViewPager2"
+          android:text="ViewPager2（游戏素材）"
           tools:ignore="UsingOnClickInXml"
           />
       <Button
@@ -115,7 +84,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="测试layoutParams"
+          android:text="测试layoutParams(UI三部曲)"
           />
       <Button
           android:id="@+id/test_json_parser"
@@ -145,7 +114,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="scroll相关"
+          android:text="ScrollView"
           />
       <Button
           android:id="@+id/open_coroutine_test_page"
@@ -175,7 +144,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="other_todo_button2"
+          android:text="TODO_Button1"
           />
       <Button
           android:id="@+id/todo2"
@@ -185,7 +154,47 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="other_todo_button3"
+          android:text="TODO_Button2"
+          />
+      <Button
+          android:id="@+id/todo3"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="TODO_Button3"
+          />
+      <Button
+          android:id="@+id/todo4"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="TODO_Button4"
+          />
+      <Button
+          android:id="@+id/todo5"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="TODO_Button5"
+          />
+      <Button
+          android:id="@+id/todo6"
+          android:textAllCaps="false"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="50dp"
+          android:layout_marginTop="10dp"
+          android:text="TODO_Button6"
           />
 
     </LinearLayout>

@@ -17,9 +17,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 import javax.inject.Inject;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import xyz.rh.common.KotlinExtensionKt;
 import xyz.rh.common.eventpublisher.BaseEventPublisher;
 import xyz.rh.enjoyfragment.coroutine.TestCoroutineActivity;
@@ -32,7 +29,7 @@ import xyz.rh.enjoyfragment.fragment.TestFragmentEntryActivity;
 import xyz.rh.enjoyfragment.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyfragment.kotlin.KotlinMainActivity;
 import xyz.rh.enjoyfragment.layoutparams.TestLayoutParamsActivity;
-import xyz.rh.enjoyfragment.scroll.TestScrollActivity;
+import xyz.rh.enjoyfragment.scrollview.TestScrollActivity;
 import xyz.rh.enjoyfragment.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyfragment.viewpager2.ViewPager2EntryActivity;
 
@@ -133,10 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding.testKotlin.setOnClickListener(this);
         _layoutBinding.testTouchEvent.setOnClickListener(this);
         _layoutBinding.testFragmentEntry.setOnClickListener(this);
-        _layoutBinding.mySkipBtn.setOnClickListener(this);
         //_layoutBinding.superAppShieldIcon.setOnClickListener(this);
-
-        _layoutBinding.testViper.setOnClickListener(this);
 
         _layoutBinding.testLayoutparams.setOnClickListener(this);
         _layoutBinding.testJsonParser.setOnClickListener(this);
@@ -174,11 +168,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(new Intent(this, TestFragmentEntryActivity.class));
         } else if (v ==  _layoutBinding.testTouchEvent) {
             startActivity(new Intent(this, EnjoyTouchEventActivity.class));
-        } else if (v ==  _layoutBinding.testViper) {
         } else if (v ==  _layoutBinding.testLayoutparams) {
-            startActivity(new Intent(this, TestLayoutParamsActivity.class));
-        }
-        else if (v == _layoutBinding.mySkipBtn) {
             startActivity(new Intent(this, TestLayoutParamsActivity.class));
         }
         else if (v == _layoutBinding.testJsonParser) {

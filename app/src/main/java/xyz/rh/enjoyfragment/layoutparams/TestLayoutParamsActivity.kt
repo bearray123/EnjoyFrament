@@ -336,7 +336,7 @@ class TestLayoutParamsActivity : BaseActivity() {
     }
 
     // 测试viewTreeObserver
-    fun testViewTreeObserver() {
+    private fun testViewTreeObserver() {
         val tx =  findViewById<TextView>(R.id.test_tx)
 
         tx.viewTreeObserver.addOnGlobalLayoutListener {
