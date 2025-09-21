@@ -32,33 +32,43 @@
           />
 
       <xyz.rh.enjoyfragment.scrollview.ColorBlockView
+          android:id="@+id/blocks1"
           android:layout_width="match_parent"
           android:layout_height="100dp"
           android:background="#fbe9e6"
+          android:contentDescription="浅色块"
           />
 
       <xyz.rh.enjoyfragment.scrollview.ColorBlockView
+          android:id="@+id/block2"
           android:layout_width="match_parent"
           android:layout_height="100dp"
           android:background="#4d8652"
+          android:contentDescription="绿色块"
           />
 
       <xyz.rh.enjoyfragment.scrollview.ColorBlockView
+          android:id="@+id/block3"
           android:layout_width="match_parent"
           android:layout_height="100dp"
           android:background="#f7cf4c"
+          android:contentDescription="黄色块"
           />
 
       <xyz.rh.enjoyfragment.scrollview.ColorBlockView
+          android:id="@+id/block4"
           android:layout_width="match_parent"
           android:layout_height="100dp"
           android:background="#ab3e40"
+          android:contentDescription="红色块"
           />
 
       <xyz.rh.enjoyfragment.scrollview.ColorBlockView
+          android:id="@+id/block5"
           android:layout_width="match_parent"
           android:layout_height="100dp"
           android:background="#b6ada4"
+          android:contentDescription="灰色块"
           />
 
     </LinearLayout>

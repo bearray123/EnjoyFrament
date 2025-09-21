@@ -15,25 +15,31 @@ class ColorBlockView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ): View(context, attrs, defStyleAttr) {
 
+    private var blockName: String? = null
+
     init {
-
         xlog("ColorBlockView:: <init> 构造器执行，attrs = ${attrs.toString()}")
-
+        for (i in 0 until attrs!!.attributeCount) {
+            xlog("ColorBlockView:: attrs Name=${attrs.getAttributeName(i)}, attrs Value = ${attrs.getAttributeValue(i)}")
+            if (attrs.getAttributeName(i).equals("contentDescription")) {
+                blockName = attrs.getAttributeValue(i)
+            }
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        xlog("ColorBlockView:: onMeasure() 测量执行")
+        xlog("ColorBlockView:: [${blockName}] onMeasure() 测量执行")
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        xlog("ColorBlockView:: onLayout() 布局执行")
+        xlog("ColorBlockView:: [${blockName}] onLayout() 布局执行")
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        xlog("ColorBlockView:: onDraw() 绘制执行")
+        xlog("ColorBlockView:: [${blockName}] onDraw() 绘制执行")
     }
 
 
