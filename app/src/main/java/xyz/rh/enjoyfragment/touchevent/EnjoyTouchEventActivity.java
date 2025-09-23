@@ -134,11 +134,11 @@ public class EnjoyTouchEventActivity extends BaseActivity {
       //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
       //    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-      LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 150);
+      LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500, 50);
 
       rhView.setLayoutParams(layoutParams);
-      rhView.measure(View.MeasureSpec.makeMeasureSpec(40, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(20, View.MeasureSpec.EXACTLY));
-      rhView.layout(0,0, rhView.getMeasuredWidth(), rhView.getMeasuredHeight());
+      //rhView.measure(View.MeasureSpec.makeMeasureSpec(40, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(20, View.MeasureSpec.EXACTLY));
+      //rhView.layout(0,0, rhView.getMeasuredWidth(), rhView.getMeasuredHeight());
       rhView.setBackgroundColor(Color.GREEN);
       return rhView;
    }

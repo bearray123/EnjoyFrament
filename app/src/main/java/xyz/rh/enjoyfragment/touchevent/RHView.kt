@@ -47,7 +47,7 @@ class RHView @JvmOverloads constructor(
         canvas?.save()
         xlog(TAG, "onDraw() ----> measuredWidth = $measuredWidth, measuredHeight = $measuredHeight, width = $width, height = $height")
         canvas?.drawCircle(20f*2, 20f*3, 20f, paint)
-        paint.textSize = 50f // px
+        paint.textSize = 30f // px
 
         // 画图形是从图形的left和top的位置开始往右下方向画
         // 画文字比较特殊，是从文字的左边和文字的baseline往右上方画，所以如果将文字画在0，0 的位置上，

@@ -64,12 +64,14 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/add_subview_btn"
       android:visibility="visible"
-      android:layout_marginTop="2dp"/>
+      android:layout_marginTop="2dp"
+      tools:background="@color/black_overlay"
+      />
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/center_group"
-      android:layout_width="wrap_content"
-      android:layout_height="120dp"
+      android:layout_width="50dp"
+      android:layout_height="100dp"
       android:padding="3dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/top_container"
@@ -81,17 +83,28 @@
 
   <LinearLayout
       android:id="@+id/linear_group"
-      android:layout_width="wrap_content"
-      android:layout_height="50dp"
+      android:layout_width="200dp"
+      android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="3dp"
+      android:padding="13dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/center_group"
       android:layout_marginTop="8dp"
       android:background="#e26256"
       tools:layout_height="100dp"
       tools:layout_width="200dp"
-      />
+      >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#9366d6"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#404040"
+        />
+  </LinearLayout>
 
   <xyz.rh.enjoyfragment.layoutparams.NewUserLayout
       android:id="@+id/new_user_layout_container"
@@ -102,26 +115,8 @@
       app:layout_constraintRight_toRightOf="parent"
       android:clipChildren="false"
       tools:visibility="visible"
-      tools:layout_height="375dp"
+      tools:layout_height="300dp"
       >
-
-    <ImageView
-        android:id="@+id/net_image_1"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="5dp"
-        tools:background="#000ffe"
-      />
-
-    <ImageView
-        android:id="@+id/net_image_2"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        app:layout_constraintStart_toEndOf="@+id/net_image_1"
-        android:layout_marginLeft="10dp"
-        tools:background="#000ffe"
-        />
   </xyz.rh.enjoyfragment.layoutparams.NewUserLayout>
 
 

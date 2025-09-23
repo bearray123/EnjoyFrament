@@ -16,9 +16,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是底部灰色的RHFrameLayout"
+        android:textStyle="bold"
+        android:text="底部灰色的RHFrameLayout"
         />
-
   </xyz.rh.enjoyfragment.touchevent.RHFrameLayout>
 
   <xyz.rh.enjoyfragment.touchevent.RHLinearLayout
@@ -28,14 +28,15 @@
       android:background="@android:color/holo_orange_light"
       android:layout_gravity="center_horizontal"
       android:layout_marginTop="50dp"
-      android:layout_marginBottom="100dp"
+      android:layout_marginBottom="8dp"
+      android:padding="8dp"
       android:clipChildren="false"
       android:clipToPadding="false"
       android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是盖在灰色区域RHFrameLayout之上的RHLinearLayout"
+        android:text="盖在灰色区域RHFrameLayout之上的RHLinearLayout"
       />
 <!--    想要子view超出父容器显示出来必须设置两层父容器的 clipChildren=false，一层不可行-->
     <xyz.rh.enjoyfragment.touchevent.RHView
@@ -50,14 +51,14 @@
         android:id="@+id/rh_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是嵌套在RHLinearLayout内部的Button"
+        android:text="嵌套在RHLinearLayout内部的Button"
         style="@android:style/Widget.ImageButton"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:padding="10dp"
-        android:textSize="16sp"
+        android:textSize="12sp"
       />
 
 
@@ -88,7 +89,7 @@
         android:background="@color/black"-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/qu_poi_card_bg"
        >
