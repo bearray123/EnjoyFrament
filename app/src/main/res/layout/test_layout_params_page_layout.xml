@@ -94,16 +94,20 @@
       tools:layout_height="100dp"
       tools:layout_width="200dp"
       >
+    <!--  给子View加背景是为了看效果  -->
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="#9366d6"
         />
-    <View
+    <!--  todo by ray : 这里如果LinearLayout第二个子view是TextView的话最终运行的效果不会导致LinearLayout撑满到父容器底部，只是占TextView的一个最小高度，但如果换成View的话就直接撑满到父容器底部了，目前还没查到原因，问了GPT目前还没得到答案，需要进一步深究！
+      PS：之前怀疑和父容器是约束布局有关，但后来在其他页面换了其他容器类型也是一样的效果！
+      -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#404040"
-        />
+        android:background="#1f2541"
+      />
   </LinearLayout>
 
   <xyz.rh.enjoyfragment.layoutparams.NewUserLayout
