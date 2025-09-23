@@ -6,19 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+  <!-- ✅ fillViewport 视口设置：可视区不满时也铺满 -->
+  <!-- ✅ 外部滚动容器的高度进行match_constraint,不要 wrap_content -->
   <xyz.rh.enjoyfragment.viewpager2.MyNestedScrollView
       android:id="@+id/outer_nestedscrollview"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
+      android:fillViewport="true"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
       >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
+      <!--  ✅头图部分，代码设置图片，高度根据图片自己自适应    -->
       <ImageView
           android:id="@+id/banner_img"
           android:layout_width="match_parent"
@@ -28,16 +33,18 @@
           tools:background="#356F88"
         />
 
+      <!-- ✅ Tab 高度固定，才能“钉住”达到吸顶效果 -->
       <com.google.android.material.tabs.TabLayout
           android:id="@+id/host_tab_layout"
           android:layout_width="match_parent"
           android:layout_height="80dp"
           />
 
+      <!--  ✅ 先 wrap，vp的高度在代码里设高   -->
       <androidx.viewpager2.widget.ViewPager2
           android:id="@+id/host_view_pager"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           tools:layout_width="match_parent"
           tools:layout_height="500dp"
           />

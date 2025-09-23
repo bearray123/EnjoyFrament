@@ -6,8 +6,10 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.NestedScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -32,7 +34,7 @@ class ViewPager2EntryActivity : BaseActivity() {
         const val TAG = "ViewPager2EntryActivity"
     }
 
-    val nestedScrollView: MyNestedScrollView by lazy {
+    private val nestedScrollView: MyNestedScrollView by lazy {
         findViewById(R.id.outer_nestedscrollview)
     }
 
@@ -75,7 +77,7 @@ class ViewPager2EntryActivity : BaseActivity() {
 //            setBackgroundColor(Color.GRAY)
             val backGroupDrawable = context.resources.getDrawable(R.drawable.dota_all_hero)
             background = backGroupDrawable
-            layoutParams.height = 200.dp // 高度设置
+//            layoutParams.height = 200.dp // 高度设置 // 不设置高度了，按照layout里的wrap_content
         }
 
         val dotaTab = GaTab("DOTA", R.drawable.tab_icon_dota, DotaFragment())
@@ -116,6 +118,19 @@ class ViewPager2EntryActivity : BaseActivity() {
 
         }
         tabLayoutMediator.attach()
+
+
+        /* 吸顶是靠“外层 NSV 的 scrollY 只允许滚到 Banner 高度”。
+        要做到“Tab 停在屏幕顶、下面内容还能继续滚”，就必须让 ViewPager2 的实际高度 = NSV 可视高度 − Tab 高度。
+        否则 NSV 还得继续上滚，Tab 就不“钉”了。*/
+        // 下面这块代码如果去掉的话就没吸顶效果！！！
+        nestedScrollView.post {
+            val visibleH = nestedScrollView.height               // NSV 可视区高
+            viewPager.updateLayoutParams<ViewGroup.LayoutParams> {
+                height = visibleH - tabLayout.height      // ✅ 关键：让内容区刚好顶住 Tab 下沿
+            }
+        }
+
 
         GlobalScope.launch(Dispatchers.Main) {
 
