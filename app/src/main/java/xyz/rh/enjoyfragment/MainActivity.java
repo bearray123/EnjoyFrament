@@ -30,8 +30,10 @@ import xyz.rh.enjoyfragment.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyfragment.kotlin.KotlinMainActivity;
 import xyz.rh.enjoyfragment.layoutparams.TestLayoutParamsActivity;
 import xyz.rh.enjoyfragment.scrollview.TestScrollActivity;
+import xyz.rh.enjoyfragment.scrollviewx.ScrollViewXActivity;
 import xyz.rh.enjoyfragment.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyfragment.viewpager2.ViewPager2EntryActivity;
+import xyz.rh.enjoyfragment.wan_glide.WanGlideActivity;
 
 /**
  * Created by xionglei01@baidu.com on 2022/9/21.
@@ -141,6 +143,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         _layoutBinding.openCoroutineTestPage.setOnClickListener(this);
         _layoutBinding.uiHierarchyTest.setOnClickListener(this);
 
+        _layoutBinding.scrollViewX.setOnClickListener(this);
+        _layoutBinding.todo2.setOnClickListener(this);
+
         // 首页注册EventPublisher事件
         testEventPublisher();
 
@@ -195,6 +200,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         else if (v == _layoutBinding.uiHierarchyTest) {
             startActivity(new Intent(this, TestFragmentsHierarchyActivity.class));
+        }
+        else if (v == _layoutBinding.scrollViewX) {
+            startActivity(new Intent(this, ScrollViewXActivity.class));
+        }
+        else if (v == _layoutBinding.todo2) {
+            startActivity(new Intent(this, WanGlideActivity.class));
         }
 
     }
