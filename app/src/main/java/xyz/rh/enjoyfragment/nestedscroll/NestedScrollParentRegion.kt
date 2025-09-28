@@ -59,7 +59,7 @@ class NestedScrollParentRegion @JvmOverloads constructor(context: Context, attrs
      * 这套协议的核心协作原理：
      * 分方向来看
      *  1）向上滑动
-     *      parent.onNestedPreScroll(父先消费下，看自己能消费多少-看头部区域， 没消费完的通过consumed[]这个数组丢给child来继续消费)
+     *      parent.onNestedPreScroll(父先消费下，看自己能消费多少-看头部区域， 父把消费的距离值通过consumed[]这个数组丢给child，child结合父已消费的值和本次滑动的距离做差值后继续消费)
      *          ===》 child消费parent没消费完剩余的距离（一般直接通过内置的childHelper内搞定）
      *  2）向下滑动
      *      child先消费，当child消费完拉下到顶后再把剩余未消费的距离”回流“给父再消费 ===》parent.onNestedScroll(...dxUnconsumed, dyUnconsumed...)

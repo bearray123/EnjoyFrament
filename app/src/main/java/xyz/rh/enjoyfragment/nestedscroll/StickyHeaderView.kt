@@ -9,9 +9,9 @@ import android.util.TypedValue
 import android.view.View
 
 /**
+ * 嵌套滚动页面需要吸顶的HeaderView
  * Created by rayxiong on 2025/9/23.
  */
-
 class StickyHeaderView  @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -52,7 +52,7 @@ class StickyHeaderView  @JvmOverloads constructor(
 //        val cy = paddingTop - fm.ascent   // 用 -ascent 把顶部对齐到 paddingTop
         val cx = width / 2f // 水平居中，目前效果不是完全水平居中的，有些偏右
         val cy = height / 2f - (fm.ascent + fm.descent) / 2f // 垂直居中
-        canvas?.drawText("英雄列表", cx, cy, paint)
+        canvas?.drawText("吸顶效果：英雄列表", cx, cy, paint)
 
     }
 

@@ -28,6 +28,12 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
 
     init { isClickable = true; childHelper.isNestedScrollingEnabled = true }
 
+
+    /**
+     * 这套嵌套滚动协议核心驱动着是Child，所以child的触摸事件方法onTouchEvent是重点需要重写的，
+     * 在onTouchEvent里进行判断和做嵌套滚动协议的方法调度
+     * 可以简单理解为：child.dispatchNestedXXX、child.startNestedXXXX、child.stopNestedXXXX 后就会调度到 parent.onXXX等回调方法上
+     */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.actionMasked) {
@@ -41,7 +47,10 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
                 val dy = (lastY - event.y).toInt()
                 vt?.addMovement(event)
 
+                // 移动Move时进行调度分发NestedPreScroll触达到parent，让父先决策是否需要先消费一小段距离
                 dispatchNestedPreScroll(0, dy, consumed, offset, ViewCompat.TYPE_TOUCH)
+                // 上一步触达到parent.onNestedPreScroll后，父先做一部分消费，然后把父消费的距离值会写入consume[]数组里
+                // 这里拿到父写入的”父消费“的距离， dy-consumed[1]就是剩余待子来消费的距离
                 val un = dy - consumed[1]
                 dispatchNestedScroll(0, 0, 0, un, offset, ViewCompat.TYPE_TOUCH)
 
