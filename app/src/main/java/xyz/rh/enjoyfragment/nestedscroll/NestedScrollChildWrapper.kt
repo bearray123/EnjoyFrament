@@ -11,6 +11,7 @@ import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 
 /**
+ * 实现嵌套滚动child协议的容器，只要被它包裹着的子view就都不需要再实现这套协议了
  * Created by rayxiong on 2025/9/28.
  */
 class NestedScrollChildWrapper @JvmOverloads constructor(
@@ -19,13 +20,13 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
     defStyleAttr: Int = 0)
     : ConstraintLayout(context, attrs, defStyleAttr) , NestedScrollingChild3{
 
-    private val helper = NestedScrollingChildHelper(this)
+    private val childHelper = NestedScrollingChildHelper(this)
     private val consumed = IntArray(2)
     private val offset = IntArray(2)
     private var lastY = 0f
     private var vt: VelocityTracker? = null
 
-    init { isClickable = true; helper.isNestedScrollingEnabled = true }
+    init { isClickable = true; childHelper.isNestedScrollingEnabled = true }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -63,9 +64,9 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
 
     // —— helper 代理，都交给内置的helper来处理 —— //
 
-    override fun setNestedScrollingEnabled(enabled: Boolean) { helper.isNestedScrollingEnabled = enabled }
+    override fun setNestedScrollingEnabled(enabled: Boolean) { childHelper.isNestedScrollingEnabled = enabled }
 
-    override fun isNestedScrollingEnabled() = helper.isNestedScrollingEnabled
+    override fun isNestedScrollingEnabled() = childHelper.isNestedScrollingEnabled
 
 
 
@@ -79,17 +80,16 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
     // 中间夹着普通容器（如 ConstraintLayout）完全没问题——它会被跳过。
 
 
-
     override fun startNestedScroll(axes: Int, type: Int): Boolean {
-        return helper.startNestedScroll(axes, type)
+        return childHelper.startNestedScroll(axes, type)
     }
 
     override fun stopNestedScroll(type: Int) {
-        helper.stopNestedScroll(type)
+        childHelper.stopNestedScroll(type)
     }
 
     override fun hasNestedScrollingParent(type: Int): Boolean {
-        return helper.hasNestedScrollingParent(type)
+        return childHelper.hasNestedScrollingParent(type)
     }
 
     /**
@@ -107,7 +107,7 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
         offsetInWindow: IntArray?,
         type: Int
     ): Boolean {
-        return helper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
+        return childHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type)
     }
 
     /**
@@ -129,7 +129,7 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
         type: Int,
         consumed: IntArray
     ) {
-        helper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type, consumed)
+        childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type, consumed)
     }
 
     override fun dispatchNestedScroll(
@@ -140,7 +140,7 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
         offsetInWindow: IntArray?,
         type: Int
     ): Boolean {
-        return helper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type)
+        return childHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type)
     }
 
     /**
@@ -150,7 +150,7 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
      * consumed：true 表示当前view消费了滑动事件，否则传false
      * @return true 表示Parent处理了滑动事件
      */
-    override fun dispatchNestedFling(vx: Float, vy: Float, consumed: Boolean) = helper.dispatchNestedFling(vx, vy, consumed)
+    override fun dispatchNestedFling(vx: Float, vy: Float, consumed: Boolean) = childHelper.dispatchNestedFling(vx, vy, consumed)
 
     /**
      * 在当前view自己处理惯性滑动前，先将滑动事件分发给Parent，一般来说如果想自己处理惯性的滑动事件，就不应该调用该方法给Parent处理。
@@ -158,7 +158,7 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
      * 返回false，代表Parent没有处理，但是不代表Parent后面就不用处理了
      * @return true：表示Parent处理了滑动事件
      */
-    override fun dispatchNestedPreFling(vx: Float, vy: Float) = helper.dispatchNestedPreFling(vx, vy)
+    override fun dispatchNestedPreFling(vx: Float, vy: Float) = childHelper.dispatchNestedPreFling(vx, vy)
 
 
 }

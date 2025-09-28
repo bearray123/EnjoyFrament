@@ -85,6 +85,16 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             android:background="#e86c2c"
         />
+        <View
+            android:id="@+id/a5"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/a1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="#6163f0"
+            />
       </xyz.rh.enjoyfragment.nestedscroll.TopArea>
 
       <!--  嵌套滚动的吸顶视图，随着NestedScrollRegion滑出屏外，它会处于吸顶状态-->
