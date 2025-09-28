@@ -5,75 +5,111 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".scrollviewx.ScrollViewXActivity">
+    tools:context=".nestedscroll.ScrollViewXActivity">
 
-  <xyz.rh.enjoyfragment.scrollviewx.KingKongContainer
-      android:id="@+id/kingkong_container"
+<!--  页面结构：-->
+    <!--  👨‍🦰嵌套滚动Parent：NestedScrollRegion -->
+        <!--  👶嵌套滚动Child1 ：NestedScrollChildWrapper-->
+              <!--  top区域-->
+              <!--  吸顶的headerView-->
+        <!--  👶嵌套滚动Child2 ：RecyclerView-->
+
+  <xyz.rh.enjoyfragment.nestedscroll.NestedScrollParentRegion
+      android:id="@+id/nested_parent_container"
       android:layout_width="0dp"
-      android:layout_height="120dp"
+      android:layout_height="wrap_content"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       android:background="#f1f1f3"
     >
-    <View
-        android:id="@+id/a1"
+
+    <!--  嵌套滚动的Child1：外层wrapper，实现了child协议，这样它内部甭管有多少层子view，都会由该实现child的该view来接管   -->
+    <!--  它即是嵌套滚动协议里child，只要触摸到它所覆盖的区域都会由它来驱动parent的回调-->
+    <xyz.rh.enjoyfragment.nestedscroll.NestedScrollChildWrapper
+        android:id="@+id/nested_child_container"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/a2"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:background="#e86c2c"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+      >
+
+      <!--  嵌套滚动头部区域，滑出屏幕后它下面的Header区域就会吸顶   -->
+      <xyz.rh.enjoyfragment.nestedscroll.TopArea
+          android:id="@+id/top_area"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+        <View
+            android:id="@+id/a1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/a2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="#e86c2c"
+          />
+        <View
+            android:id="@+id/a2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/a1"
+            app:layout_constraintEnd_toStartOf="@id/a3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="#5289cd"
+            />
+        <View
+            android:id="@+id/a3"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/a2"
+            app:layout_constraintEnd_toStartOf="@id/a4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="#3b3d41"
+            />
+        <View
+            android:id="@+id/a4"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/a3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="#e86c2c"
+        />
+      </xyz.rh.enjoyfragment.nestedscroll.TopArea>
+
+      <!--  嵌套滚动的吸顶视图，随着NestedScrollRegion滑出屏外，它会处于吸顶状态-->
+      <xyz.rh.enjoyfragment.nestedscroll.StickyHeaderView
+          android:id="@+id/stick_bar"
+          android:layout_width="0dp"
+          android:layout_height="50dp"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/top_area"
+          android:background="#ccbcf8"
       />
 
-    <View
-        android:id="@+id/a2"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/a1"
-        app:layout_constraintEnd_toStartOf="@id/a3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:background="#5289cd"
+    </xyz.rh.enjoyfragment.nestedscroll.NestedScrollChildWrapper>
+
+    <!--  嵌套滚动的Child2：核心内容区域，是个长列表，RecyclerView本身就实现了child协议了，直接用即可 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/nested_child_container"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
-    <View
-        android:id="@+id/a3"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/a2"
-        app:layout_constraintEnd_toStartOf="@id/a4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:background="#3b3d41"
-        />
+  </xyz.rh.enjoyfragment.nestedscroll.NestedScrollParentRegion>
 
-    <View
-        android:id="@+id/a4"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/a3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:background="#e86c2c"
-        />
-
-  </xyz.rh.enjoyfragment.scrollviewx.KingKongContainer>
-
-
-<xyz.rh.enjoyfragment.scrollviewx.StickyHeaderView
-    android:layout_width="0dp"
-    android:layout_height="30dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/kingkong_container"
-    android:background="#db4176"
-  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

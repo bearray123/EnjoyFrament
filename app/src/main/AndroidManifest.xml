@@ -22,7 +22,7 @@
         android:name=".wan_glide.WanGlideActivity"
         android:exported="false" />
     <activity
-        android:name=".scrollviewx.ScrollViewXActivity"
+        android:name=".nestedscroll.ScrollViewXActivity"
         android:exported="false" />
     <activity
         android:name=".MainActivity"

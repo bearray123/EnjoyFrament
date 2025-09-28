@@ -30,7 +30,7 @@ import xyz.rh.enjoyfragment.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyfragment.kotlin.KotlinMainActivity;
 import xyz.rh.enjoyfragment.layoutparams.TestLayoutParamsActivity;
 import xyz.rh.enjoyfragment.scrollview.TestScrollActivity;
-import xyz.rh.enjoyfragment.scrollviewx.ScrollViewXActivity;
+import xyz.rh.enjoyfragment.nestedscroll.ScrollViewXActivity;
 import xyz.rh.enjoyfragment.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyfragment.viewpager2.ViewPager2EntryActivity;
 import xyz.rh.enjoyfragment.wan_glide.WanGlideActivity;
