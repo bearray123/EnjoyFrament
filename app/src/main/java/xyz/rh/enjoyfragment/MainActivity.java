@@ -29,8 +29,8 @@ import xyz.rh.enjoyfragment.fragment.TestFragmentEntryActivity;
 import xyz.rh.enjoyfragment.jsonparser.TestJsonParserActivity;
 import xyz.rh.enjoyfragment.kotlin.KotlinMainActivity;
 import xyz.rh.enjoyfragment.layoutparams.TestLayoutParamsActivity;
+import xyz.rh.enjoyfragment.nestedscroll.NestedScrollViewActivity;
 import xyz.rh.enjoyfragment.scrollview.TestScrollActivity;
-import xyz.rh.enjoyfragment.nestedscroll.ScrollViewXActivity;
 import xyz.rh.enjoyfragment.touchevent.EnjoyTouchEventActivity;
 import xyz.rh.enjoyfragment.viewpager2.ViewPager2EntryActivity;
 import xyz.rh.enjoyfragment.wan_glide.WanGlideActivity;
@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(new Intent(this, TestFragmentsHierarchyActivity.class));
         }
         else if (v == _layoutBinding.scrollViewX) {
-            startActivity(new Intent(this, ScrollViewXActivity.class));
+            startActivity(new Intent(this, NestedScrollViewActivity.class));
         }
         else if (v == _layoutBinding.todo2) {
             startActivity(new Intent(this, WanGlideActivity.class));

@@ -47,11 +47,13 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
                 val dy = (lastY - event.y).toInt()
                 vt?.addMovement(event)
 
-                // 移动Move时进行调度分发NestedPreScroll触达到parent，让父先决策是否需要先消费一小段距离
+                // 让父先预消费（折叠头部区域）：移动Move时进行调度分发NestedPreScroll触达到parent，让父先决策是否需要先消费一小段距离
                 dispatchNestedPreScroll(0, dy, consumed, offset, ViewCompat.TYPE_TOUCH)
                 // 上一步触达到parent.onNestedPreScroll后，父先做一部分消费，然后把父消费的距离值会写入consume[]数组里
                 // 这里拿到父写入的”父消费“的距离， dy-consumed[1]就是剩余待子来消费的距离
                 val un = dy - consumed[1]
+
+                // 自己不滚，把剩余的“未消费”继续上报
                 dispatchNestedScroll(0, 0, 0, un, offset, ViewCompat.TYPE_TOUCH)
 
                 lastY = event.y - offset[1]
@@ -60,7 +62,9 @@ class NestedScrollChildWrapper @JvmOverloads constructor(
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 vt?.addMovement(event); vt?.computeCurrentVelocity(1000)
                 val vy = vt?.yVelocity ?: 0f
+                // 先问父要不要接管 fling
                 val taken = dispatchNestedPreFling(0f, vy)
+                // 再广播 fling（自己不消费）
                 if (!taken) dispatchNestedFling(0f, vy, false)
                 stopNestedScroll(ViewCompat.TYPE_TOUCH)
                 vt?.recycle(); vt = null

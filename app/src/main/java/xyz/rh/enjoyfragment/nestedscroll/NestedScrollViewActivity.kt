@@ -3,17 +3,19 @@ package xyz.rh.enjoyfragment.nestedscroll
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import xyz.rh.enjoyfragment.R
 
-class ScrollViewXActivity : AppCompatActivity() {
+/**
+ * 练手掌握NestedScrolling协议
+ * 最佳实践还是要走系统自带的组件,比如参考 ViewPager2EntryActivity 里的内容
+ */
+class NestedScrollViewActivity : AppCompatActivity() {
 
     private val recyclerView: RecyclerView by lazy {
         findViewById(R.id.recycler_view)
