@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".nestedscroll.ScrollViewXActivity">
+    tools:context=".nestedscroll.NestedScrollViewActivity">
 
 <!--  页面结构：-->
     <!--  👨‍🦰嵌套滚动Parent：NestedScrollRegion -->
@@ -85,16 +85,19 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             android:background="#e86c2c"
         />
-        <View
-            android:id="@+id/a5"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            app:layout_constraintHorizontal_weight="1"
+        <!-- 图片尺寸是1000x380宽度铺满父，高度根据宽自适应adjustViewBounds -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/a1"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            android:background="#6163f0"
-            />
+            android:src="@drawable/devices_density"
+            android:background="#78d5fb"
+            android:padding="4dp"
+          />
       </xyz.rh.enjoyfragment.nestedscroll.TopArea>
 
       <!--  嵌套滚动的吸顶视图，随着NestedScrollRegion滑出屏外，它会处于吸顶状态-->
