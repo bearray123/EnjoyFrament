@@ -18,17 +18,12 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.EnjoyFrament"
       tools:targetApi="31">
-    <activity
-        android:name=".wan_glide.WanGlideActivity"
-        android:exported="false" />
-    <activity
-        android:name=".nestedscroll.NestedScrollViewActivity"
-        android:exported="false" />
+
+<!--    android:launchMode="singleTask"  不要给主页面加singleTask模式，会出现在其他页面时前后台切换后又回到主页面的问题！-->
     <activity
         android:name=".MainActivity"
         android:exported="true"
         android:label="@string/app_name"
-        android:launchMode="singleTask"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -83,6 +78,13 @@
     <activity
         android:name=".didihierarchy.TestFragmentsHierarchyActivity"
         android:theme="@style/Theme.EnjoyFrament.NoActionBar" />
+    <activity
+        android:name=".wan_glide.WanGlideActivity"
+        android:exported="false" />
+    <activity
+        android:name=".nestedscroll.NestedScrollViewActivity"
+        android:exported="false" />
+
   </application>
 
 </manifest>
