@@ -40,7 +40,7 @@
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
           android:textAllCaps="false"
-          android:text="touch测试"
+          android:text="Touch测试"
           />
       <Button
           android:id="@+id/test_fragment_entry"
@@ -50,7 +50,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="Fragment周期"
+          android:text="Fragment生命周期"
           />
       <Button
           android:id="@+id/test_dialog"
@@ -144,7 +144,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="ScrollViewX"
+          android:text="NestedScrollling嵌套滚动协议"
           />
       <Button
           android:id="@+id/todo2"
@@ -154,7 +154,7 @@
           android:layout_marginLeft="50dp"
           android:layout_marginRight="50dp"
           android:layout_marginTop="10dp"
-          android:text="Glide"
+          android:text="玩Glide"
           />
       <Button
           android:id="@+id/todo3"

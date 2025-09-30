@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
 
-class WanGlideActivity : AppCompatActivity() {
+class WanGlideActivity : BaseActivity() {
 
     private val carImageView: ImageView by lazy {
         findViewById(R.id.car_gif_img)

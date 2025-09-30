@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
 
 /**
  * 练手掌握NestedScrolling协议
  * 最佳实践还是要走系统自带的组件,比如参考 ViewPager2EntryActivity 里的内容
  */
-class NestedScrollViewActivity : AppCompatActivity() {
+class NestedScrollViewActivity : BaseActivity() {
 
     private val recyclerView: RecyclerView by lazy {
         findViewById(R.id.recycler_view)

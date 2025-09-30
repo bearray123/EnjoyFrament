@@ -5,9 +5,10 @@ import android.text.Layout
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
 
-class TestFragmentsHierarchyActivity : FragmentActivity() {
+class TestFragmentsHierarchyActivity : BaseActivity() {
 
     private val mainStackContainer: MyFrameLayout by lazy {
         findViewById(R.id.main_stack_layout)
