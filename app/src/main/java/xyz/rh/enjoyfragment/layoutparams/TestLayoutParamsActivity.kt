@@ -31,6 +31,7 @@ import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.Runnable
 import xyz.rh.common.dp
 import xyz.rh.common.getUiHandler
+import xyz.rh.common.safeArea.getSafeAreaInsets
 import xyz.rh.common.xlog
 import xyz.rh.enjoyfragment.BaseActivity
 import xyz.rh.enjoyfragment.R
@@ -76,6 +77,13 @@ class TestLayoutParamsActivity : BaseActivity() {
         testViewTreeObserver()
 
         testMarquee()
+
+        // 这里随便拿一个view测下安全区，看这个方法内部的打印即可！
+        // 底部安全区的距离看视觉效果就行，刚好这个页面底部是一个绿色的块区域
+        // 在小米12上 top=108px（状态栏高度）, bottom=56px（导航栏高度）
+        topContainer.post {
+            getSafeAreaInsets(topContainer)
+        }
 
         val newUserLayout = findViewById<NewUserLayout>(R.id.new_user_layout_container)
 
