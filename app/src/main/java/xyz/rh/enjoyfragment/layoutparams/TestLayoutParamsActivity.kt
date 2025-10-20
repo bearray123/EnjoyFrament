@@ -80,7 +80,7 @@ class TestLayoutParamsActivity : BaseActivity() {
 
         // 这里随便拿一个view测下安全区，看这个方法内部的打印即可！
         // 底部安全区的距离看视觉效果就行，刚好这个页面底部是一个绿色的块区域
-        // 在小米12上 top=108px（状态栏高度）, bottom=56px（导航栏高度）
+        // 在小米12上 top=108px（状态栏高度）, bottom=56px（导航栏高度，如果修改系统导航栏换成三个底部按钮的方式bottom=165px）
         topContainer.post {
             getSafeAreaInsets(topContainer)
         }
