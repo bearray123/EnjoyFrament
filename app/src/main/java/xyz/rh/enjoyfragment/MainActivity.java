@@ -1,7 +1,9 @@
 package xyz.rh.enjoyfragment;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
@@ -161,7 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
     }
 
-    @Override public void onClick(View v) {
+    @SuppressLint("QueryPermissionsNeeded") @Override public void onClick(View v) {
 
         if (v == _layoutBinding.testKotlin) {
             startActivity(new Intent(this, KotlinMainActivity.class));
@@ -187,10 +190,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             //intent.addCategory("android.intent.category.BROWSABLE");
             Uri work = Uri.parse("OneTravel://dache_anycar/entrance");
             intent.setData(work);
-            // 这种写法是不work的，无法实现deeplink跳转，生成的对象是Uri$HierarchicalUri，对应的scheme是UrlEncode之后的：/OneTravel%3A%2F%2Fdache_anycar%2Fentrance
-            //Uri notwork = new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build();
-            //intent.setData(new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build());
-            startActivity(intent);
+            ComponentName componentName = intent.resolveActivity(this.getPackageManager());
+            Log.d(TAG, "尝试跳转滴滴出行，ok不？" + (componentName != null));
+            if (componentName != null) {
+                // 这种写法是不work的，无法实现deeplink跳转，生成的对象是Uri$HierarchicalUri，对应的scheme是UrlEncode之后的：/OneTravel%3A%2F%2Fdache_anycar%2Fentrance
+                //Uri notwork = new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build();
+                //intent.setData(new Uri.Builder().appendPath("OneTravel://dache_anycar/entrance").build());
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "跳转失败，当前未安装滴滴出行！引导跳应用市场下载安装！", Toast.LENGTH_SHORT).show();
+                fallbackToStore(this, "com.sdu.didi.psnger");
+            }
         }
         else if (v == _layoutBinding.testScroll) {
             startActivity(new Intent(this, TestScrollActivity.class));
@@ -268,6 +278,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 }
             });
+    }
+
+
+
+    // 跳转应用商店引导下载安装
+    private void fallbackToStore(Context context, String pkg) {
+        // 优先 Play / 应用商店
+        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("markets://details?id=" + pkg));
+        boolean canMarket = marketIntent.resolveActivity(context.getPackageManager()) != null;
+        Log.d(TAG, "能否跳转应用商店, canMarket=" + canMarket);
+        Intent target = null;
+        if (canMarket) { // 国内应用市场
+            target = marketIntent;
+        } else { // GP
+            target = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkg));
+        }
+
+        //if (context !is Activity) target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (target != null) {
+            context.startActivity(target);
+        } else {
+            Toast.makeText(this, "完犊子了，好像连应用市场都没安装！！！", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
